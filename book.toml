@@ -1,0 +1,19 @@
+[book]
+title = "The Aozora Bunko Notation Specification"
+description = "A normative, RFC-quality specification of 青空文庫記法 (Aozora Bunko notation)."
+authors = ["aozora-notation-spec contributors"]
+language = "en"
+src = "src"
+
+[output.html]
+default-theme = "light"
+preferred-dark-theme = "navy"
+no-section-label = false
+# git-repository-url = "https://github.com/<owner>/aozora-notation-spec"
+
+[output.html.fold]
+enable = true
+level = 1
+
+[output.html.search]
+enable = true

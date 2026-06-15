@@ -1,0 +1,67 @@
+; The Aozora Bunko Notation Specification — collected lexical grammar.
+; ABNF per RFC 5234 / RFC 7405. Terminals are Unicode scalar values given by
+; %x (codepoint), so this grammar applies to the §4 sanitized source decoded
+; to a sequence of Unicode scalar values (UTF-8 on the wire).
+;
+; SCOPE: this grammar fixes the LEXICAL surface — how a directive, a ruby
+; span, a gaiji reference, and an accent span are delimited. It deliberately
+; treats a directive body as an opaque run; *which* directive a body denotes
+; is classified by the normative prose of §6, and structural pairing /
+; forward-reference resolution is defined by §7. Alternatives of `element`
+; are applied by LEFTMOST-LONGEST match (§5); `text` is whatever remains.
+
+; ===== Delimiter terminals (full-width) =====
+LBRACK      = %xFF3B          ; ［  FULLWIDTH LEFT SQUARE BRACKET
+RBRACK      = %xFF3D          ; ］  FULLWIDTH RIGHT SQUARE BRACKET
+HASH        = %xFF03          ; ＃  FULLWIDTH NUMBER SIGN
+RUBY-OPEN   = %x300A          ; 《  LEFT DOUBLE ANGLE BRACKET
+RUBY-CLOSE  = %x300B          ; 》  RIGHT DOUBLE ANGLE BRACKET
+BAR         = %xFF5C          ; ｜  FULLWIDTH VERTICAL LINE (ruby base mark)
+REFMARK     = %x203B          ; ※  REFERENCE MARK (gaiji)
+LQUOTE      = %x300C          ; 「  LEFT CORNER BRACKET
+RQUOTE      = %x300D          ; 」  RIGHT CORNER BRACKET
+LPAREN      = %xFF08          ; （  FULLWIDTH LEFT PARENTHESIS
+RPAREN      = %xFF09          ; ）  FULLWIDTH RIGHT PARENTHESIS
+TORT-OPEN   = %x3014          ; 〔  LEFT TORTOISE SHELL BRACKET (accent span)
+TORT-CLOSE  = %x3015          ; 〕  RIGHT TORTOISE SHELL BRACKET
+
+; ===== Top level =====
+; A document is a sequence of elements; `text` carries everything that does
+; not begin a construct, per the leftmost-longest rule (§5).
+document    = *element
+element     = gaiji-ref / ruby / double-ruby / accent-span / directive / text
+
+; ===== Directive:  ［＃ body ］ =====
+; `body` is opaque here; §6 classifies it (page break, indent, bouten, …).
+directive   = LBRACK HASH body RBRACK
+body        = *body-char
+body-char   = %x0-FF3C / %xFF3E-10FFFF      ; any scalar except ］ (U+FF3D)
+
+; ===== Gaiji reference:  ※［＃ … ］ =====
+; A reference mark immediately followed by a directive (§6.4).
+gaiji-ref   = REFMARK directive
+
+; ===== Ruby =====
+; Explicit base is delimited by ｜; the implicit form takes its base from a
+; preceding run per §6.1. Reading is the run inside 《 … 》.
+ruby            = [ BAR base ] RUBY-OPEN reading RUBY-CLOSE
+base            = 1*base-char
+base-char       = %x0-3009 / %x300C-FF5B / %xFF5D-10FFFF
+                                            ; excludes 《 》 (U+300A/B) and ｜ (U+FF5C)
+reading         = 1*reading-char
+reading-char    = %x0-300A / %x300C-10FFFF  ; excludes 》 (U+300B)
+
+; ===== Double-bracket bouten:  《《 … 》》 =====
+double-ruby     = RUBY-OPEN RUBY-OPEN reading RUBY-CLOSE RUBY-CLOSE
+
+; ===== Accent span:  〔 … 〕  (one per line; see §4) =====
+accent-span     = TORT-OPEN accent-body TORT-CLOSE
+accent-body     = *accent-char
+accent-char     = %x0-3014 / %x3016-10FFFF  ; excludes 〕 (U+3015)
+
+; ===== Text =====
+; The maximal run that does not begin one of the constructs above. ABNF
+; cannot express the negative lookahead directly; §5 defines the
+; leftmost-longest disambiguation that yields it.
+text        = 1*scalar
+scalar      = %x0-D7FF / %xE000-10FFFF      ; any Unicode scalar value

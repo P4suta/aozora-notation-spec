@@ -1,0 +1,37 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  spec:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install jsonschema
+        run: pip install jsonschema
+
+      - name: Validate conformance vectors
+        run: python3 tools/validate_vectors.py
+
+      - name: Check the ABNF grammar
+        run: python3 tools/abnf_check.py src/grammar/aozora.abnf
+
+      - name: Check cross-references
+        run: python3 tools/linkcheck.py
+
+      - name: Install mdBook
+        run: |
+          cargo install mdbook --version "^0.4" --locked
+          cargo install mdbook-linkcheck --locked
+
+      - name: Build the book
+        run: mdbook build
