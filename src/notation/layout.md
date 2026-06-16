@@ -9,10 +9,11 @@ right-alignment (地寄せ). Each has a **block** form (a paired container
 governing many lines) and, for indent, end-align, and centring, a
 **single-line** form; line length (字詰め) has a block form only. This section
 pins indentation (including the hanging-indent 折り返し字下げ form),
-end-alignment, line length, and the **single-line** centring marker
-(`ページの左右中央` / `中央揃え`). The block centring form (which has no closer
-in practice), margined right-alignment (地寄せ), and compound directives are
-deferred (§10.5); they are catalogued in [Annex C.2](../annex/slugs.md).
+end-alignment, line length, the **single-line** centring marker
+(`ページの左右中央` / `中央揃え`), and the combined indent-plus-centre form
+(`ここからN字下げ、ページの左右中央`). The block centring form (which has no
+closer in practice) and the remaining compound directives are deferred
+(§10.5); they are catalogued in [Annex C.2](../annex/slugs.md).
 
 ## Notation
 
@@ -20,6 +21,10 @@ deferred (§10.5); they are catalogued in [Annex C.2](../annex/slugs.md).
 ［＃ここから2字下げ］          ← block indent opener
 　本文…
 ［＃ここで字下げ終わり］        ← closer
+
+［＃ここから5字下げ、ページの左右中央に］  ← indent + page-centre
+　献辞…
+［＃ここで字下げ終わり］
 
 ［＃ここから2字下げ、折り返して4字下げ］  ← hanging indent (first line 2, wrap 4)
 　長い本文が折り返して4字下げされる…
@@ -39,6 +44,7 @@ deferred (§10.5); they are catalogued in [Annex C.2](../annex/slugs.md).
 ```abnf
 indent-block-open = LBRACK HASH %s"ここから" 1*DIGIT %s"字下げ" RBRACK
 indent-wrap-open  = LBRACK HASH %s"ここから" 1*DIGIT %s"字下げ、折り返して" 1*DIGIT %s"字下げ" RBRACK
+indent-center-open = LBRACK HASH %s"ここから" 1*DIGIT %s"字下げ、" ( %s"ページの左右中央" [ %s"に" ] / %s"左右中央" ) RBRACK
 indent-single     = LBRACK HASH 1*DIGIT %s"字下げ" RBRACK
 line-width-open   = LBRACK HASH %s"ここから" 1*DIGIT %s"字詰め" RBRACK
 align-end-single  = LBRACK HASH %s"地付き" RBRACK
@@ -53,6 +59,8 @@ center-single     = LBRACK HASH ( %s"ページの左右中央" / %s"中央揃え
 - **amount** — for indent, the number of full-width characters to indent.
 - **wrap** — for the hanging-indent form (折り返し字下げ), the indent applied
   to wrapped continuation lines after the first; absent for a plain indent.
+- **center** — `true` for the combined `ここからN字下げ、ページの左右中央`
+  form (the indented block is also page-centred); `false` otherwise.
 - **offset** — for end-align, the distance from the foot: `0` (地付き) or `N`
   (地からN字上げ).
 - **width** — for line-width (字詰め), the number of full-width characters per
@@ -65,7 +73,10 @@ center-single     = LBRACK HASH ( %s"ページの左右中央" / %s"中央揃え
   containers nest (§7.3). Pairing is by **family**, so a `2字下げ` opener pairs
   with a plain `字下げ終わり` (§7.2). The hanging-indent opener
   (`ここからN字下げ、折り返してM字下げ`) is the same `indent` family carrying a
-  `wrap` parameter, so it too closes with the shared `字下げ終わり`.
+  `wrap` parameter, so it too closes with the shared `字下げ終わり`. The
+  combined opener `ここからN字下げ、ページの左右中央` is likewise the `indent`
+  family — carrying a `center` flag (an indented, page-centred block) — and
+  also closes with `字下げ終わり`.
 - The **line-width** opener (`ここからN字詰め`) is the `line-width` family
   carrying a `width` parameter; it is **block-only** (no single-line form) and
   closes with `字詰め終わり` (§7.2).
