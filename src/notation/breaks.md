@@ -31,7 +31,7 @@ None.
   yield a `section-break` node tagged recto / column / spread respectively.
   Both are **block leaves** (§8.1) standing on their own line.
 - Reference rendering (§8): `<div class="aozora-page-break"></div>` for
-  改ページ; `<div class="aozora-section-break aozora-section-break-<choho|dan|spread>"></div>`
+  改ページ; `<div class="aozora-section-break aozora-section-break-<kaicho|kaidan|kaimihiraki>"></div>`
   for the section flavours.
 - **Interaction with annotations and containers** (§7.3, §7.4):
   - a break does **not** close a **block** layout container (字下げ, 地付き,

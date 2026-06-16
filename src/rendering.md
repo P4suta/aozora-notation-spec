@@ -49,7 +49,7 @@ each with its span; container open/close appear as `containerOpen` /
 | Heading (大/中/小 × style) | `<h1>`–`<h3>` (standard / 同行) or `<div>` (窓), `class="aozora-heading aozora-heading-<large\|medium\|small>"` plus `aozora-heading-<same-line\|window>` for a non-standard style |
 | Heading hint (unpromoted) | `<span class="aozora-heading-hint" data-level data-style data-target hidden></span>` (`data-style` only when non-standard) |
 | Page break | `<div class="aozora-page-break"></div>` |
-| Section break | `<div class="aozora-section-break aozora-section-break-<choho\|dan\|spread>"></div>` |
+| Section break | `<div class="aozora-section-break aozora-section-break-<kaicho\|kaidan\|kaimihiraki>"></div>` |
 
 Text is grouped into paragraphs (`<p>`); a blank line ends a paragraph; a
 single newline within a paragraph is a `<br />`. The five HTML-significant
