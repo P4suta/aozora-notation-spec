@@ -1,42 +1,88 @@
-# 6.12 Bold and italic (太字・斜体)
+# 6.12 Bold and Italic (太字・斜体)
 
 ## Synopsis
 
-Bold (太字) and italic (斜体) mark emphasis as a weight/slant rather than the
-dots/lines of bouten (§6.2). Unlike bouten, they use the `ここから`/`ここで`
-**block** opener/closer form.
+太字 (bold / ゴシック) and 斜体 (italic) mark a run for emphasis as a change of
+**weight** or **slant**, rather than the dots or lines of bouten (§6.2). The
+two form one family with a 太字/斜体 split, parallel to the 点/線 split of
+bouten.
 
 ## Notation
 
-```text
-［＃ここから太字］強調する段落。［＃ここで太字終わり］
-［＃ここから斜体］…［＃ここで斜体終わり］
-```
+Three forms produce emphasis. Unlike bouten the particle is `は` (not `に`), and
+the family has both a bare inline range and a `ここから`/`ここで` block range.
 
-```abnf
-bold-open   = LBRACK HASH %s"ここから太字" RBRACK
-bold-close  = LBRACK HASH %s"ここで太字終わり" RBRACK
-italic-open = LBRACK HASH %s"ここから斜体" RBRACK
-italic-close= LBRACK HASH %s"ここで斜体終わり" RBRACK
-```
+- **Forward reference** — quote the target; the emphasis applies to the most
+  recent preceding occurrence (§7.5):
 
-An inline forward-reference form (`［＃「X」は太字］`) also occurs.
+  ```text
+  作者附記［＃「作者附記」は太字］
+  序文［＃「序文」は斜体］
+  ```
+
+- **Inline range** — a bare opener and matching closer wrap the run directly,
+  within a line. This is the most common form in the corpus:
+
+  ```abnf
+  emphasis-range = directive 1*element directive   ; ［＃太字］ … ［＃太字終わり］
+  ```
+
+  ```text
+  本文［＃太字］註［＃太字終わり］。
+  値は［＃斜体］ｅ［＃斜体終わり］である。
+  ```
+
+- **Block range** — the `ここから`/`ここで…終わり` form wraps one or more whole
+  paragraphs; the opener sits on its own line:
+
+  ```text
+  ［＃ここから太字］
+  強調する段落。
+  ［＃ここで太字終わり］
+  ```
 
 ## Parameters
 
-None beyond the target (for the forward-reference form).
+- **weight** — 太字 (bold) or 斜体 (italic). The weight is what pairing checks
+  for the range forms (§7.2): a 太字 opener pairs with a 太字 closer.
+- **target** — for the forward-reference form, the single quoted run to
+  emphasise. The form names exactly one target; a multi-quote body
+  (`「A」「B」は太字`) is not a recognised emphasis shape and degrades (§6.14).
 
 ## Semantics
 
-太字 / 斜体 pair as a block container (§7.1) by family `bold` / `italic`,
-the reference rendering being `<strong>` / `<em>` (or styled `<span>`s); the
-inline forward-reference form resolves its target per §7.5.
+- The forward-reference form resolves its target by the look-back rule of §7.5
+  and yields an `emphasis` node over that run. It is an **inline** construct.
+- The inline range form pairs opener and closer by **weight** (§7.1) and is an
+  **inline** construct (§7.3): in the corpus it never spans a line, and
+  rendering does not introduce block structure. It yields a `container` node
+  (weight-tagged `bold` / `italic`) over the enclosed content.
+- The block range form pairs the same way but is a **block** construct: it
+  wraps the enclosed paragraphs in a weight-tagged `container` node.
+- Reference rendering (§8): the inline forms are `<b class="aozora-bold">…</b>`
+  (太字) and `<i class="aozora-italic">…</i>` (斜体) — presentational elements
+  distinct from the `<em>` of bouten, so the two families never collide on one
+  tag. The block form is a block container, `<div class="aozora-container
+  aozora-container-bold">…</div>` (resp. `aozora-container-italic`), so the
+  wrapped paragraphs nest validly.
+- Serialization (§7.6) reconstructs the source form — the `は` forward
+  reference (including a redundant preceding target copy), the bare inline
+  range, or the `ここから`/`ここで` block range — byte-exact.
 
-This revision documents the notation but does not yet pin its full normative
-semantics or conformance vectors; they are deferred to a later revision
-(§10.5). A processor that does not implement 太字 / 斜体 retains the opener as
-a generic annotation (§6.14), so no input is lost.
+## Error conditions
+
+- **Weight mismatch (range)** — a 太字 opener closed by a 斜体 closer, or
+  vice-versa, raises
+  [`mismatched-container-close`](../diagnostics.md#mismatched-container-close)
+  (error); the run is keyed to the opener's weight (recovery).
+- **Unclosed range** — an opener with no closer is handled per
+  [`unclosed-bracket`](../diagnostics.md#unclosed-bracket).
+- **Target with no referent (forward reference)** — a `は太字` / `は斜体`
+  directive whose quoted target does not occur in the preceding text has no run
+  to emphasise; it is not recognised as emphasis and degrades to a generic
+  annotation (§6.14), so no input is lost.
 
 ## Conformance vectors
 
-None in this revision (§10.5).
+`bold_inline`, `italic_inline`, `bold_block`, `italic_block`, `bold_forward`,
+`italic_forward`, `emphasis_mixed` (under `conformance/vectors/`).

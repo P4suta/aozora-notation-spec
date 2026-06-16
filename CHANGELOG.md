@@ -17,12 +17,13 @@ break a conforming processor bumps MAJOR).
   (including the range form and 左に position), tate-chu-yoko, gaiji
   (men-ku-ten / U+XXXX / description fallback + 〔…〕 accent decomposition),
   layout containers (字下げ / 地付き / 地上げ, block and single-line),
-  keigakomi, warichu, breaks, headings, illustrations, and input-editor
-  annotations.
+  keigakomi, warichu, breaks, headings, illustrations, bold / italic
+  (太字・斜体 — forward-reference, bare inline range, and ここから block
+  range), and input-editor annotations.
 - Families the official guide treats as provisional, documented with their
   notation pending full normative text: kunten saidoku-moji (再読文字),
-  字詰め / 中央揃え / 地寄せ / 折り返し字下げ, bold / italic (太字・斜体),
-  tables and columns (表・段組).
+  字詰め / 中央揃え / 地寄せ / 折り返し字下げ, and tables and columns
+  (表・段組).
 - Machine-readable conformance test-vector suite (`conformance/vectors/`) with
   its JSON Schema and runner contract.
 - Decision records under `docs/adr/` for normative choices made where the

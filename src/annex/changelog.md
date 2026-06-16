@@ -8,11 +8,12 @@ annex mirrors it for readers of the rendered book.
 **Added** — the initial framework (§§1–5, 7–12) and annexes; normative
 notation families (ruby, bouten/bousen including the range form and 左に
 side, tate-chu-yoko, gaiji, the core layout containers, keigakomi, warichu,
-breaks, headings, illustrations, input-editor annotations); the families the
-official guide treats as provisional, documented with their notation (kunten
-saidoku-moji, 字詰め / 中央揃え / 地寄せ / 折り返し字下げ, 太字・斜体,
-表・段組); the machine-readable conformance suite (schema, vectors, runner
-contract); and the decision records under `docs/adr/`.
+breaks, headings, illustrations, bold/italic (太字・斜体), input-editor
+annotations); the families the official guide treats as provisional,
+documented with their notation (kunten saidoku-moji,
+字詰め / 中央揃え / 地寄せ / 折り返し字下げ, 表・段組); the machine-readable
+conformance suite (schema, vectors, runner contract); and the decision
+records under `docs/adr/`.
 
 Versioning: the specification is `vMAJOR.MINOR`; a normative change that can
 break a conforming processor bumps MAJOR. See §10.5 for how provisional

@@ -17,11 +17,12 @@ family that produces them, are:
 |---|---|---|
 | `ruby` | §6.1 | base + reading |
 | `bouten` | §6.2 | dot/line variant + side |
+| `emphasis` | §6.12 | bold / italic weight (forward-reference form) |
 | `tate-chu-yoko` | §6.3 | rotated run |
 | `gaiji` | §6.4 | resolved scalar or description fallback |
 | `kaeriten` | §6.5 | return-mark text |
 | `indent` / `align-end` | §6.6 | single-line layout markers |
-| `container` | §6.6/6.7/6.8/6.2 | paired; tagged by family |
+| `container` | §6.6/6.7/6.8/6.2/6.12 | paired; tagged by family |
 | `page-break` / `section-break` | §6.9 | block leaves |
 | `heading` | §6.10 | window / sub heading |
 | `sashie` | §6.11 | illustration reference |
@@ -38,6 +39,7 @@ each with its span; container open/close appear as `containerOpen` /
 |---|---|
 | Ruby | `<ruby>base<rp>(</rp><rt>reading</rt><rp>)</rp></ruby>` |
 | Bouten / bousen | `<em class="aozora-bouten aozora-bouten-<variant> aozora-bouten-<side>">…</em>` |
+| Bold / italic (inline) | `<b class="aozora-bold">…</b>` / `<i class="aozora-italic">…</i>` |
 | Tate-chu-yoko | `<span class="aozora-tcy">…</span>` |
 | Gaiji (resolved) | the resolved character, optionally `<span class="aozora-gaiji" …>…</span>` |
 | Gaiji (unresolved) | `<span class="aozora-gaiji" data-description="…">…</span>` |

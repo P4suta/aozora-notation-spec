@@ -18,9 +18,9 @@ Every family subsection follows the same shape:
 6. **Conformance vectors** — the `conformance/vectors/` cases that pin it.
 
 Where the official 注記一覧 is silent or ambiguous, the **Semantics** make an
-explicit decision and cite a decision record under `docs/adr/`. A few families
-the official guide treats as provisional (§6.12, §6.13) are documented here
-with their notation; their full normative semantics are deferred (§10.5).
+explicit decision and cite a decision record under `docs/adr/`. A family
+the official guide treats as provisional (§6.13) is documented here with its
+notation; its full normative semantics are deferred (§10.5).
 
 ## 6.0.2 Family index
 
@@ -37,6 +37,6 @@ with their notation; their full normative semantics are deferred (§10.5).
 | 6.9 | Breaks | `［＃改ページ］`, `［＃改丁／改段／改見開き］` |
 | 6.10 | Headings (見出し) | `［＃「序」は大見出し］` |
 | 6.11 | Illustrations (挿絵) | `［＃挿絵（fig.png）入る］` |
-| 6.12 | Bold / italic (太字・斜体) | `［＃ここから太字］…` |
+| 6.12 | Bold / italic (太字・斜体) | `［＃太字］…［＃太字終わり］`, `［＃「X」は太字］` |
 | 6.13 | Tables / columns (表・段組) | (page-described) |
 | 6.14 | Input-editor annotations (入力者注) | `［＃「X」に「ママ」の注記］`, unrecognised `［＃…］` |

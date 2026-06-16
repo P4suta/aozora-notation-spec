@@ -31,6 +31,7 @@ FEATURE_SECTION = {
     "break": "6.9", "page_break": "6.9", "section_break": "6.9",
     "heading": "6.10",
     "sashie": "6.11",
+    "emphasis": "6.12",
     "annotation": "6.14",
     "plain_text": "5",
     "accent": "4",
