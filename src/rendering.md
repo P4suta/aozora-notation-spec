@@ -22,7 +22,7 @@ family that produces them, are:
 | `gaiji` | §6.4 | resolved scalar or description fallback |
 | `kaeriten` | §6.5 | return-mark text |
 | `indent` / `align-end` | §6.6 | single-line layout markers |
-| `container` | §6.6/6.7/6.8/6.2/6.12 | paired; tagged by family |
+| `container` | §6.6/6.7/6.8/6.2/6.10/6.12 | paired; tagged by family |
 | `page-break` / `section-break` | §6.9 | block leaves |
 | `heading` | §6.10 | 大/中/小 level × standard/同行/窓 style |
 | `sashie` | §6.11 | illustration reference |

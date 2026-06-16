@@ -21,7 +21,7 @@ break a conforming processor bumps MAJOR).
   地付き / 地上げ, block and single-line; 字詰め line-width, block),
   keigakomi, warichu, breaks,
   headings (大/中/小 levels × standard/同行/窓 styles; forward-reference
-  promotion to `<h1>`–`<h3>`),
+  promotion to `<h1>`–`<h3>`, plus paired and block delimited forms),
   illustrations, bold / italic (太字・斜体 — forward-reference, bare inline
   range, and ここから block range), and input-editor annotations.
 - Families the official guide treats as provisional, documented with their

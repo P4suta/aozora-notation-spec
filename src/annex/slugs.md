@@ -79,6 +79,8 @@ Ladder families and bases (§6.5): numeric `一<二<三<四` (base `一`), jouge
 |---|---|
 | `挿絵（…）入る` | illustration (§6.11) |
 | `「X」は[同行/窓]〈大/中/小〉見出し` | heading hint — level × style (§6.10) |
+| `[同行/窓]〈大/中/小〉見出し` … `…見出し終わり` | heading — paired (§6.10) |
+| `ここから[同行/窓]〈大/中/小〉見出し` … `ここで…見出し終わり` | heading — block (§6.10) |
 | `「X」は縦中横` | tate-chu-yoko (§6.3) |
 | `「X」に「ママ」の注記` / `「X」は底本では「Y」` | editor annotation (§6.14) |
 
