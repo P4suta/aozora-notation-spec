@@ -13,7 +13,8 @@ break a conforming processor bumps MAJOR).
   encoding, pre-processing (normalization), lexical syntax (ABNF), structural
   processing model, reference rendering, diagnostics, conformance, security,
   references, and annexes.
-- Normative notation families: ruby, bouten/bousen
+- Normative notation families: ruby (incl. the left-side ruby that, with
+  okurigana and a return mark, composes a saidoku-moji 再読文字), bouten/bousen
   (including the range form, 左に position, and the rare 鎖線 / 破線 /
   黒三角傍点 variants), tate-chu-yoko, gaiji
   (men-ku-ten / U+XXXX / description fallback + 〔…〕 accent decomposition),
@@ -27,7 +28,7 @@ break a conforming processor bumps MAJOR).
   illustrations, bold / italic (太字・斜体 — forward-reference, bare inline
   range, and ここから block range), and input-editor annotations.
 - Families the official guide treats as provisional, documented with their
-  notation pending full normative text: kunten saidoku-moji (再読文字), the
+  notation pending full normative text: the
   block centring form, margined right-alignment (地寄せ), and the table/column
   sub-directives (上段/下段, 段間に罫).
 - Machine-readable conformance test-vector suite (`conformance/vectors/`) with

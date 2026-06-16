@@ -4,9 +4,9 @@
 
 Kunten are the marginal marks that let classical Chinese (漢文) be read in
 Japanese word order. This section specifies **kaeriten** (返り点), the
-reading-order *return marks*, and their **okurigana**. The official guide
-also defines *saidoku-moji* (再読文字, characters read twice); see the note at
-the end of this section.
+reading-order *return marks*, their **okurigana**, and the **left-side ruby**
+that — composed with these — expresses a *saidoku-moji* (再読文字, a character
+read twice). See the final subsection.
 
 ## Notation
 
@@ -71,15 +71,36 @@ ladder flags valid kanbun. This decision is recorded in
   likely a stray annotation, not a return mark. A document with a cluster of
   kaeriten (real 漢文) is never flagged.
 
-## Saidoku-moji (再読文字)
+## Left-side ruby and saidoku-moji (再読文字)
 
-The official guide also defines *saidoku-moji* — a character read twice with
-different glosses (e.g. 未, 将, 当), marked with a re-reading note. The
-notation belongs to 訓点; this revision specifies kaeriten and okurigana and
-defers the full normative treatment of saidoku-moji to a later revision
-(§10.5).
+*Saidoku-moji* (再読文字) — a kanbun character read twice with different glosses
+(e.g. 未, 将, 当) — has **no dedicated notation**. It is written as a
+*composition* of constructs already defined: a **left-side ruby** for the
+second reading, plus okurigana and a return mark. For example, 未 read
+「いまだ…ず」 is `未［＃「未」の左に「ザル」のルビ］［＃（ダ）］［＃レ］`.
+
+The **left-side ruby** is the one piece §6 does not otherwise cover. A
+forward-reference directive attaches a reading to the *left* of the preceding
+run (vs §6.1 ruby, which is on the right):
+
+```text
+未［＃「未」の左に「ザル」のルビ］
+```
+
+```abnf
+left-ruby = LBRACK HASH LQUOTE target RQUOTE %s"の左に" LQUOTE reading RQUOTE %s"のルビ" RBRACK
+```
+
+- **target** — the preceding run the reading attaches to (resolved by §7.5).
+- **reading** — the left-side reading text.
+
+A left-side ruby yields a `ruby` node with a *left* side. Reference rendering
+(§8): `<ruby>X<rp>(</rp><rt class="aozora-ruby-left">Y</rt><rp>)</rp></ruby>`.
+Serialization reconstructs `X［＃「X」の左に「Y」のルビ］` byte-exact (§7.6). The
+right-side variant (`の右に…のルビ`) and the side-*annotation* form
+(`の左に…の注記`, a non-ruby gloss) are deferred (§10.5).
 
 ## Conformance vectors
 
-`bracketed-kaeriten-no-pair`, `kaeriten-outside-kanbun`, and the kaeriten
-recognition cases under `conformance/vectors/`.
+`bracketed-kaeriten-no-pair`, `kaeriten-outside-kanbun`, `left_ruby`, and the
+kaeriten recognition cases under `conformance/vectors/`.

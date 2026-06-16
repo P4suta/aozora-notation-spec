@@ -94,6 +94,7 @@ Ladder families and bases (§6.5): numeric `一<二<三<四` (base `一`), jouge
 | `[同行/窓]〈大/中/小〉見出し` … `…見出し終わり` | heading — paired (§6.10) |
 | `ここから[同行/窓]〈大/中/小〉見出し` … `ここで…見出し終わり` | heading — block (§6.10) |
 | `「X」は縦中横` | tate-chu-yoko (§6.3) |
+| `「X」の左に「Y」のルビ` | left-side ruby — saidoku building block (§6.5) |
 | `「X」に「ママ」の注記` / `「X」は底本では「Y」` | editor annotation (§6.14) |
 
 Any body matching no keyword here is a generic annotation (§6.14); a

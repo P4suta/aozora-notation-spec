@@ -37,7 +37,7 @@ each with its span; container open/close appear as `containerOpen` /
 
 | Construct | HTML |
 |---|---|
-| Ruby | `<ruby>base<rp>(</rp><rt>reading</rt><rp>)</rp></ruby>` |
+| Ruby | `<ruby>base<rp>(</rp><rt>reading</rt><rp>)</rp></ruby>` (a left-side ruby adds `class="aozora-ruby-left"` on the `<rt>`) |
 | Bouten / bousen | `<em class="aozora-bouten aozora-bouten-<variant> aozora-bouten-<side>">…</em>` |
 | Bold / italic (inline) | `<b class="aozora-bold">…</b>` / `<i class="aozora-italic">…</i>` |
 | Tate-chu-yoko | `<span class="aozora-tcy">…</span>` |
