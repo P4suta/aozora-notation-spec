@@ -28,6 +28,7 @@ family that produces them, are:
 | `sashie` | §6.11 | illustration reference |
 | `annotation` | §6.14 | generic / editor annotation |
 | `double-ruby` | §6.2 | `《《…》》` |
+| `side-note` | §6.5 | base + left-side note (注記) |
 
 The `nodes` conformance projection lists recognized nodes in source order,
 each with its span; container open/close appear as `containerOpen` /

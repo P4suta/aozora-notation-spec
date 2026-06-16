@@ -97,10 +97,35 @@ left-ruby = LBRACK HASH LQUOTE target RQUOTE %s"の左に" LQUOTE reading RQUOTE
 A left-side ruby yields a `ruby` node with a *left* side. Reference rendering
 (§8): `<ruby>X<rp>(</rp><rt class="aozora-ruby-left">Y</rt><rp>)</rp></ruby>`.
 Serialization reconstructs `X［＃「X」の左に「Y」のルビ］` byte-exact (§7.6). The
-right-side variant (`の右に…のルビ`) and the side-*annotation* form
-(`の左に…の注記`, a non-ruby gloss) are deferred (§10.5).
+right-side variant (`の右に…のルビ`) is deferred (§10.5); the left-side
+*annotation* form (`の左に…の注記`) is covered next.
+
+## Side annotation (注記)
+
+A **side annotation** (注記) attaches an editorial note — *not* a phonetic
+reading — to the *left* of the preceding run. It shares the forward-reference
+shape of the left-side ruby but ends in `の注記`, so a processor keeps it
+distinct: a `side-note` node, never `ruby`.
+
+```text
+未来［＃「未来」の左に「みらい」の注記］
+```
+
+```abnf
+side-note = LBRACK HASH LQUOTE target RQUOTE %s"の左に" LQUOTE note RQUOTE %s"の注記" RBRACK
+```
+
+- **target** — the preceding run the note attaches to (resolved by §7.5).
+- **note** — the left-side annotation text.
+
+A side annotation yields a `side-note` node. Reference rendering (§8) places the
+note like a left-side ruby but marks it a note:
+`<ruby>X<rp>(</rp><rt class="aozora-sidenote">Y</rt><rp>)</rp></ruby>`.
+Serialization reconstructs `X［＃「X」の左に「Y」の注記］` byte-exact (§7.6). The
+right-side annotation form (`の右に…の注記`) is deferred (§10.5).
 
 ## Conformance vectors
 
-`bracketed-kaeriten-no-pair`, `kaeriten-outside-kanbun`, `left_ruby`, and the
-kaeriten recognition cases under `conformance/vectors/`.
+`bracketed-kaeriten-no-pair`, `kaeriten-outside-kanbun`, `left_ruby`,
+`side_note_left`, and the kaeriten recognition cases under
+`conformance/vectors/`.
