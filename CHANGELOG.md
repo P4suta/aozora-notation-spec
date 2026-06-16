@@ -20,7 +20,8 @@ break a conforming processor bumps MAJOR).
   layout containers (字下げ — incl. the 折り返し字下げ hanging form — /
   地付き / 地上げ, block and single-line; 字詰め line-width, block),
   keigakomi, warichu, breaks,
-  headings (with forward-reference promotion to `<h1>`–`<h3>`),
+  headings (大/中/小 levels × standard/同行/窓 styles; forward-reference
+  promotion to `<h1>`–`<h3>`),
   illustrations, bold / italic (太字・斜体 — forward-reference, bare inline
   range, and ここから block range), and input-editor annotations.
 - Families the official guide treats as provisional, documented with their

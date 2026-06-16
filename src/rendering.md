@@ -24,7 +24,7 @@ family that produces them, are:
 | `indent` / `align-end` | §6.6 | single-line layout markers |
 | `container` | §6.6/6.7/6.8/6.2/6.12 | paired; tagged by family |
 | `page-break` / `section-break` | §6.9 | block leaves |
-| `heading` | §6.10 | 大/中/小 level + 窓/副 style |
+| `heading` | §6.10 | 大/中/小 level × standard/同行/窓 style |
 | `sashie` | §6.11 | illustration reference |
 | `annotation` | §6.14 | generic / editor annotation |
 | `double-ruby` | §6.2 | `《《…》》` |
@@ -46,8 +46,8 @@ each with its span; container open/close appear as `containerOpen` /
 | Kaeriten | `<sup class="aozora-kaeriten">…</sup>` |
 | Single-line indent / align | `<span class="aozora-indent aozora-indent-N">` / `<span class="aozora-align-end" …>` |
 | Block container | `<div class="aozora-container aozora-container-<family>">…</div>` |
-| Heading (大/中/小) | `<h1>`–`<h3>` `class="aozora-heading aozora-heading-<large\|medium\|small>"` |
-| Heading hint (unpromoted) | `<span class="aozora-heading-hint" data-level data-target hidden></span>` |
+| Heading (大/中/小 × style) | `<h1>`–`<h3>` (standard / 同行) or `<div>` (窓), `class="aozora-heading aozora-heading-<large\|medium\|small>"` plus `aozora-heading-<same-line\|window>` for a non-standard style |
+| Heading hint (unpromoted) | `<span class="aozora-heading-hint" data-level data-style data-target hidden></span>` (`data-style` only when non-standard) |
 | Page break | `<div class="aozora-page-break"></div>` |
 | Section break | `<div class="aozora-section-break aozora-section-break-<choho\|dan\|spread>"></div>` |
 
