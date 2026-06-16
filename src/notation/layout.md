@@ -6,11 +6,13 @@ Layout directives control horizontal placement of lines: **indentation**
 (字下げ), **end-alignment** (地付き / 地上げ, i.e. flush to the foot of the
 vertical line), line length (字詰め), centring (中央揃え), and margined
 right-alignment (地寄せ). Each has a **block** form (a paired container
-governing many lines) and, for indent and end-align, a **single-line** form;
-line length (字詰め) has a block form only. This section pins indentation
-(including the hanging-indent 折り返し字下げ form), end-alignment, and line
-length; the remaining layout directives (centring, margined right-alignment)
-are catalogued below and in [Annex C.2](../annex/slugs.md).
+governing many lines) and, for indent, end-align, and centring, a
+**single-line** form; line length (字詰め) has a block form only. This section
+pins indentation (including the hanging-indent 折り返し字下げ form),
+end-alignment, line length, and the **single-line** centring marker
+(`ページの左右中央` / `中央揃え`). The block centring form (which has no closer
+in practice), margined right-alignment (地寄せ), and compound directives are
+deferred (§10.5); they are catalogued in [Annex C.2](../annex/slugs.md).
 
 ## Notation
 
@@ -26,6 +28,7 @@ are catalogued below and in [Annex C.2](../annex/slugs.md).
 ［＃2字下げ］この行だけ        ← single-line indent
 ［＃地付き］平和への誓い        ← single-line end-align (foot)
 ［＃地から2字上げ］…           ← single-line end-align, 2 from the foot
+［＃ページの左右中央］          ← single-line centring marker (page centre)
 
 ［＃ここから地付き］…［＃ここで地付き終わり］          ← block end-align
 ［＃ここから地から2字上げ］…［＃ここで字上げ終わり］   ← block end-align (margin)
@@ -40,6 +43,7 @@ indent-single     = LBRACK HASH 1*DIGIT %s"字下げ" RBRACK
 line-width-open   = LBRACK HASH %s"ここから" 1*DIGIT %s"字詰め" RBRACK
 align-end-single  = LBRACK HASH %s"地付き" RBRACK
                   / LBRACK HASH %s"地から" 1*DIGIT %s"字上げ" RBRACK
+center-single     = LBRACK HASH ( %s"ページの左右中央" / %s"中央揃え" ) RBRACK
 ```
 
 (`1*DIGIT` admits ASCII or full-width digits.)
@@ -66,8 +70,10 @@ align-end-single  = LBRACK HASH %s"地付き" RBRACK
   carrying a `width` parameter; it is **block-only** (no single-line form) and
   closes with `字詰め終わり` (§7.2).
 - A **single-line** directive (no `ここから`, no closer) governs only the rest
-  of its line and is a **zero-width marker** node (`indent` / `align-end`),
-  not a wrapping container (§7.4). It does not capture following lines.
+  of its line and is a **zero-width marker** node (`indent` / `align-end` /
+  `center`), not a wrapping container (§7.4). It does not capture following
+  lines. The centring marker (`ページの左右中央` / `中央揃え`) flags its line as
+  page-centred; the actual centring is a presentation concern (§8).
 - Breaks persist across a **block** container (not flagged); a break sharing
   a line with a **single-line** directive drops it (§6.9, §7.4).
 - Reference rendering (§8): block → `<div class="aozora-container
@@ -75,7 +81,7 @@ align-end-single  = LBRACK HASH %s"地付き" RBRACK
   and `data-amount="N"`; the hanging form adds `aozora-container-wrap-indent`
   and `data-wrap="M"`; line-width adds `data-width="N"`); single-line → a marker
   `<span class="aozora-indent aozora-indent-N">` / `<span class="aozora-align-end"
-  data-offset="N">`.
+  data-offset="N">` / `<span class="aozora-center">`.
 - The official guidance is to prefer an annotation over inserted whitespace,
   so the same visual layout round-trips through the directive, not spaces.
 
@@ -92,18 +98,19 @@ align-end-single  = LBRACK HASH %s"地付き" RBRACK
 
 ## Further layout directives
 
-The official guide defines further layout families beyond those pinned above:
-中央揃え (`ここから中央揃え`) and 地寄せ (margined right-align). Their notation
-is catalogued in [Annex C.2](../annex/slugs.md). This revision pins normative
-semantics for 字下げ (including the 折り返し字下げ hanging form), 地付き / 地上げ,
-and 字詰め (`ここからN字詰め`); the remaining layout families (中央揃え, 地寄せ)
-are deferred to a later revision (§10.5). A processor
-encountering an unrecognised `ここから…` opener retains it as a generic
-annotation (§6.14) and reports
+This revision pins normative semantics for 字下げ (including the 折り返し字下げ
+hanging form), 地付き / 地上げ, 字詰め (`ここからN字詰め`), and the single-line
+centring marker (`ページの左右中央` / `中央揃え`). Deferred to a later revision
+(§10.5): the **block** centring form (`ここから…中央…`, which has no closer in
+practice), margined right-alignment (地寄せ), and **compound** directives that
+combine families in one bracket (e.g. `ここから2字下げ、中央揃え`). Their notation
+is catalogued in [Annex C.2](../annex/slugs.md). A processor encountering an
+unrecognised `ここから…` opener retains it as a generic annotation (§6.14) and
+reports
 [`unrecognised-container-directive`](../diagnostics.md#unrecognised-container-directive).
 
 ## Conformance vectors
 
 `indent_container`, `wrap_indent`, `align_end_container`, `line_width_container`,
-`nested_containers`, `mismatched-container-close`,
+`center_page`, `nested_containers`, `mismatched-container-close`,
 `unrecognised-container-directive`, `break-in-single-line-container`.

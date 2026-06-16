@@ -25,9 +25,21 @@ parameter slots are shown as `N` (a decimal count, ASCII or full-width) or
 | `ここからN字詰め` | `ここで字詰め終わり` | line-width (block) |
 | `N字下げ` | (single line) | indent |
 | `地付き` / `地からN字上げ` | (single line) | align-end |
+| `ページの左右中央` / `中央揃え` | (single line) | center |
 
-Further layout keywords (§6.6, deferred): `ここから中央揃え`/`ここで中央揃え終わり`,
-`…地寄せ`.
+Further layout keywords (§6.6, deferred): the block centring form
+`ここから…中央…`, margined right-align `…地寄せ`, and compound directives
+(`ここから2字下げ、中央揃え`).
+
+## C.2a Tables and columns (§6.13)
+
+| Opener | Closer | Family |
+|---|---|---|
+| `ここから表` | `ここで表終わり` | table |
+| `ここからN段組` (and `…段組み`) | `ここで段組終わり` (and `…段組み終わり`) | columns |
+
+Deferred (§6.13, §10.5): column sub-directives `上段` / `下段`, `段間に罫`,
+`段組み適用外`.
 
 ## C.3 Keigakomi (§6.7) and warichu (§6.8)
 

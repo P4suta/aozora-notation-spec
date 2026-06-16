@@ -55,9 +55,11 @@ An implementation claiming conformance SHOULD state:
 
 ## 10.5 Coverage and growth
 
-Not every notation family is yet at `must` coverage. The families the
-official guide treats as provisional (§6.5 saidoku-moji, parts of §6.6, §6.13)
-carry their notation but no `must` vectors yet. As such a family gains
+Not every notation family is yet at `must` coverage. The directives the
+official guide treats as provisional (§6.5 saidoku-moji, the deferred §6.6
+layout directives — the block centring form, 地寄せ, compound directives — and
+the §6.13 column sub-directives) carry their notation but no `must` vectors
+yet. As such a family gains
 full normative text it gains `must` vectors, recorded in
 [Annex E](annex/changelog.md). Coverage gaps are tracked openly rather than
 implied — a processor is never asked to match a behaviour this document has

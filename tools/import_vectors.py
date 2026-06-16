@@ -32,6 +32,7 @@ FEATURE_SECTION = {
     "heading": "6.10",
     "sashie": "6.11",
     "emphasis": "6.12",
+    "tables_columns": "6.13",
     "annotation": "6.14",
     "plain_text": "5",
     "accent": "4",
