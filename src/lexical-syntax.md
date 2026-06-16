@@ -1,25 +1,23 @@
 # 5. Lexical Syntax
 
 This section defines how the sanitized source (§4) is decomposed into
-**elements**: directives, ruby spans, gaiji references, double-bracket
-bouten, accent spans, and runs of plain text. The complete grammar is
+**elements**: directives, ruby spans, gaiji references, double-angle
+quotations, accent spans, and runs of plain text. The complete grammar is
 [Annex D](annex/abnf.md); the key productions are inlined below.
 
 ## 5.1 Element stream
 
 ```abnf
 document = *element
-element  = gaiji-ref / ruby / double-ruby / accent-span / directive / text
+element  = gaiji-ref / ruby / angle-quote / accent-span / directive / text
 ```
 
 A processor scans the source left to right, at each position recognizing the
 **longest** construct that begins there; if none begins there, the position
 contributes to a `text` run. This **leftmost-longest** rule is normative and
 resolves the alternatives of `element` (ABNF cannot express the negative
-lookahead that "is not the start of a construct" requires). Two consequences:
+lookahead that "is not the start of a construct" requires). One consequence:
 
-- A `《《` opens a [double-bracket bouten](notation/bouten.md), never two
-  ruby openers, because `double-ruby` out-matches `ruby` at that position.
 - A `※` immediately followed by `［＃` is a [gaiji reference](notation/gaiji.md)
   (`gaiji-ref`), not a bare reference mark plus a directive.
 
@@ -43,17 +41,21 @@ A body that matches no known form is retained as a
 [generic annotation](notation/annotation.md) (§6.14); a processor MUST NOT
 discard it, preserving the guarantee that no bare `［＃` ever reaches output.
 
-## 5.3 Ruby
+## 5.3 Ruby and double-angle quotation
 
 ```abnf
 ruby        = [ BAR base ] RUBY-OPEN reading RUBY-CLOSE   ; ［｜］base《reading》
-double-ruby = RUBY-OPEN RUBY-OPEN reading RUBY-CLOSE RUBY-CLOSE   ; 《《…》》
+angle-quote = ANGLE-OPEN angle-content ANGLE-CLOSE        ; ≪…≫ (input) → 《…》 (display)
 ```
 
 A **ruby** span is an optional explicit base introduced by `｜`, then a
 reading inside `《 … 》`. Without the `｜`, the base is determined by the
-look-back rule of §6.1. The detailed semantics are §6.1; the adjacent-double
-form `《《…》》` is §6.2.
+look-back rule of §6.1. The detailed semantics are §6.1.
+
+A **double-angle quotation** is the input encoding `≪…≫` (U+226A/U+226B) for a
+底本's twin angle brackets `《…》`, kept distinct from the ruby markers
+`《 … 》` (U+300A/U+300B) they would otherwise collide with; §6.15. Because the
+delimiters are distinct scalars, no leftmost-longest tie-break arises.
 
 ## 5.4 Gaiji references
 

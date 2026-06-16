@@ -58,8 +58,9 @@ the base. The base is identified in one of two ways:
 
 - Serialization (§7) reconstructs the source form, including the `｜` when the
   base was explicit, so the round-trip is byte-exact.
-- An adjacent **`《《…》》`** is **not** two ruby openers: it is double-bracket
-  bouten (§6.2), selected by the leftmost-longest rule (§5.1).
+- An adjacent **`《《…》》`** **is** two ruby openers — a
+  [nested ruby](../diagnostics.md#nested-ruby) error, not a single construct.
+  The double-angle quotation notation (§6.15) is the distinct `≪…≫`.
 
 ## Error conditions
 
@@ -78,4 +79,4 @@ the base. The base is identified in one of two ways:
 ## Conformance vectors
 
 `ruby_explicit`, `ruby_implicit`, `empty-ruby-reading`, `nested-ruby`,
-`double_ruby`, `mixed_ruby_bouten` (under `conformance/vectors/`).
+`mixed_ruby_bouten` (under `conformance/vectors/`).

@@ -8,7 +8,7 @@ same idea with a **line**. The two form one family with a 点/線 split.
 
 ## Notation
 
-Three forms produce emphasis; a fourth is a related double-bracket construct.
+Three forms produce emphasis.
 
 - **Forward reference** — quote the target; the emphasis applies to the most
   recent preceding occurrence (§7.5):
@@ -34,12 +34,6 @@ Three forms produce emphasis; a fourth is a related double-bracket construct.
 
 - **Left side** — an optional `左に` prefix places the marks on the left of
   the vertical base text (`［＃左に傍線］…`, `［＃「X」の左に傍点］`).
-
-- **Double-bracket bouten** — `《《…》》` (selected over ruby by §5.1):
-
-  ```text
-  《《重要》》
-  ```
 
 ## Parameters
 
@@ -84,5 +78,5 @@ Three forms produce emphasis; a fourth is a related double-bracket construct.
 ## Conformance vectors
 
 `bouten-target-ambiguous`, `bouten_range`, `bouten_chain_line`,
-`bouten_black_triangle`, `mismatched-bouten-container`, `double_ruby`,
+`bouten_black_triangle`, `mismatched-bouten-container`,
 `mixed_ruby_bouten`.

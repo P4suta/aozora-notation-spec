@@ -26,7 +26,8 @@ break a conforming processor bumps MAJOR).
   headings (大/中/小 levels × standard/同行/窓 styles; forward-reference
   promotion to `<h1>`–`<h3>`, plus paired and block delimited forms),
   illustrations, bold / italic (太字・斜体 — forward-reference, bare inline
-  range, and ここから block range), and input-editor annotations.
+  range, and ここから block range), input-editor annotations, and double-angle
+  quotation (二重山括弧, input `≪…≫` → display `《…》`).
 - Families the official guide treats as provisional, documented with their
   notation pending full normative text: the
   block centring form, margined right-alignment (地寄せ), and the table/column
@@ -35,3 +36,13 @@ break a conforming processor bumps MAJOR).
   its JSON Schema and runner contract.
 - Decision records under `docs/adr/` for normative choices made where the
   official 注記一覧 is silent or ambiguous.
+
+### Changed
+
+- Recharacterized the double-angle quotation (二重山括弧, §6.15). An earlier
+  draft described `《《…》》` as a "double-bracket bouten" construct selected over
+  ruby by the leftmost-longest rule. That was incorrect: the input encoding is
+  `≪…≫` (U+226A / U+226B), restored to the display form `《…》`
+  (U+300A / U+300B), and a literal `《《…》》` in source is two ruby openers
+  (a `nested-ruby` error). The `double_ruby` conformance vector is renamed
+  `angle_quote`.

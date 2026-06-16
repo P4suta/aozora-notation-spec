@@ -16,6 +16,8 @@ RBRACK      = %xFF3D          ; ］  FULLWIDTH RIGHT SQUARE BRACKET
 HASH        = %xFF03          ; ＃  FULLWIDTH NUMBER SIGN
 RUBY-OPEN   = %x300A          ; 《  LEFT DOUBLE ANGLE BRACKET
 RUBY-CLOSE  = %x300B          ; 》  RIGHT DOUBLE ANGLE BRACKET
+ANGLE-OPEN  = %x226A          ; ≪  MUCH LESS-THAN (double-angle quotation, input)
+ANGLE-CLOSE = %x226B          ; ≫  MUCH GREATER-THAN (double-angle quotation, input)
 BAR         = %xFF5C          ; ｜  FULLWIDTH VERTICAL LINE (ruby base mark)
 REFMARK     = %x203B          ; ※  REFERENCE MARK (gaiji)
 LQUOTE      = %x300C          ; 「  LEFT CORNER BRACKET
@@ -29,7 +31,7 @@ TORT-CLOSE  = %x3015          ; 〕  RIGHT TORTOISE SHELL BRACKET
 ; A document is a sequence of elements; `text` carries everything that does
 ; not begin a construct, per the leftmost-longest rule (§5).
 document    = *element
-element     = gaiji-ref / ruby / double-ruby / accent-span / directive / text
+element     = gaiji-ref / ruby / angle-quote / accent-span / directive / text
 
 ; ===== Directive:  ［＃ body ］ =====
 ; `body` is opaque here; §6 classifies it (page break, indent, bouten, …).
@@ -51,8 +53,10 @@ base-char       = %x0-3009 / %x300C-FF5B / %xFF5D-10FFFF
 reading         = 1*reading-char
 reading-char    = %x0-300A / %x300C-10FFFF  ; excludes 》 (U+300B)
 
-; ===== Double-bracket bouten:  《《 … 》》 =====
-double-ruby     = RUBY-OPEN RUBY-OPEN reading RUBY-CLOSE RUBY-CLOSE
+; ===== Double-angle quotation:  ≪ … ≫  (input) → 《 … 》 (display) =====
+angle-quote     = ANGLE-OPEN angle-content ANGLE-CLOSE
+angle-content   = 1*angle-char
+angle-char      = %x0-226A / %x226C-10FFFF   ; excludes ≫ (U+226B, ANGLE-CLOSE)
 
 ; ===== Accent span:  〔 … 〕  (one per line; see §4) =====
 accent-span     = TORT-OPEN accent-body TORT-CLOSE

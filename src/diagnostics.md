@@ -82,9 +82,10 @@ reading. A bare `《》` with no `｜` is *not* flagged (it is literal text).
 `nested-ruby` · **error**
 
 A ruby reading body itself opened another ruby (`｜漢《か《ん》じ》`). Ruby does
-not nest. An adjacent `《《…》》` is **not** nested ruby — it is
-[double-bracket bouten](notation/bouten.md). **Recovery:** the outer ruby is
-parsed best-effort; the label points at the inner `《`.
+not nest; an adjacent `《《…》》` is likewise two openers, not a single construct
+(the [double-angle quotation](notation/angle-quote.md) notation is the distinct
+`≪…≫`, §6.15). **Recovery:** the outer ruby is parsed best-effort; the label
+points at the inner `《`.
 
 ## 9.5 Containers, forward references, and kunten
 

@@ -27,7 +27,7 @@ family that produces them, are:
 | `heading` | §6.10 | 大/中/小 level × standard/同行/窓 style |
 | `sashie` | §6.11 | illustration reference |
 | `annotation` | §6.14 | generic / editor annotation |
-| `double-ruby` | §6.2 | `《《…》》` |
+| `angle-quote` | §6.15 | `≪…≫` → `《…》` |
 | `side-note` | §6.5 | base + left-side note (注記) |
 
 The `nodes` conformance projection lists recognized nodes in source order,
@@ -42,6 +42,7 @@ each with its span; container open/close appear as `containerOpen` /
 | Bouten / bousen | `<em class="aozora-bouten aozora-bouten-<variant> aozora-bouten-<side>">…</em>` |
 | Bold / italic (inline) | `<b class="aozora-bold">…</b>` / `<i class="aozora-italic">…</i>` |
 | Tate-chu-yoko | `<span class="aozora-tcy">…</span>` |
+| Double-angle quotation | `<span class="aozora-angle-quote">《…》</span>` (display restored from input `≪…≫`) |
 | Gaiji (resolved) | the resolved character, optionally `<span class="aozora-gaiji" …>…</span>` |
 | Gaiji (unresolved) | `<span class="aozora-gaiji" data-description="…">…</span>` |
 | Kaeriten | `<sup class="aozora-kaeriten">…</sup>` |
