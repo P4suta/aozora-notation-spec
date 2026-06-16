@@ -18,13 +18,14 @@ break a conforming processor bumps MAJOR).
   黒三角傍点 variants), tate-chu-yoko, gaiji
   (men-ku-ten / U+XXXX / description fallback + 〔…〕 accent decomposition),
   layout containers (字下げ — incl. the 折り返し字下げ hanging form — /
-  地付き / 地上げ, block and single-line), keigakomi, warichu, breaks,
+  地付き / 地上げ, block and single-line; 字詰め line-width, block),
+  keigakomi, warichu, breaks,
   headings (with forward-reference promotion to `<h1>`–`<h3>`),
   illustrations, bold / italic (太字・斜体 — forward-reference, bare inline
   range, and ここから block range), and input-editor annotations.
 - Families the official guide treats as provisional, documented with their
   notation pending full normative text: kunten saidoku-moji (再読文字),
-  字詰め / 中央揃え / 地寄せ, and tables and columns (表・段組).
+  中央揃え / 地寄せ, and tables and columns (表・段組).
 - Machine-readable conformance test-vector suite (`conformance/vectors/`) with
   its JSON Schema and runner contract.
 - Decision records under `docs/adr/` for normative choices made where the

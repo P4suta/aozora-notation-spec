@@ -22,11 +22,12 @@ parameter slots are shown as `N` (a decimal count, ASCII or full-width) or
 | `ここからN字下げ` (and `ここから字下げ`) | `ここで字下げ終わり` | indent (block) |
 | `ここからN字下げ、折り返してM字下げ` | `ここで字下げ終わり` | indent (hanging) |
 | `ここから地付き` / `ここから地からN字上げ` | `ここで地付き終わり` / `ここで字上げ終わり` | align-end (block) |
+| `ここからN字詰め` | `ここで字詰め終わり` | line-width (block) |
 | `N字下げ` | (single line) | indent |
 | `地付き` / `地からN字上げ` | (single line) | align-end |
 
-Further layout keywords (§6.6, deferred): `ここからN字詰め`/`ここで字詰め終わり`,
-`ここから中央揃え`/`ここで中央揃え終わり`, `…地寄せ`.
+Further layout keywords (§6.6, deferred): `ここから中央揃え`/`ここで中央揃え終わり`,
+`…地寄せ`.
 
 ## C.3 Keigakomi (§6.7) and warichu (§6.8)
 

@@ -8,11 +8,11 @@ annex mirrors it for readers of the rendered book.
 **Added** — the initial framework (§§1–5, 7–12) and annexes; normative
 notation families (ruby, bouten/bousen including the range form, 左に side,
 and the rare 鎖線 / 破線 / 黒三角傍点 variants, tate-chu-yoko, gaiji, the
-layout containers including the 折り返し字下げ hanging form, keigakomi,
-warichu, breaks, headings with forward-reference promotion, illustrations,
-bold/italic (太字・斜体), input-editor annotations); the families the official
-guide treats as provisional, documented with their notation (kunten
-saidoku-moji, 字詰め / 中央揃え / 地寄せ, 表・段組); the machine-readable
+layout containers including the 折り返し字下げ hanging form and the 字詰め
+line-width form, keigakomi, warichu, breaks, headings with forward-reference
+promotion, illustrations, bold/italic (太字・斜体), input-editor annotations);
+the families the official guide treats as provisional, documented with their
+notation (kunten saidoku-moji, 中央揃え / 地寄せ, 表・段組); the machine-readable
 conformance suite (schema, vectors, runner contract); and the decision
 records under `docs/adr/`.
 
