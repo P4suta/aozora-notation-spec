@@ -69,6 +69,11 @@ center-single     = LBRACK HASH ( %s"ページの左右中央" / %s"中央揃え
 - The **line-width** opener (`ここからN字詰め`) is the `line-width` family
   carrying a `width` parameter; it is **block-only** (no single-line form) and
   closes with `字詰め終わり` (§7.2).
+- The **end-align** block opener (`ここから地付き` / `ここから地からN字上げ`) is
+  the `align-end` family carrying an `offset` parameter, closed by **either**
+  `字上げ終わり` or `地付き終わり` (pairing is by family, §7.2). The opener's
+  `offset` is authoritative; the closer carries none. Round-tripping (§7.6)
+  preserves that offset and canonicalises the closer to `地付き終わり`.
 - A **single-line** directive (no `ここから`, no closer) governs only the rest
   of its line and is a **zero-width marker** node (`indent` / `align-end` /
   `center`), not a wrapping container (§7.4). It does not capture following
