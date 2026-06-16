@@ -43,10 +43,10 @@ Three forms produce emphasis; a fourth is a related double-bracket construct.
 
 ## Parameters
 
-- **variant** — one of the eleven keywords of [Annex C.4](../annex/slugs.md);
-  eight 点 and three 線. A processor MAY accept the further official variants
-  (鎖線 / 破線 / 黒三角傍点) where it has a rendering, and otherwise degrades
-  them (§6.14).
+- **variant** — one of the fourteen keywords of [Annex C.4](../annex/slugs.md);
+  nine 点 and five 線. The rare 鎖線 / 破線 (線) and 黒三角傍点 (点) are official
+  but corpus-sparse; a processor renders them like any other variant where it
+  has a glyph, otherwise degrading them (§6.14).
 - **family** — 点 (dots) or 線 (line). The family is what pairing checks for
   the range form (§7.2).
 - **position** — right (default) or left (`左に`).
@@ -83,5 +83,6 @@ Three forms produce emphasis; a fourth is a related double-bracket construct.
 
 ## Conformance vectors
 
-`bouten-target-ambiguous`, `bouten_range`, `mismatched-bouten-container`,
-`double_ruby`, `mixed_ruby_bouten`.
+`bouten-target-ambiguous`, `bouten_range`, `bouten_chain_line`,
+`bouten_black_triangle`, `mismatched-bouten-container`, `double_ruby`,
+`mixed_ruby_bouten`.

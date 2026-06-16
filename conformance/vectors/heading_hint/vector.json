@@ -5,16 +5,16 @@
     "level": "should",
     "spec_section": "6.10"
   },
-  "source": "序章\n［＃「序章」は中見出し］\n",
+  "source": "序章\n本文\n［＃「序章」は中見出し］\n",
   "expected": {
-    "html": "<p>序章<br />\n<!-- aozora_heading_hint --></p>\n",
-    "serialize": "序章\n［＃「序章」は中見出し］\n",
+    "html": "<p>序章<br />\n本文<br />\n<span class=\"aozora-heading-hint\" data-level=\"2\" data-target=\"序章\" hidden></span></p>\n",
+    "serialize": "序章\n本文\n［＃「序章」は中見出し］\n",
     "nodes": [
       {
         "kind": "headingHint",
         "span": {
-          "start": 7,
-          "end": 43
+          "start": 14,
+          "end": 50
         }
       }
     ],
@@ -22,23 +22,23 @@
       {
         "kind": "quote",
         "open": {
-          "start": 13,
-          "end": 16
+          "start": 20,
+          "end": 23
         },
         "close": {
-          "start": 22,
-          "end": 25
+          "start": 29,
+          "end": 32
         }
       },
       {
         "kind": "bracket",
         "open": {
-          "start": 7,
-          "end": 10
+          "start": 14,
+          "end": 17
         },
         "close": {
-          "start": 40,
-          "end": 43
+          "start": 47,
+          "end": 50
         }
       }
     ],

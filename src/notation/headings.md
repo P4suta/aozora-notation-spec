@@ -30,10 +30,16 @@ A *window* (窓) heading and a *sub* (副) heading are named likewise
 ## Semantics
 
 - A heading hint resolves its target (§7.5) and promotes that run to a
-  `heading` node carrying the level/style.
-- Reference rendering (§8) is a heading element appropriate to the level
-  (e.g. `<h1>`–`<h3>`), or a styled block for 窓/副; the precise tag is part
-  of the reference mapping (§8.3), not mandated.
+  `heading` node carrying the level/style. Promotion applies when the target is
+  the bare line immediately preceding the directive — the run is pulled out of
+  the flow and becomes the heading. When the referent is not such a clean
+  preceding line, the hint is retained inline (a `heading-hint` marker) rather
+  than promoted, so no run is mis-titled and no input is lost.
+- Reference rendering (§8): a promoted 大 / 中 / 小 heading is `<h1>`–`<h3>`
+  (`class="aozora-heading aozora-heading-<large|medium|small>"`); 窓 / 副 are a
+  styled block; an unpromoted hint is a hidden inline marker
+  (`<span class="aozora-heading-hint" data-level=… data-target=… hidden>`). The
+  precise tag is part of the reference mapping (§8.2), not mandated.
 - Serialization reconstructs the directive (and the literal target it follows)
   byte-exact (§7.6).
 
@@ -44,4 +50,4 @@ A *window* (窓) heading and a *sub* (副) heading are named likewise
 
 ## Conformance vectors
 
-`heading`, `heading_hint`.
+`heading`, `heading_hint`, `heading_promoted`.

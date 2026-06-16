@@ -20,13 +20,13 @@ parameter slots are shown as `N` (a decimal count, ASCII or full-width) or
 | Opener | Closer | Family |
 |---|---|---|
 | `ここからN字下げ` (and `ここから字下げ`) | `ここで字下げ終わり` | indent (block) |
+| `ここからN字下げ、折り返してM字下げ` | `ここで字下げ終わり` | indent (hanging) |
 | `ここから地付き` / `ここから地からN字上げ` | `ここで地付き終わり` / `ここで字上げ終わり` | align-end (block) |
 | `N字下げ` | (single line) | indent |
 | `地付き` / `地からN字上げ` | (single line) | align-end |
 
-Further layout keywords (§6.6): `ここからN字詰め`/`ここで字詰め終わり`,
-`ここから中央揃え`/`ここで中央揃え終わり`, `…地寄せ`,
-`ここからN字下げ、折り返してM字下げ`.
+Further layout keywords (§6.6, deferred): `ここからN字詰め`/`ここで字詰め終わり`,
+`ここから中央揃え`/`ここで中央揃え終わり`, `…地寄せ`.
 
 ## C.3 Keigakomi (§6.7) and warichu (§6.8)
 
@@ -55,9 +55,13 @@ side.
 | `波線` | 線 | `wavy-line` |
 | `傍線` | 線 | `under-line` |
 | `二重傍線` | 線 | `double-under-line` |
+| `鎖線` | 線 | `chain-line` |
+| `破線` | 線 | `dashed-line` |
+| `黒三角傍点` | 点 | `black-triangle` |
 
-(The official guide also lists 鎖線 / 破線 / 黒三角傍点; these are recognized
-in the inline form where supported and otherwise degrade per §6.14.)
+(鎖線 / 破線 / 黒三角傍点 are official but corpus-sparse; a processor renders
+them like any other variant where it has a glyph, otherwise degrading per
+§6.14.)
 
 ## C.5 Kaeriten marks (§6.5)
 
