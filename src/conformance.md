@@ -55,12 +55,31 @@ An implementation claiming conformance SHOULD state:
 
 ## 10.5 Coverage and growth
 
-Not every notation family is yet at `must` coverage. The directives the
-official guide treats as provisional (the §6.5 right-side ruby and annotation
-forms, the deferred §6.6 layout directives — the block centring form, compound
-directives — and the §6.13 column sub-directives) carry their notation but no
-`must` vectors yet. As such a family gains
-full normative text it gains `must` vectors, recorded in
+Not every notation family is at `must` coverage. The directives the official
+guide treats as provisional, or that lack corpus attestation, carry their
+notation but no `must` vectors yet:
+
+- **Right-side ruby / annotation** (`の右に…のルビ`, `の右に…の注記`) — the
+  right side is the default `｜《》` ruby; the explicit right-side bracket forms
+  have no corpus attestation.
+- **Horizontal writing** (`横書き` / `横組み`) — a document-level writing-mode
+  switch rather than an inline or block node, so it falls outside the §6
+  per-run model.
+- **Table cell structure** — `［＃ここから表］` (§6.13) marks a table *region*;
+  cell and row structure has no sanctioned delimiter (the full-width `／`
+  sometimes seen is an editor convention, not a directive), so the region stays
+  layout-only.
+- **Column sub-regions and inter-column rules** (上段 / 下段, 段間に罫) beyond
+  the §6.13 `ここからN段組` region.
+- **Block centring with no closer** (`ここから中央揃え` alone) — unattested in
+  the corpus; page-centring is covered by the single-line marker (§6.6) and the
+  combined `ここからN字下げ、ページの左右中央`.
+- **The remaining compound directives** — combinations other than the pinned
+  字下げ＋ページの左右中央 (e.g. 字下げ＋字詰め, indent＋横書き＋罫囲み). Each
+  component closes independently, so they have no single shared closer.
+
+A conforming processor MAY keep any of these as a generic annotation (§6.14).
+As a family gains full normative text it gains `must` vectors, recorded in
 [Annex E](annex/changelog.md). Coverage gaps are tracked openly rather than
-implied — a processor is never asked to match a behaviour this document has
-not pinned with a vector.
+implied — a processor is never asked to match a behaviour this document has not
+pinned with a vector.
