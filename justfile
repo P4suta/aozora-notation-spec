@@ -5,9 +5,17 @@ set shell := ["bash", "-uc"]
 default:
     @just --list
 
-# Install the doc toolchain (mdBook + linkcheck backend).
+# Provision the dev toolchain (mdBook, Python, committed, …) via mise.
 setup:
-    cargo install mdbook mdbook-linkcheck
+    mise install
+
+# Install the lefthook git hooks (commit-msg + pre-push).
+hooks:
+    lefthook install
+
+# Remove the lefthook git hook stubs.
+hooks-uninstall:
+    lefthook uninstall
 
 # Render the spec to ./book.
 build:

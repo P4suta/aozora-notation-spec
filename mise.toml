@@ -1,0 +1,14 @@
+# mise (https://mise.jdx.dev/) — single declarative source of dev-tool
+# versions for the Aozora notation spec. Run `just setup` (or
+# `mise install`) once after cloning to provision everything.
+#
+# The spec is an mdBook + Python toolchain (no Rust workspace), so mise
+# pins precompiled binaries (aqua / GitHub releases) instead of building
+# mdBook from source via `cargo install` — host == CI, and CI no longer
+# pays a multi-minute compile to render a book.
+[tools]
+mdbook = "0.4"
+python = "3.12"
+just = "latest"
+lefthook = "latest"
+"github:crate-ci/committed" = "latest"
