@@ -56,9 +56,24 @@ An implementation claiming conformance SHOULD state:
 ## 10.5 Coverage and growth
 
 Not every notation family is at `must` coverage. The directives the official
-guide treats as provisional, or that lack corpus attestation, carry their
-notation but no `must` vectors yet:
+guide treats as provisional, that lack corpus attestation, or that this
+revision has not yet pinned with normative semantics, carry their notation but
+no `must` vectors yet:
 
+- **Character-size change** (`は●段階大きな文字` / `…小さな文字`, and the
+  `ここから…段階大きな文字` block form) — an emphasis-page family
+  ([AOZORA-ANNOTATION], `etc.html`) that scales a run rather than changing its
+  weight (§6.12); corpus-attested, but its step-count parameter and block
+  closer are not yet pinned.
+- **Inline keigakomi** (`「X」は罫囲み`) — the forward-reference inline form of
+  §6.7; the block form is normative, the inline span form is not yet pinned.
+- **Left-ruby block form** (`［＃左にルビ付き］…［＃左に「X」のルビ付き終わり］`)
+  — the paired-block counterpart of the §6.5 forward-reference left-side ruby;
+  the forward form is normative, the block form is not yet pinned.
+- **Illustration caption** (`挿絵（file）「caption」入る`,
+  `『caption』はキャプション`) — §6.11 carries the figure; the bundled-caption
+  forms ([AOZORA-ANNOTATION], `graphics.html`) are documented but not yet pinned
+  to a `<figcaption>`-bearing vector.
 - **Right-side ruby / annotation** (`の右に…のルビ`, `の右に…の注記`) — the
   right side is the default `｜《》` ruby; the explicit right-side bracket forms
   have no corpus attestation.
