@@ -41,6 +41,24 @@ font-size-close = LBRACK HASH %s"ここで" direction %s"文字終わり" RBRACK
 The block closer drops the magnitude — it names only the **direction**
 (`大きな` / `小さな`); the opener's stage count is authoritative.
 
+A **bare inline range** — an opener carrying the stage count and a `…文字終わり`
+closer, with neither `ここから` nor `ここで` — resizes a run inline (the corpus
+attests it more often than the block form, ~9k paired occurrences):
+
+```abnf
+font-size-range-open  = LBRACK HASH size-spec RBRACK
+font-size-range-close = LBRACK HASH direction %s"文字終わり" RBRACK
+```
+
+```text
+本文［＃1段階小さな文字］小さい［＃小さな文字終わり］本文
+```
+
+The bare range yields an **inline** `container` node (family `font-size`,
+`block: false`), rendered with the same inline `<span>` as the
+forward-reference leaf below; the `ここから`/`ここで` form is the block variant
+(`block: true`).
+
 ## Parameters
 
 - **magnitude** — the number of stages, 1‥127. A leading run of ASCII or
@@ -78,5 +96,5 @@ The block closer drops the magnitude — it names only the **direction**
 
 ## Conformance vectors
 
-`font_size_larger_forward`, `font_size_smaller_forward`, `font_size_block`
-(under `conformance/vectors/`).
+`font_size_larger_forward`, `font_size_smaller_forward`, `font_size_block`,
+`font_size_bare_range` (under `conformance/vectors/`).

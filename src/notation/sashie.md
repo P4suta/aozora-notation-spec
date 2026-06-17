@@ -10,21 +10,27 @@ caption — a reference to a figure file rather than image data itself.
 ```text
 ［＃挿絵（fig01.png）入る］
 ［＃挿絵（fig01.png）「図一」入る］
+［＃挿絵（fig42_03.png、横480×縦640）入る］      ← with a pixel-size note
 ```
 
 ```abnf
-sashie  = LBRACK HASH %s"挿絵（" path %s"）" [caption] %s"入る" RBRACK
-path    = 1*body-char-not-rparen
-caption = %s"「" 1*body-char-not-rquote %s"」"
+sashie     = LBRACK HASH %s"挿絵（" path [ %s"、" dimensions ] %s"）" [caption] %s"入る" RBRACK
+path       = 1*body-char-not-rparen-not-comma
+dimensions = %s"横" 1*DIGIT %s"×縦" 1*DIGIT
+caption    = %s"「" 1*body-char-not-rquote %s"」"
 ```
 
 The path is the figure file name between the full-width parentheses
-`（ … ）`. An OPTIONAL `「caption」` between `）` and `入る` carries the
-figure's caption ([AOZORA-ANNOTATION], `graphics.html`).
+`（ … ）`. The corpus' standard form bundles a pixel-size note after a `、`
+(`横W×縦H`); it is split off the path so the rendered `<img src>` stays a
+clean file reference. An OPTIONAL `「caption」` between `）` and `入る` carries
+the figure's caption ([AOZORA-ANNOTATION], `graphics.html`).
 
 ## Parameters
 
-- **path** — the figure file reference.
+- **path** — the figure file reference (without any trailing size note).
+- **dimensions** — OPTIONAL verbatim pixel-size note (`横W×縦H`); when it
+  parses as two digit runs it also supplies the rendered `width`/`height`.
 - **caption** — OPTIONAL associated caption text, where the source provides
   one.
 
@@ -46,4 +52,4 @@ generic annotation (§6.14); no dedicated diagnostic is defined.
 
 ## Conformance vectors
 
-`sashie`, `sashie_caption`.
+`sashie`, `sashie_caption`, `sashie_dimensions`.

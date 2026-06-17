@@ -3,6 +3,40 @@
 The authoritative change log is `CHANGELOG.md` at the repository root; this
 annex mirrors it for readers of the rendered book.
 
+## Draft v0.2 (unreleased)
+
+**Added** — corpus-attested notation forms that an earlier revision missed,
+each grounded in a fresh `P4suta/aozorabunko_text` frequency survey and pinned
+with a conformance vector:
+
+- the **改行天付き hanging indent** `［＃ここから改行天付き、折り返してM字下げ］`
+  (and its single-line form) — first line flush to the head, wrapped lines
+  indent by M (§6.6; the corpus' single most common compound-indent form,
+  ~8k occurrences). Vectors `head_flush_wrap_indent`, `head_flush_single`.
+- the **head-anchored single-line indent** `［＃天からN字下げ］` (§6.6). Vector
+  `indent_from_top`.
+- the **bare-range 行右/行左小書き** `［＃行右小書き］…［＃行右小書き終わり］`
+  (§6.16; ~4k paired occurrences each). Vectors `side_glyph_right_range`,
+  `side_glyph_left_range`.
+- the **bare-range character-size** `［＃N段階小さな文字］…［＃小さな文字終わり］`
+  (§6.17; ~9k paired occurrences, more common than the block form). Vector
+  `font_size_bare_range`.
+- the **input-editor `はママ` (sic) and `は底本では「…」` textual-divergence
+  notes** (§6.14; ~3k and ~7k occurrences) — the `はママ` shape replaces the
+  earlier, corpus-unattested `に「ママ」の注記` ABNF. Vectors `correction_sic`,
+  `correction_textual_note`.
+- the **composed-glyph gaiji** `※［＃「X」の「Y」に代えて「Z」、第N水準P-R-C］`
+  (§6.4; ~2.8k occurrences) — the whole pre-address body is the description,
+  serialized verbatim. Fixes a round-trip data loss that dropped everything
+  after the first quote. Vector `gaiji_composed_glyph`.
+- the **illustration pixel-size note** `［＃挿絵（file、横W×縦H）入る］`
+  (§6.11) — split off the path so `<img src>` stays clean and `width`/`height`
+  are supplied. Vector `sashie_dimensions`.
+
+**Changed** — §1.3 promoted to v0.2 and the stale "deferred families" note
+removed (every §6 family now carries a vector); §10.5 records compound
+forward-references (`「X」は縦中横、行右小書き`) as a preserved-verbatim boundary.
+
 ## Draft v0.1 (unreleased)
 
 **Added** — the initial framework (§§1–5, 7–12) and annexes; normative

@@ -102,6 +102,13 @@ processor MAY keep them as a generic annotation (§6.14).
   is already the default `｜《》` ruby, so the explicit right-side ruby bracket
   is redundant and essentially unattested; the right-side *annotation* mirror of
   the §6.5 左 note is marginal (≈8 corpus hits).
+- **Compound forward-references** (`「X」は縦中横、行右小書き`) — a single target
+  taking two treatments at once (here 縦中横 §6.3 *and* 行右小書き §6.16). About
+  900 corpus occurrences, but a forward-reference yields one node per §7.5, so a
+  composite (nested) inline node is an architectural extension out of proportion
+  to the frequency. A conforming processor keeps the directive as a generic
+  annotation (§6.14) — **preserved verbatim and round-tripped byte-exact, not
+  dropped** — until the composite model is pinned.
 
 As a family in the second group gains full normative text it gains a vector,
 recorded in [Annex E](annex/changelog.md). Coverage gaps are tracked openly

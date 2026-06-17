@@ -19,7 +19,16 @@ gaiji-ref = REFMARK directive          ; ※［＃ description 〔、address〕 
 ※［＃「口＋世」、U+546D、123-4］          ← Unicode reference (+ provenance)
 ※［＃「土へん＋竒」、123-4］              ← description only (provenance locator)
 ※［＃二の字点、1-2-22］                  ← named, with men-ku-ten
+※［＃「比」の「ヒ」に代えて「く」、第4水準2-1-23］  ← composed-glyph description
 ```
+
+The last line is the **composed-glyph** form: the description is a verbatim
+`「X」の「Y」に代えて「Z」` recipe (build glyph X with component Y replaced by Z)
+and the trailing men-ku-ten resolves the character. Because such a description
+carries its own balanced `「…」`, it is serialized **verbatim** (without the
+re-wrapping `「…」` of a plain description) so it round-trips. A processor MUST
+keep the whole pre-address body as the description; dropping everything after
+the first quote is a round-trip data loss.
 
 The accent form `〔…〕` (§4.3, [Annex A](../annex/accent-table.md)) and the
 iteration marks `／＼` / `／″＼` are related glyph-encoding notations covered
@@ -53,4 +62,5 @@ in [Annex B](../annex/gaiji.md).
 
 ## Conformance vectors
 
-`gaiji`, `unresolved-gaiji`, `accent-decomposition-applied`.
+`gaiji`, `unresolved-gaiji`, `accent-decomposition-applied`,
+`gaiji_composed_glyph`.

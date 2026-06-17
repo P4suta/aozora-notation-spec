@@ -33,9 +33,25 @@ keyword      = "上付き小文字" / "下付き小文字" / "行右小書き" /
 あい［＃「い」は行左小書き］
 ```
 
-Unlike 太字/斜体 there is **no bare inline range and no `ここから`/`ここで`
-block range** for these families: the official guide gives only the
-forward-reference form, and the corpus attests only it.
+The two 小書き families also have a **bare inline range** (parallel to the
+太字/斜体 bare range of §6.12) — an opener and a `…終わり` closer with neither
+`ここから` nor `ここで` — which the corpus attests in quantity (~4k paired
+occurrences each):
+
+```abnf
+side-glyph-range-open  = "［＃" ( "行右小書き" / "行左小書き" ) "］"
+side-glyph-range-close = "［＃" ( "行右小書き" / "行左小書き" ) "終わり］"
+```
+
+```text
+あ［＃行右小書き］いう［＃行右小書き終わり］え
+```
+
+The bare range yields a `container` node (family `small-side`) carrying the
+右/左 position, rendered with the **same** inline `<span>` as the
+forward-reference leaf (below). The 上付き/下付き families have **no** bare
+range and **no** `ここから`/`ここで` block range: the official guide gives only
+their forward-reference form, and the corpus attests only it.
 
 ## Parameters
 
@@ -72,4 +88,5 @@ forward-reference form, and the corpus attests only it.
 ## Conformance vectors
 
 `superscript_forward`, `subscript_forward`, `side_glyph_right`,
-`side_glyph_left` (under `conformance/vectors/`).
+`side_glyph_left`, `side_glyph_right_range`, `side_glyph_left_range` (under
+`conformance/vectors/`).

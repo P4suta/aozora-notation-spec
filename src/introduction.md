@@ -58,12 +58,14 @@ with Aozora Bunko.
 
 ## 1.3 Document status
 
-This is **draft v0.1**. The framework (§§1–5, 7–12) and the notation families
-in §6 are normative. A few families that the official guide itself treats as
-provisional — 太字 / 斜体 (§6.12), 表 / 段組 (§6.13), saidoku-moji (§6.5),
-and some layout directives (§6.6) — are documented with their notation, but
-their full normative semantics are deferred to a later revision and not yet
-required for conformance; each is flagged where it appears (see §10.5).
+This is **draft v0.2**. The framework (§§1–5, 7–12) and **every** notation
+family in §6 are normative, including the families an earlier revision left
+provisional (太字 / 斜体 §6.12, 表 / 段組 §6.13, saidoku-moji §6.5, the
+layout directives of §6.6) — each now carries a conformance vector. The
+remaining genuinely-unmodelled constructs are a short, corpus-grounded
+boundary list in §10.5 (compound forward-references, table cell delimiters,
+and a few sub-region directives that have no parseable notation); those are
+preserved verbatim by a conforming processor, not silently dropped.
 
 ## 1.4 Conformance levels (overview)
 

@@ -30,7 +30,13 @@ closer in practice) and the remaining compound directives are deferred
 　長い本文が折り返して4字下げされる…
 ［＃ここで字下げ終わり］
 
+［＃ここから改行天付き、折り返して1字下げ］  ← 改行天付き hanging (first line flush, wrap 1)
+　和歌や箇条書きの本文…
+［＃ここで字下げ終わり］
+
 ［＃2字下げ］この行だけ        ← single-line indent
+［＃改行天付き、折り返して2字下げ］この行  ← single-line 改行天付き hanging
+［＃天から3字下げ］この行だけ   ← single-line head-anchored indent
 ［＃地付き］平和への誓い        ← single-line end-align (foot)
 ［＃地から2字上げ］…           ← single-line end-align, 2 from the foot
 ［＃ページの左右中央］          ← single-line centring marker (page centre)
@@ -44,8 +50,11 @@ closer in practice) and the remaining compound directives are deferred
 ```abnf
 indent-block-open = LBRACK HASH %s"ここから" 1*DIGIT %s"字下げ" RBRACK
 indent-wrap-open  = LBRACK HASH %s"ここから" 1*DIGIT %s"字下げ、折り返して" 1*DIGIT %s"字下げ" RBRACK
+indent-headflush-open = LBRACK HASH %s"ここから改行天付き、折り返して" 1*DIGIT %s"字下げ" RBRACK
 indent-center-open = LBRACK HASH %s"ここから" 1*DIGIT %s"字下げ、" ( %s"ページの左右中央" [ %s"に" ] / %s"左右中央" ) RBRACK
 indent-single     = LBRACK HASH 1*DIGIT %s"字下げ" RBRACK
+indent-headflush-single = LBRACK HASH %s"改行天付き、折り返して" 1*DIGIT %s"字下げ" RBRACK
+indent-fromtop-single = LBRACK HASH %s"天から" 1*DIGIT %s"字下げ" RBRACK
 line-width-open   = LBRACK HASH %s"ここから" 1*DIGIT %s"字詰め" RBRACK
 align-end-single  = LBRACK HASH %s"地付き" RBRACK
                   / LBRACK HASH %s"地から" 1*DIGIT %s"字上げ" RBRACK
@@ -59,6 +68,12 @@ center-single     = LBRACK HASH ( %s"ページの左右中央" / %s"中央揃え
 - **amount** — for indent, the number of full-width characters to indent.
 - **wrap** — for the hanging-indent form (折り返し字下げ), the indent applied
   to wrapped continuation lines after the first; absent for a plain indent.
+- **head_flush** — `true` for the 改行天付き hanging form
+  (`改行天付き、折り返してM字下げ`): the first line is flush to the head
+  (天付き, so **amount** is `0`) and only wrapped lines indent by **wrap**.
+- **from_top** — `true` for the head-anchored single-line form
+  (`天からN字下げ`), the top-edge counterpart of `地からN字上げ`. Rendered
+  identically to a plain `N字下げ`; the flag preserves the source spelling.
 - **center** — `true` for the combined `ここからN字下げ、ページの左右中央`
   form (the indented block is also page-centred); `false` otherwise.
 - **offset** — for end-align, the distance from the foot: `0` (地付き) or `N`

@@ -11,16 +11,21 @@ body matches no other construct.
 ## Notation
 
 ```text
-怪体な［＃「怪体」に「ママ」の注記］          ← "as-is from the source"
+怪体な［＃「怪体」はママ］                    ← "as-is from the source" (sic)
 峰﹅［＃「峰」は底本では「峯」］              ← textual divergence note
 ［＃なにかしらの注記］                       ← generic (unrecognised) annotation
 ```
 
 ```abnf
-mama-note     = LBRACK HASH LQUOTE target RQUOTE %s"に「ママ」の注記" RBRACK
+mama-note     = LBRACK HASH LQUOTE target RQUOTE %s"はママ" RBRACK
 textual-note  = LBRACK HASH LQUOTE target RQUOTE %s"は底本では" LQUOTE alt RQUOTE RBRACK
 annotation    = directive          ; any body not classified by §6.1–§6.13
 ```
+
+The `はママ` (sic) form is the corpus's dominant editorial marker (~3k
+occurrences); `は底本では「…」` (textual divergence, ~7k) is the most common
+editorial note overall. (The `「X」に「Y」の注記` shape is a *side note*, §6.5,
+not an input-editor annotation.)
 
 ## Parameters
 
@@ -54,4 +59,5 @@ annotation    = directive          ; any body not classified by §6.1–§6.13
 
 ## Conformance vectors
 
-`annotation`, `unrecognised-container-directive`.
+`annotation`, `unrecognised-container-directive`, `correction_sic`,
+`correction_textual_note`.
