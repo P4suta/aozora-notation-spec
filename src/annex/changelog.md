@@ -17,14 +17,15 @@ standard/同行/窓 styles, in forward-reference, paired, and block forms),
 illustrations, bold/italic (太字・斜体), input-editor annotations,
 double-angle quotation (二重山括弧, ≪…≫ → 《…》), the superscript /
 subscript / side-glyph families (§6.16: 上付き小文字・下付き小文字・
-行右小書き・行左小書き), the forward-reference character-size change
-(§6.17: `N段階大きな/小さな文字`), and horizontal writing (§6.18: 横組み,
-inline `は横組み` and the `ここから/ここで` block));
+行右小書き・行左小書き), the character-size change (§6.17:
+`N段階大きな/小さな文字`, both the forward-reference and `ここから/ここで`
+block forms), and horizontal writing (§6.18: 横組み, inline `は横組み` and the
+`ここから/ここで` block));
 the bundled illustration caption `挿絵（file）「caption」入る` (§6.11);
 the families the official guide treats as provisional or that this revision has
 not yet pinned, documented with their notation (the block centring form, the
-段組 sub-directives, the character-size block form, the left-ruby block form,
-and the standalone caption directive — see §10.5); the machine-readable
+段組 sub-directives, the left-ruby block form, and the standalone caption
+directive — see §10.5); the machine-readable
 conformance suite (schema, vectors, runner contract); and the decision
 records under `docs/adr/`.
 

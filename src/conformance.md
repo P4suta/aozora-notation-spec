@@ -60,10 +60,6 @@ guide treats as provisional, that lack corpus attestation, or that this
 revision has not yet pinned with normative semantics, carry their notation but
 no `must` vectors yet:
 
-- **Character-size block form** (`［＃ここから…段階大きな文字］ … ［＃ここで
-  大きな文字終わり］`) — the forward-reference size change is now normative
-  (§6.17); the block form is corpus-attested but its closer drops the magnitude
-  and pairs by direction (大きな vs 小さな), semantics not yet pinned.
 - **Left-ruby block form** (`［＃左にルビ付き］…［＃左に「X」のルビ付き終わり］`)
   — the paired-block counterpart of the §6.5 forward-reference left-side ruby;
   the forward form is normative, the block form is not yet pinned.

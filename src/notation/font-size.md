@@ -10,13 +10,14 @@ notes, mathematics, and emphasis where weight is unsuitable
 
 ## Notation
 
-The **forward-reference** form (particle `は`) is the corpus-attested and
-normative form:
+Two forms occur. The **forward-reference** form (particle `は`) resizes a
+single run:
 
 ```abnf
-font-size = target "［＃「" target "」は" magnitude %s"段階" direction %s"文字" "］"
-magnitude = 1*DIGIT          ; ASCII or full-width, 1..127
-direction = %s"大きな" / %s"小さな"
+font-size  = target "［＃「" target "」は" size-spec "］"
+size-spec  = magnitude %s"段階" direction %s"文字"
+magnitude  = 1*DIGIT          ; ASCII or full-width, 1..127
+direction  = %s"大きな" / %s"小さな"
 ```
 
 ```text
@@ -24,9 +25,21 @@ direction = %s"大きな" / %s"小さな"
 注記［＃「注記」は1段階小さな文字］
 ```
 
-A `ここから…段階大きな文字 … ここで大きな文字終わり` block form also occurs in
-the corpus; its closer drops the magnitude and pairs by direction. Its pairing
-semantics are not yet pinned and it remains deferred (§10.5).
+The **block** form resizes the enclosed paragraphs:
+
+```abnf
+font-size-open  = LBRACK HASH %s"ここから" size-spec RBRACK
+font-size-close = LBRACK HASH %s"ここで" direction %s"文字終わり" RBRACK
+```
+
+```text
+［＃ここから2段階大きな文字］
+大きく組まれた段落。
+［＃ここで大きな文字終わり］
+```
+
+The block closer drops the magnitude — it names only the **direction**
+(`大きな` / `小さな`); the opener's stage count is authoritative.
 
 ## Parameters
 
@@ -42,10 +55,16 @@ semantics are not yet pinned and it remains deferred (§10.5).
 - The forward-reference form resolves its target by the look-back rule of §7.5
   and yields an `emphasis` node carrying the signed stage count. It is an
   **inline** construct.
-- Reference rendering (§8) is
-  `<span class="aozora-font-larger" data-steps="N">…</span>` for 大きな and
-  `<span class="aozora-font-smaller" data-steps="N">…</span>` for 小さな, where
-  `N` is the (positive) magnitude. A stylesheet maps the stage count to a size.
+- The block form pairs opener and closer by the `font-size` family (§7.1) and
+  yields a **block** `container` node carrying the opener's signed stage count.
+  Because the closer names only a direction, a 大きな opener closed by a 小さな
+  closer is **not** flagged as a family mismatch; the corpus never mixes them.
+- Reference rendering (§8): the inline form is
+  `<span class="aozora-font-larger" data-steps="N">…</span>` (大きな) /
+  `<span class="aozora-font-smaller" …>` (小さな); the block form is
+  `<div class="aozora-container aozora-container-font-larger" data-steps="N">…</div>`
+  (resp. `aozora-container-font-smaller`), where `N` is the (positive)
+  magnitude. A stylesheet maps the stage count to a size.
 - Serialization (§7.6) reconstructs `［＃「X」はN段階大きな/小さな文字］`. A
   full-width magnitude canonicalises to ASCII; the mapping is idempotent, so
   the parse∘serialize fixed point holds after the first pass.
@@ -59,5 +78,5 @@ semantics are not yet pinned and it remains deferred (§10.5).
 
 ## Conformance vectors
 
-`font_size_larger_forward`, `font_size_smaller_forward` (under
-`conformance/vectors/`).
+`font_size_larger_forward`, `font_size_smaller_forward`, `font_size_block`
+(under `conformance/vectors/`).
