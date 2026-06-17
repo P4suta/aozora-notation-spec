@@ -9,15 +9,18 @@ caption — a reference to a figure file rather than image data itself.
 
 ```text
 ［＃挿絵（fig01.png）入る］
+［＃挿絵（fig01.png）「図一」入る］
 ```
 
 ```abnf
-sashie = LBRACK HASH %s"挿絵（" path %s"）入る" RBRACK
-path   = 1*body-char-not-rparen
+sashie  = LBRACK HASH %s"挿絵（" path %s"）" [caption] %s"入る" RBRACK
+path    = 1*body-char-not-rparen
+caption = %s"「" 1*body-char-not-rquote %s"」"
 ```
 
 The path is the figure file name between the full-width parentheses
-`（ … ）`.
+`（ … ）`. An OPTIONAL `「caption」` between `）` and `入る` carries the
+figure's caption ([AOZORA-ANNOTATION], `graphics.html`).
 
 ## Parameters
 
@@ -31,8 +34,10 @@ The path is the figure file name between the full-width parentheses
   caption if present).
 - Reference rendering (§8) is an image reference; because this specification
   does not fetch or embed image data, the reference mapping emits a figure
-  placeholder/reference rather than pixels.
-- Serialization reconstructs the directive byte-exact (§7.6).
+  placeholder/reference rather than pixels. A caption, when present, renders
+  into the figure's `<figcaption>`.
+- Serialization reconstructs the directive — including the optional
+  `「caption」` — byte-exact (§7.6).
 
 ## Error conditions
 
@@ -41,4 +46,4 @@ generic annotation (§6.14); no dedicated diagnostic is defined.
 
 ## Conformance vectors
 
-`sashie`.
+`sashie`, `sashie_caption`.

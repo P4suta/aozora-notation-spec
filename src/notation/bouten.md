@@ -77,6 +77,6 @@ Three forms produce emphasis.
 
 ## Conformance vectors
 
-`bouten-target-ambiguous`, `bouten_range`, `bouten_chain_line`,
-`bouten_black_triangle`, `mismatched-bouten-container`,
-`mixed_ruby_bouten`.
+`bouten-target-ambiguous`, `bouten_range`, `bouten_range_chain_line`,
+`bouten_chain_line`, `bouten_black_triangle`,
+`mismatched-bouten-container`, `mixed_ruby_bouten`.

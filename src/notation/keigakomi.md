@@ -26,18 +26,36 @@ keigakomi-close = LBRACK HASH %s"罫囲み終わり" RBRACK
 > variant is an accepted equivalent and pairs by the same `keigakomi`
 > family.
 
+There is also an **inline forward-reference** form that boxes a single run,
+the span-level counterpart of the block container (parallel to how 太字 has
+both a block range and a `は`-form leaf, §6.12):
+
+```text
+注意［＃「注意」は罫囲み］事項。
+```
+
+```abnf
+keigakomi-inline = target "［＃「" target "」は罫囲み］"
+```
+
 ## Parameters
 
-None.
+None for the block form. The inline form names a single **target** (the
+quoted run to box), resolved by the look-back rule of §7.5.
 
 ## Semantics
 
 - The opener/closer pair (§7.1) yields a `container` node (family
   `keigakomi`) governing the enclosed block; it nests with other block
   containers (§7.3).
+- The inline forward-reference form yields an `emphasis` node over its target
+  run and is an **inline** construct.
 - Reference rendering (§8) is
-  `<div class="aozora-container aozora-container-keigakomi">…</div>`.
-- Serialization reconstructs the opener/closer byte-exact (§7.6).
+  `<div class="aozora-container aozora-container-keigakomi">…</div>` for the
+  block form and `<span class="aozora-keigakomi-inline">…</span>` for the
+  inline form.
+- Serialization reconstructs the block opener/closer or the inline directive
+  byte-exact (§7.6).
 
 ## Error conditions
 
@@ -48,4 +66,4 @@ None.
 
 ## Conformance vectors
 
-`keigakomi_container`.
+`keigakomi_container`, `keigakomi_inline_forward`.
