@@ -64,8 +64,6 @@ no `must` vectors yet:
   大きな文字終わり］`) — the forward-reference size change is now normative
   (§6.17); the block form is corpus-attested but its closer drops the magnitude
   and pairs by direction (大きな vs 小さな), semantics not yet pinned.
-- **Inline keigakomi** (`「X」は罫囲み`) — the forward-reference inline form of
-  §6.7; the block form is normative, the inline span form is not yet pinned.
 - **Left-ruby block form** (`［＃左にルビ付き］…［＃左に「X」のルビ付き終わり］`)
   — the paired-block counterpart of the §6.5 forward-reference left-side ruby;
   the forward form is normative, the block form is not yet pinned.
