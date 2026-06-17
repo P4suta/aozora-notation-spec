@@ -2,7 +2,7 @@
 
 This section defines every notation family: the directives and inline
 constructs a processor recognizes, their parameters, and their meaning. Each
-family is a subsection (§6.1–§6.16).
+family is a subsection (§6.1–§6.17).
 
 ## 6.0.1 Per-family template
 
@@ -42,3 +42,4 @@ notation; its full normative semantics are deferred (§10.5).
 | 6.14 | Input-editor annotations (入力者注) | `［＃「X」に「ママ」の注記］`, unrecognised `［＃…］` |
 | 6.15 | Double-angle quotation (二重山括弧) | `≪…≫` → `《…》` |
 | 6.16 | Superscript / subscript / side glyphs (上付き・下付き・小書き) | `［＃「X」は上付き小文字］`, `［＃「X」は行右小書き］` |
+| 6.17 | Character size (文字サイズ) | `［＃「X」は2段階大きな文字］`, `［＃「X」は1段階小さな文字］` |

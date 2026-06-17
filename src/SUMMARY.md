@@ -26,6 +26,7 @@
   - [6.14 Input-editor annotations (入力者注)](notation/annotation.md)
   - [6.15 Double-angle quotation (二重山括弧)](notation/angle-quote.md)
   - [6.16 Superscript, subscript, and side glyphs (上付き・下付き・小書き)](notation/script-glyphs.md)
+  - [6.17 Character size (文字サイズ)](notation/font-size.md)
 - [7. Structural Processing Model](structural-model.md)
 - [8. Reference Rendering](rendering.md)
 - [9. Diagnostics and Error Handling](diagnostics.md)
