@@ -74,9 +74,6 @@ no `must` vectors yet:
 - **Right-side ruby / annotation** (`の右に…のルビ`, `の右に…の注記`) — the
   right side is the default `｜《》` ruby; the explicit right-side bracket forms
   have no corpus attestation.
-- **Horizontal writing** (`横書き` / `横組み`) — a document-level writing-mode
-  switch rather than an inline or block node, so it falls outside the §6
-  per-run model.
 - **Table cell structure** — `［＃ここから表］` (§6.13) marks a table *region*;
   cell and row structure has no sanctioned delimiter (the full-width `／`
   sometimes seen is an editor convention, not a directive), so the region stays
