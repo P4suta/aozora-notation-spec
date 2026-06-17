@@ -55,36 +55,55 @@ An implementation claiming conformance SHOULD state:
 
 ## 10.5 Coverage and growth
 
-Not every notation family is at `must` coverage. The directives the official
-guide treats as provisional, that lack corpus attestation, or that this
-revision has not yet pinned with normative semantics, carry their notation but
-no `must` vectors yet:
+The §6 catalogue covers every notation family that has a **parseable form
+attested in the corpus**. What remains here is of two distinct kinds, kept
+separate so the boundary is honest rather than a catch-all "deferred" bucket.
 
-- **Left-ruby block form** (`［＃左にルビ付き］…［＃左に「X」のルビ付き終わり］`)
-  — the paired-block counterpart of the §6.5 forward-reference left-side ruby;
-  the forward form is normative, the block form is not yet pinned.
-- **Standalone illustration caption** (`『caption』はキャプション`) — the
-  bundled `挿絵（file）「caption」入る` form is now normative (§6.11), but the
-  free-standing caption directive that captions a preceding figure across a
-  line break is not yet pinned.
-- **Right-side ruby / annotation** (`の右に…のルビ`, `の右に…の注記`) — the
-  right side is the default `｜《》` ruby; the explicit right-side bracket forms
-  have no corpus attestation.
-- **Table cell structure** — `［＃ここから表］` (§6.13) marks a table *region*;
-  cell and row structure has no sanctioned delimiter (the full-width `／`
+### No parseable notation
+
+These are not deferred features — the corpus has **no `［＃…］` directive
+form** for them, so there is nothing for a processor to parse. (Corpus
+evidence: [`P4suta/aozorabunko_text`](https://github.com/P4suta/aozorabunko_text),
+sampled 2026-06-17.)
+
+- **Table cell / row structure** — `［＃ここから表］` (§6.13) marks a table
+  *region*; there is no sanctioned cell or row delimiter (the full-width `／`
   sometimes seen is an editor convention, not a directive), so the region stays
   layout-only.
-- **Column sub-regions and inter-column rules** (上段 / 下段, 段間に罫) beyond
-  the §6.13 `ここからN段組` region.
-- **Block centring with no closer** (`ここから中央揃え` alone) — unattested in
-  the corpus; page-centring is covered by the single-line marker (§6.6) and the
-  combined `ここからN字下げ、ページの左右中央`.
-- **The remaining compound directives** — combinations other than the pinned
-  字下げ＋ページの左右中央 (e.g. 字下げ＋字詰め, indent＋横書き＋罫囲み). Each
-  component closes independently, so they have no single shared closer.
+- **Column sub-regions** (上段 / 下段, 段間に罫) — `［＃上段］` and
+  `［＃ここから上段］` have **zero** corpus occurrences; 上段 / 下段 appear only
+  as body text, never as directives. There is no sub-region notation to pin.
+- **Block centring with no closer** (`ここから中央揃え` alone) — zero corpus
+  occurrences; page-centring is fully covered by the single-line marker (§6.6)
+  and the combined `ここからN字下げ、ページの左右中央`.
+- **Open-ended compound directives** — combinations beyond the pinned
+  字下げ＋ページの左右中央 (e.g. 字下げ＋字詰め＋罫囲み). Each component opens and
+  **closes independently**, so there is no single compound directive (and no
+  shared closer) to recognise; the components are simply nested §6.6/§6.7
+  containers, already covered individually.
 
-A conforming processor MAY keep any of these as a generic annotation (§6.14).
-As a family gains full normative text it gains `must` vectors, recorded in
-[Annex E](annex/changelog.md). Coverage gaps are tracked openly rather than
-implied — a processor is never asked to match a behaviour this document has not
-pinned with a vector.
+### Real but unpinned
+
+These have a real form but are vanishingly rare and/or architecturally
+ill-fitting, so they carry their notation but no vector yet; a conforming
+processor MAY keep them as a generic annotation (§6.14).
+
+- **Left-ruby block form** (`［＃左にルビ付き］…［＃左に「X」のルビ付き終わり］`)
+  — the paired-block counterpart of the §6.5 forward-reference left-side ruby
+  (which **is** normative). Only ~2 corpus occurrences, and the reading sits in
+  the *closer*, so the run's reading is unknown until the block ends — a model
+  that does not fit the streaming per-run container machinery. Pinned only when
+  real demand justifies the special case.
+- **Standalone illustration caption** (`『caption』はキャプション`) — the
+  bundled `挿絵（file）「caption」入る` form is normative (§6.11); the
+  free-standing directive that captions a *preceding* figure across a line
+  break is not yet pinned.
+- **Explicit right-side ruby / annotation** (`の右に…のルビ`) — the right side
+  is already the default `｜《》` ruby, so the explicit right-side ruby bracket
+  is redundant and essentially unattested; the right-side *annotation* mirror of
+  the §6.5 左 note is marginal (≈8 corpus hits).
+
+As a family in the second group gains full normative text it gains a vector,
+recorded in [Annex E](annex/changelog.md). Coverage gaps are tracked openly
+with corpus evidence rather than implied — a processor is never asked to match
+a behaviour this document has not pinned with a vector.
