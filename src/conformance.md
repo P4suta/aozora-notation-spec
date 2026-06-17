@@ -55,55 +55,68 @@ An implementation claiming conformance SHOULD state:
 
 ## 10.5 Coverage and growth
 
-The §6 catalogue covers every notation family that has a **parseable form
-attested in the corpus**. What remains here is of two distinct kinds, kept
-separate so the boundary is honest rather than a catch-all "deferred" bucket.
+The §6 catalogue covers the core notation families. The boundary below is
+grounded in a **full sweep** of every work in
+[`P4suta/aozorabunko_text`](https://github.com/P4suta/aozorabunko_text)
+(17,889 files, 2026-06-17) — parsed and bucketed by the reference
+implementation, not estimated. Counts are occurrences across that sweep. An
+earlier draft of this section misreported several of them (noted inline); they
+are corrected here from the measured data.
 
-### No parseable notation
+### Recognised, pending full §6 promotion
 
-These are not deferred features — the corpus has **no `［＃…］` directive
-form** for them, so there is nothing for a processor to parse. (Corpus
-evidence: [`P4suta/aozorabunko_text`](https://github.com/P4suta/aozorabunko_text),
-sampled 2026-06-17.)
+These corpus-attested forms are **recognised** by the reference implementation
+(typed distinctly, not the generic-annotation fallback). They are listed here
+because their full normative §6 text and vectors are still being written; until
+then a conforming processor MAY treat them as generic annotations (§6.14), but
+the recommended behaviour is the typed form below.
 
-- **Table cell / row structure** — `［＃ここから表］` (§6.13) marks a table
-  *region*; there is no sanctioned cell or row delimiter (the full-width `／`
-  sometimes seen is an editor convention, not a directive), so the region stays
-  layout-only.
-- **Column sub-regions** (上段 / 下段, 段間に罫) — `［＃上段］` and
-  `［＃ここから上段］` have **zero** corpus occurrences; 上段 / 下段 appear only
-  as body text, never as directives. There is no sub-region notation to pin.
-- **Block centring with no closer** (`ここから中央揃え` alone) — zero corpus
-  occurrences; page-centring is fully covered by the single-line marker (§6.6)
-  and the combined `ここからN字下げ、ページの左右中央`.
-- **Open-ended compound directives** — combinations beyond the pinned
-  字下げ＋ページの左右中央 (e.g. 字下げ＋字詰め＋罫囲み). Each component opens and
-  **closes independently**, so there is no single compound directive (and no
-  shared closer) to recognise; the components are simply nested §6.6/§6.7
-  containers, already covered individually.
+- **File-header 凡例 symbols** — the de-facto-standard legend that prefixes
+  nearly every work: `［＃］` (入力者注, ~14k occurrences), `［＃…］` (返り点),
+  `［＃（…）］` (訓点送り仮名). Empty / placeholder directives — not unrecognised
+  notation. Typed distinctly so they leave the generic-annotation bucket.
+- **Bare-range forms** of families whose `ここから…/ここで…終わり` block form is
+  already in §6: `［＃{N}段階…文字］…［＃…文字終わり］` (font-size, ~15k),
+  `［＃横組み］…終わり` (~3k), `［＃行右/左小書き］…終わり` (~8k),
+  `［＃キャプション］…終わり` (~2.5k).
+- **Block `罫囲み` / `割り注`** (the `ここから…` region forms; the bare
+  `［＃罫囲み］`/`［＃割り注］` remain inline), **`天から{N}字下げ`** (top-origin
+  indent), and the bare **`改行天付き、折り返して{N}字下げ`** hanging indent.
+- **Range bouten** `「X」～「Y」に<kind>` (also `〜`) — marks the whole preceding
+  run from X to Y.
+- **Input-editor notes**: `「X」はママ` (*sic*), `「X」は底本では「Y」` (source
+  divergence), `「X」に「Y」の注記` (side annotation — see the correction below),
+  numbered illustrations `［＃挿絵{N}（…）入る］`, and caption-before figures
+  `「caption」のキャプション付きの(図|挿絵|写真)（file）入る`.
 
-### Real but unpinned
+### Genuinely outside the model
 
-These have a real form but are vanishingly rare and/or architecturally
-ill-fitting, so they carry their notation but no vector yet; a conforming
-processor MAY keep them as a generic annotation (§6.14).
+- **Table cell / row structure** — `［＃ここから表］` marks a *region*; there is
+  no sanctioned cell or row delimiter (the full-width `／` is an editor
+  convention). `段間に罫` appears just **once** across the sweep (the earlier
+  "zero" was imprecise) and `上段`/`下段` never appear as directives — far too
+  sparse to pin a sub-region model.
+- **Right-side ruby / annotation** — the right side is already the default
+  `｜《》` ruby, so an explicit `の右に…のルビ` bracket is redundant. **Corrected
+  count: the `の右に…のルビ` and `の右に…の注記` forms have 0 occurrences** (the
+  earlier "≈8" was wrong); the attested side-annotation form is
+  `「X」に「Y」の注記`, now recognised (above).
+- **Left-ruby block form** (`［＃左にルビ付き］…［＃左に「X」のルビ付き終わり］`) —
+  the paired-block counterpart of the forward-reference left-side ruby (which
+  **is** normative). ~2 occurrences, and the reading sits in the *closer*, so it
+  does not fit the streaming per-run container machinery. Pinned only on demand.
+- **Dedicated-node layout / structural markers** — `［＃改行］` (forced break),
+  `［＃本文終わり］` (body end), `字組み` compounds, and the `ローマ数字、面-区-点`
+  gaiji form each need a node the model does not yet carry; left as generic
+  annotations until promoted.
 
-- **Left-ruby block form** (`［＃左にルビ付き］…［＃左に「X」のルビ付き終わり］`)
-  — the paired-block counterpart of the §6.5 forward-reference left-side ruby
-  (which **is** normative). Only ~2 corpus occurrences, and the reading sits in
-  the *closer*, so the run's reading is unknown until the block ends — a model
-  that does not fit the streaming per-run container machinery. Pinned only when
-  real demand justifies the special case.
-- **Standalone illustration caption** (`『caption』はキャプション`) — the
-  bundled `挿絵（file）「caption」入る` form is normative (§6.11); the
-  free-standing directive that captions a *preceding* figure across a line
-  break is not yet pinned.
-- **Explicit right-side ruby / annotation** (`の右に…のルビ`) — the right side
-  is already the default `｜《》` ruby, so the explicit right-side ruby bracket
-  is redundant and essentially unattested; the right-side *annotation* mirror of
-  the §6.5 左 note is marginal (≈8 corpus hits).
+The full sweep leaves ~9.3k generic-annotation occurrences (down from ~194k
+before this round of corpus grounding). The remainder is overwhelmingly
+**correct** as a generic annotation: open-ended 入力者注 free-text prose (not a
+fixed notation) and forward references whose target is genuinely absent (legend
+*examples* like `（例）［＃「第一章」は中見出し］`, bullet-prefixed headings).
 
-As a family in the second group gains full normative text it gains a vector,
-recorded in [Annex E](annex/changelog.md). Coverage gaps are tracked openly
-with corpus evidence rather than implied — a processor is never asked to match
+As a family in the first group gains full normative text it gains a vector,
+recorded in [Annex E](annex/changelog.md). Coverage is tracked openly with
+full-corpus evidence rather than implied — a processor is never asked to match
 a behaviour this document has not pinned with a vector.
