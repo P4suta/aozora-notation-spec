@@ -53,8 +53,8 @@ forward-reference form, and the corpus attests only it.
 - Reference rendering (§8):
   - 上付き小文字 → `<sup class="aozora-superscript">…</sup>`
   - 下付き小文字 → `<sub class="aozora-subscript">…</sub>`
-  - 行右小書き → `<span class="aozora-koshogaki-right">…</span>`
-  - 行左小書き → `<span class="aozora-koshogaki-left">…</span>`
+  - 行右小書き → `<span class="aozora-kogaki-right">…</span>`
+  - 行左小書き → `<span class="aozora-kogaki-left">…</span>`
 
   The `<sup>` / `<sub>` elements give super- and sub-script their conventional
   horizontal rendering; the 小書き families, which are positional in vertical
