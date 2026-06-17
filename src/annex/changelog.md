@@ -18,10 +18,11 @@ illustrations, bold/italic (太字・斜体), input-editor annotations,
 double-angle quotation (二重山括弧, ≪…≫ → 《…》), and the superscript /
 subscript / side-glyph families (§6.16: 上付き小文字・下付き小文字・
 行右小書き・行左小書き));
+the bundled illustration caption `挿絵（file）「caption」入る` (§6.11);
 the families the official guide treats as provisional or that this revision has
 not yet pinned, documented with their notation (the block centring form, the
 段組 sub-directives, character-size change, inline keigakomi, the left-ruby
-block form, and the illustration-caption forms — see §10.5); the machine-readable
+block form, and the standalone caption directive — see §10.5); the machine-readable
 conformance suite (schema, vectors, runner contract); and the decision
 records under `docs/adr/`.
 

@@ -70,10 +70,10 @@ no `must` vectors yet:
 - **Left-ruby block form** (`［＃左にルビ付き］…［＃左に「X」のルビ付き終わり］`)
   — the paired-block counterpart of the §6.5 forward-reference left-side ruby;
   the forward form is normative, the block form is not yet pinned.
-- **Illustration caption** (`挿絵（file）「caption」入る`,
-  `『caption』はキャプション`) — §6.11 carries the figure; the bundled-caption
-  forms ([AOZORA-ANNOTATION], `graphics.html`) are documented but not yet pinned
-  to a `<figcaption>`-bearing vector.
+- **Standalone illustration caption** (`『caption』はキャプション`) — the
+  bundled `挿絵（file）「caption」入る` form is now normative (§6.11), but the
+  free-standing caption directive that captions a preceding figure across a
+  line break is not yet pinned.
 - **Right-side ruby / annotation** (`の右に…のルビ`, `の右に…の注記`) — the
   right side is the default `｜《》` ruby; the explicit right-side bracket forms
   have no corpus attestation.
