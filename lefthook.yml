@@ -1,0 +1,20 @@
+# lefthook (https://lefthook.dev/) git hooks for the Aozora notation spec.
+#
+# Enable after clone:  `just hooks`
+# Disable:             `just hooks-uninstall`
+#
+# Tools are provisioned by mise (see mise.toml). commit-msg lints the
+# Conventional-Commits subject; pre-push runs the full `just ci` doc gate
+# (vector validation, ABNF check, cross-references, mdBook build).
+
+commit-msg:
+  commands:
+    # Conventional Commits via `committed` (config in committed.toml).
+    committed:
+      run: committed --commit-file {1}
+
+pre-push:
+  commands:
+    ci:
+      run: just ci
+      fail_text: "`just ci` failed — run it directly to see the error."
