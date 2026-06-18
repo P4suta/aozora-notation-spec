@@ -58,19 +58,19 @@ side.
 | Keyword | Family | Slug |
 |---|---|---|
 | `傍点` | 点 | `goma` |
-| `白ゴマ傍点` | 点 | `white-sesame` |
-| `丸傍点` | 点 | `circle` |
-| `白丸傍点` | 点 | `white-circle` |
-| `二重丸傍点` | 点 | `double-circle` |
+| `白ゴマ傍点` | 点 | `shirogoma` |
+| `丸傍点` | 点 | `maru` |
+| `白丸傍点` | 点 | `shiromaru` |
+| `二重丸傍点` | 点 | `nijumaru` |
 | `蛇の目傍点` | 点 | `janome` |
-| `ばつ傍点` | 点 | `cross` |
-| `白三角傍点` | 点 | `white-triangle` |
-| `波線` | 線 | `wavy-line` |
-| `傍線` | 線 | `under-line` |
-| `二重傍線` | 線 | `double-under-line` |
-| `鎖線` | 線 | `chain-line` |
-| `破線` | 線 | `dashed-line` |
-| `黒三角傍点` | 点 | `black-triangle` |
+| `ばつ傍点` | 点 | `batsu` |
+| `白三角傍点` | 点 | `shirosankaku` |
+| `波線` | 線 | `namisen` |
+| `傍線` | 線 | `bosen` |
+| `二重傍線` | 線 | `nijubosen` |
+| `鎖線` | 線 | `kusarisen` |
+| `破線` | 線 | `hasen` |
+| `黒三角傍点` | 点 | `kurosankaku` |
 
 (鎖線 / 破線 / 黒三角傍点 are official but corpus-sparse; a processor renders
 them like any other variant where it has a glyph, otherwise degrading per
