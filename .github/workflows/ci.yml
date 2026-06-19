@@ -11,14 +11,24 @@ permissions:
 jobs:
   commitlint:
     runs-on: ubuntu-latest
-    if: github.event_name == 'pull_request'
+    # Skip for dependabot (its subjects/bodies exceed 50/72 and its PRs
+    # squash-merge with a maintainer subject). Guard on the PR *author*,
+    # not `github.actor`, so a maintainer `gh pr update-branch` on a bot
+    # PR doesn't flip the guard and fail the lint (P4suta/aozora#113).
+    if: github.event_name == 'pull_request' && github.event.pull_request.user.login != 'dependabot[bot]'
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
       - uses: jdx/mise-action@v2
+      # Lint only non-merge commits: `committed` flags any merge commit
+      # ("Merge branch 'main' …") as "Missing type", so a maintainer
+      # `gh pr update-branch` merge must not reach it (P4suta/aozora#113).
       - name: Check Conventional Commits (committed)
-        run: committed "${{ github.event.pull_request.base.sha }}..${{ github.event.pull_request.head.sha }}"
+        run: |
+          base='${{ github.event.pull_request.base.sha }}'
+          head='${{ github.event.pull_request.head.sha }}'
+          git rev-list --no-merges "$base..$head" | xargs -r committed
 
   spec:
     runs-on: ubuntu-latest
