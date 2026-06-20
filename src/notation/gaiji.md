@@ -25,6 +25,17 @@ The accent form `〔…〕` (§4.3, [Annex A](../annex/accent-table.md)) and the
 iteration marks `／＼` / `／″＼` are related glyph-encoding notations covered
 in [Annex B](../annex/gaiji.md).
 
+### Standalone form (tolerant)
+
+Some 凡例 write the same `［＃description〔、address〕］` reference **without**
+the leading `※` — a standalone descriptive note rather than an inline
+insertion. A conforming processor SHOULD recognise it as a `gaiji` node when
+the body carries a resolvable description or a mencode / page-line address (so
+an ordinary `［＃…］` note is not mistaken for one), and serialise it back
+without a `※`. This is a corpus-attested tolerant extension, not part of the
+core `external_character.html` notation; the reference-mark form above is
+canonical. Vector: `standalone_gaiji`.
+
 ## Parameters
 
 - **description** — the text before the first `、`: a radical composition
