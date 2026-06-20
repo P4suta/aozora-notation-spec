@@ -110,11 +110,14 @@ the recommended behaviour is the typed form below.
   gaiji form each need a node the model does not yet carry; left as generic
   annotations until promoted.
 
-The full sweep leaves ~9.3k generic-annotation occurrences (down from ~194k
-before this round of corpus grounding). The remainder is overwhelmingly
-**correct** as a generic annotation: open-ended 入力者注 free-text prose (not a
-fixed notation) and forward references whose target is genuinely absent (legend
-*examples* like `（例）［＃「第一章」は中見出し］`, bullet-prefixed headings).
+The full sweep leaves a residue of generic-annotation occurrences (down from
+~194k before successive rounds of corpus grounding). The remainder is
+overwhelmingly **correct** as a generic annotation: open-ended 入力者注 free-text
+prose (not a fixed notation) and forward references whose target is genuinely
+absent — legend *examples* like `（例）［＃「第一章」は中見出し］`, where the quoted
+target never occurs as a preceding run. (A heading whose title merely carries
+ruby is **not** such a case: its target is present, only ruby-split, and is
+resolved ruby-stripped per §7.5 — see `heading_ruby_hint`.)
 
 As a family in the first group gains full normative text it gains a vector,
 recorded in [Annex E](annex/changelog.md). Coverage is tracked openly with

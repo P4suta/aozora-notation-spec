@@ -51,7 +51,11 @@ appears almost exclusively in the paired form.
   immediately preceding the directive — the run is pulled out of the flow and
   becomes the heading. When the referent is not such a clean preceding line, the
   hint is retained inline (a `heading-hint` marker) rather than promoted, so no
-  run is mis-titled and no input is lost. The 同行 (same-line) and 窓 styles in
+  run is mis-titled and no input is lost. The quoted target is matched
+  **ruby-stripped** (§7.5), so a title carrying ruby —
+  `両頭《りやうとう》の蛇《へび》` — is still recognised by its base text
+  `両頭の蛇` (retained as a hint, since a ruby-bearing run is not a clean bare
+  line). The 同行 (same-line) and 窓 styles in
   practice run into the body on their own line, so they are typically retained
   as hints; the standard style with a bare title line is the usual promotion
   case.
@@ -83,5 +87,5 @@ appears almost exclusively in the paired form.
 
 ## Conformance vectors
 
-`heading`, `heading_hint`, `heading_promoted`, `heading_same_line`,
-`heading_window`, `heading_paired_window`, `heading_block`.
+`heading`, `heading_hint`, `heading_ruby_hint`, `heading_promoted`,
+`heading_same_line`, `heading_window`, `heading_paired_window`, `heading_block`.

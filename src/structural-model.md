@@ -74,6 +74,13 @@ to the start of the current line, or the document per the construct) for the
 most recent occurrence of the quoted target `X`, and applies the construct to
 that run.
 
+- The look-back is over the **base text**: ruby readings (`《…》`) and the
+  explicit-base `｜` marker are not part of what `X` matches against. A heading
+  whose title carries ruby —
+  `○　両頭《りやうとう》の蛇《へび》［＃「○　両頭の蛇」は中見出し］` — quotes the
+  ruby-stripped target `○　両頭の蛇`, which a processor resolves against the
+  ruby-stripped run `○　両頭の蛇`.
+
 - If `X` does not occur in the look-back, the directive degrades to a generic
   annotation and raises the family's "target not found" diagnostic
   (e.g. [`tcy-target-not-found`](diagnostics.md#tcy-target-not-found)).
