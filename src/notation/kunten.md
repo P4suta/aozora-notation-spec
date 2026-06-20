@@ -124,8 +124,34 @@ note like a left-side ruby but marks it a note:
 Serialization reconstructs `X［＃「X」の左に「Y」の注記］` byte-exact (§7.6). The
 right-side annotation form (`の右に…の注記`) is deferred (§10.5).
 
+## Marginal annotation (傍記)
+
+A **marginal annotation** (傍記) attaches a redaction marker — 典型的に `×` —
+*beside* the preceding run. It records a 底本's 伏字 (a masked word) in
+proletarian-literature restoration: the original word is set as `X` and the
+marker `Y` notes that the source censored it. It shares the `side-note` node
+with the 注記 form, but uses a bare `に` connector and ends in `の傍記`, so a
+processor keeps it distinct and round-trips it to its own keyword.
+
+```text
+革命［＃「革命」に「×」の傍記］
+```
+
+```abnf
+marginal-note = LBRACK HASH LQUOTE target RQUOTE %s"に" LQUOTE note RQUOTE %s"の傍記" RBRACK
+```
+
+- **target** — the preceding run the marker attaches to (resolved by §7.5).
+- **note** — the marker text (典型的に `×`).
+
+A marginal annotation yields a `side-note` node, rendered like the 注記 form:
+`<ruby>X<rp>(</rp><rt class="aozora-sidenote">Y</rt><rp>)</rp></ruby>`.
+Serialization reconstructs `X［＃「X」に「Y」の傍記］` byte-exact (§7.6) — the bare
+`に`, not `の左に`. This is a corpus-attested tolerant extension (102
+occurrences, one shape); 注記 is the canonical side annotation. Vector: `boki`.
+
 ## Conformance vectors
 
 `bracketed-kaeriten-no-pair`, `kaeriten-outside-kanbun`, `left_ruby`,
-`side_note_left`, and the kaeriten recognition cases under
+`side_note_left`, `boki`, and the kaeriten recognition cases under
 `conformance/vectors/`.
