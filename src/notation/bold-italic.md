@@ -59,11 +59,11 @@ the family has both a bare inline range and a `ここから`/`ここで` block r
   (weight-tagged `bold` / `italic`) over the enclosed content.
 - The block range form pairs the same way but is a **block** construct: it
   wraps the enclosed paragraphs in a weight-tagged `container` node.
-- Reference rendering (§8): the inline forms are `<b class="aozora-bold">…</b>`
-  (太字) and `<i class="aozora-italic">…</i>` (斜体) — presentational elements
+- Reference rendering (§8): the inline forms are `<b class="aozora-futoji">…</b>`
+  (太字) and `<i class="aozora-shatai">…</i>` (斜体) — presentational elements
   distinct from the `<em>` of bouten, so the two families never collide on one
   tag. The block form is a block container, `<div class="aozora-container
-  aozora-container-bold">…</div>` (resp. `aozora-container-italic`), so the
+  aozora-container-futoji">…</div>` (resp. `aozora-container-shatai`), so the
   wrapped paragraphs nest validly.
 - Serialization (§7.6) reconstructs the source form — the `は` forward
   reference (including a redundant preceding target copy), the bare inline

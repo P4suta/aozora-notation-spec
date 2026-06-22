@@ -51,8 +51,8 @@ forward-reference form, and the corpus attests only it.
 - The node carries the kind so serialization (§7.6) can reconstruct the source
   directive, including the redundant preceding target copy, byte-exact.
 - Reference rendering (§8):
-  - 上付き小文字 → `<sup class="aozora-superscript">…</sup>`
-  - 下付き小文字 → `<sub class="aozora-subscript">…</sub>`
+  - 上付き小文字 → `<sup class="aozora-uwatsuki">…</sup>`
+  - 下付き小文字 → `<sub class="aozora-shitatsuki">…</sub>`
   - 行右小書き → `<span class="aozora-kogaki-right">…</span>`
   - 行左小書き → `<span class="aozora-kogaki-left">…</span>`
 

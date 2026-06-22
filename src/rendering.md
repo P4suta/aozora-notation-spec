@@ -40,7 +40,7 @@ each with its span; container open/close appear as `containerOpen` /
 |---|---|
 | Ruby | `<ruby>base<rp>(</rp><rt>reading</rt><rp>)</rp></ruby>` (a left-side ruby adds `class="aozora-ruby-left"` on the `<rt>`) |
 | Bouten / bousen | `<em class="aozora-bouten aozora-bouten-<variant> aozora-bouten-<side>">…</em>` |
-| Bold / italic (inline) | `<b class="aozora-bold">…</b>` / `<i class="aozora-italic">…</i>` |
+| Bold / italic (inline) | `<b class="aozora-futoji">…</b>` / `<i class="aozora-shatai">…</i>` |
 | Tate-chu-yoko | `<span class="aozora-tcy">…</span>` |
 | Double-angle quotation | `<span class="aozora-angle-quote">《…》</span>` (display restored from input `≪…≫`) |
 | Gaiji (resolved) | the resolved character, optionally `<span class="aozora-gaiji" …>…</span>` |

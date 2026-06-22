@@ -35,9 +35,9 @@ horizontal-close  = LBRACK HASH %s"ここで横組み終わり" RBRACK
 - The block form pairs opener and closer by the `horizontal` family (§7.1) and
   yields a **block** `container` node governing the enclosed paragraphs; it
   nests with other block containers (§7.3).
-- Reference rendering (§8) is `<span class="aozora-horizontal">…</span>` for
+- Reference rendering (§8) is `<span class="aozora-yokogumi">…</span>` for
   the inline form and
-  `<div class="aozora-container aozora-container-horizontal">…</div>` for the
+  `<div class="aozora-container aozora-container-yokogumi">…</div>` for the
   block form. Whether a processor reorients glyphs or merely tags the region is
   a presentation choice; the node model only records that the run is 横組み.
 - Serialization reconstructs the inline directive or the block opener/closer
