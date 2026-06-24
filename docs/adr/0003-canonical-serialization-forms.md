@@ -50,16 +50,22 @@ that reproduces the input bytes; the two are distinct and the verbatim form
 is not required to equal the canonical form.
 
 Because the model is scope-free, the canonical form is reconstructed from the
-concept alone; it does not depend on a per-node "how was this written" flag.
-This makes the fixed point **structural**: the canonical form parses back to
-the same concept, which re-serialises identically.
+concept alone — the surface *scope* (forward/range/block) is not retained. One
+narrower per-node fact does survive on a recognised forward reference: whether
+its target literal is owned by the node (re-emitted on serialize) or already
+present upstream. This is provenance, not scope, and it is irreducible — a
+non-adjacent target that is itself a ruby base (`我《が》…我［＃「我」に傍点］`)
+cannot be folded into the text-only node, so it must stay upstream. The fixed
+point is **structural up to this one provenance bit**: the canonical form
+parses back to the same concept and re-serialises identically.
 
 ## Consequences
 
-- The unbounded round-trip growth observed on forward references with an
-  intervening delimiter in the target (a quoted phrase, ruby, an explicit
-  base) disappears: there is no scope-variant split and no leading-literal
-  re-emit flag, so no fragment is stranded and re-prepended per pass.
+- The unbounded round-trip growth (a reclaimed literal doubled into both the
+  plain tail and the node, re-prepended every pass) disappears: the lowering
+  pass truncates the overlap so the literal is emitted once. The scope-variant
+  split is gone; the leading-literal provenance bit is *retained* (see the
+  Decision) and is what keeps non-adjacent forwards a fixed point.
 - `to_source` may differ from the author's surface scope (e.g. a range-form
   傍点 re-serialises as forward); the verbatim projection is the faithful
   reproduction.
@@ -72,10 +78,11 @@ the same concept, which re-serialises identically.
   lowering pass both forward and range are fixed points, so the choice is
   pure least-surprise — and range would re-write the 125,229 forward 傍点
   occurrences against the dominant author form.
-- **Retain the input scope as provenance and echo it.** Rejected: it
-  re-introduces a per-node surface flag (the very coupling this model
-  removes) and makes the fixed point depend on that flag rather than on the
-  concept.
+- **Retain the input scope (forward/range/block) as provenance and echo it.**
+  Rejected: it re-introduces a per-node *scope* flag (the very coupling this
+  model removes). This is distinct from the leading-literal provenance bit,
+  which *is* irreducibly retained — it records re-emit, not scope, and a
+  ruby-base non-adjacent target cannot be folded away.
 
 ## References
 
