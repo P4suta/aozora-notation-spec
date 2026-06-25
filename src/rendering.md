@@ -24,6 +24,7 @@ family that produces them, are:
 | `indent` / `align-end` / `center` | §6.6 | single-line layout markers |
 | `container` | §6.6/6.7/6.8/6.2/6.10/6.12/6.13 | paired; tagged by family |
 | `page-break` / `section-break` | §6.9 | block leaves |
+| `bodyEnd` / `forcedBreak` | §6.19 | structural marker leaves (block / inline) |
 | `heading` | §6.10 | 大/中/小 level × standard/同行/窓 style |
 | `sashie` | §6.11 | illustration reference |
 | `annotation` | §6.14 | generic / editor annotation |
@@ -48,10 +49,13 @@ each with its span; container open/close appear as `containerOpen` /
 | Kaeriten | `<sup class="aozora-kaeriten">…</sup>` |
 | Single-line indent / align / center | `<span class="aozora-indent aozora-indent-N">` / `<span class="aozora-align-end" …>` / `<span class="aozora-center">` |
 | Block container | `<div class="aozora-container aozora-container-<family>">…</div>` (incl. `table`, `columns` with `data-columns="N"`) |
+| Compound indent (§6.6) decorative styles | extra flat classes on the single indent `<div>`, in canonical order, reusing each style's standalone container class: `aozora-container-futoji` (ゴシック体), `aozora-container-yokogumi` (横書き), `aozora-container-keigakomi` (罫囲み), `aozora-container-font-smaller` (小さい活字, +`data-steps="1"`); `data-amount` as usual |
 | Heading (大/中/小 × style) | `<h1>`–`<h3>` (standard / 同行) or `<div>` (窓), `class="aozora-heading aozora-heading-<large\|medium\|small>"` plus `aozora-heading-<same-line\|window>` for a non-standard style |
 | Heading hint (unpromoted) | `<span class="aozora-heading-hint" data-level data-style data-target hidden></span>` (`data-style` only when non-standard) |
 | Page break | `<div class="aozora-page-break"></div>` |
 | Section break | `<div class="aozora-section-break aozora-section-break-<kaicho\|kaidan\|kaimihiraki>"></div>` |
+| Body end | `<div class="aozora-body-end"></div>` |
+| Forced break | `<br />` |
 
 Text is grouped into paragraphs (`<p>`); a blank line ends a paragraph; a
 single newline within a paragraph is a `<br />`. The five HTML-significant

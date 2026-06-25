@@ -58,10 +58,13 @@ An implementation claiming conformance SHOULD state:
 The §6 catalogue covers the core notation families. The boundary below is
 grounded in a **full sweep** of every work in
 [`P4suta/aozorabunko_text`](https://github.com/P4suta/aozorabunko_text)
-(17,889 files, 2026-06-17) — parsed and bucketed by the reference
+(17,889 files, re-measured 2026-06-25) — parsed and bucketed by the reference
 implementation, not estimated. Counts are occurrences across that sweep. An
 earlier draft of this section misreported several of them (noted inline); they
-are corrected here from the measured data.
+are corrected here from the measured data. The most recent #78 burn-down
+promoted the compound-indent modifier set (§6.6) and the structural-marker
+leaves (§6.19), dropping the residual Unknown (generic-annotation) total from
+3418 to **2848**.
 
 ### Recognised, pending full §6 promotion
 
@@ -89,26 +92,66 @@ the recommended behaviour is the typed form below.
   numbered illustrations `［＃挿絵{N}（…）入る］`, and caption-before figures
   `「caption」のキャプション付きの(図|挿絵|写真)（file）入る`.
 
-### Genuinely outside the model
+### Promoted in the #78 burn-down
 
+Two families that this section previously listed as outside the model are now
+**normative**, each with a `must` vector:
+
+- **Structural-marker leaves (§6.19)** — `［＃本文終わり］` (body end, 242
+  occurrences, the #1 unrecognised body before this change) is a block leaf;
+  `［＃改行］` (forced break, 165) is an inline leaf. See `body_end` and
+  `forced_break`.
+- **Compound-indent modifier set (§6.6)** — the decorative clauses an indent
+  opener may stack after `ここからN字下げ、` (`ゴシック体`, `横書き`/`横組み`,
+  `罫囲み`, `小さい活字`), order-independent on input and re-emitted in a fixed
+  canonical order, are now §6.6-normative (no longer deferred). Page-centring
+  **within** an indent (`ページの左右中央に`) is part of the same compound form
+  and is likewise supported. See `indent_compound_styled`. The canonical order,
+  spellings, and the modifier set are fixed by
+  [ADR-0010](../docs/adr/0010-compound-indent-and-rare-bouten.md) (extending
+  [ADR-0003](../docs/adr/0003-canonical-serialization-forms.md)).
+
+### Closed as a boundary (kept lossless-generic)
+
+These forms were reviewed in the #78 burn-down and **closed** for want of corpus
+demand: a conforming processor retains the whole `［＃…］` as a generic annotation
+(§6.14), round-tripping byte-exact. The measured occurrence is recorded so the
+boundary is auditable.
+
+- **Rare bouten in bare-range form** — `［＃鎖線］…［＃鎖線終わり］` and the
+  破線 / 黒三角傍点 variants: **0 occurrences**. The forward-reference form
+  (`「X」に鎖線の傍点` etc.) stays normative; the bare-range deferral is recorded
+  in [ADR-0010](../docs/adr/0010-compound-indent-and-rare-bouten.md).
+- **Right-side ruby / annotation** — the right side is already the default
+  `｜《》` ruby, so an explicit `の右に…のルビ` bracket is redundant. The
+  `の右に…のルビ` and `の右に…の注記` forms have **0 occurrences** (an earlier
+  "≈8" was wrong); the attested side-annotation form `「X」に「Y」の注記` is
+  recognised (above).
 - **Table cell / row structure** — `［＃ここから表］` marks a *region*; there is
   no sanctioned cell or row delimiter (the full-width `／` is an editor
-  convention). `段間に罫` appears just **once** across the sweep (the earlier
-  "zero" was imprecise) and `上段`/`下段` never appear as directives — far too
-  sparse to pin a sub-region model.
-- **Right-side ruby / annotation** — the right side is already the default
-  `｜《》` ruby, so an explicit `の右に…のルビ` bracket is redundant. **Corrected
-  count: the `の右に…のルビ` and `の右に…の注記` forms have 0 occurrences** (the
-  earlier "≈8" was wrong); the attested side-annotation form is
-  `「X」に「Y」の注記`, now recognised (above).
+  convention). `段間に罫` appears just **once** across the sweep and `上段`/`下段`
+  never appear as directives (**0**) — far too sparse to pin a sub-region model.
+- **Column sub-regions** — `上段`/`下段`/`段組み適用外` as in-region directives:
+  **0 occurrences**. The `段組み` region itself is recognised; it carries no
+  sanctioned sub-region split.
+
+### Still deferred
+
+- **Block centring with no closer** — `ここから中央揃え` (**0**) and the attested
+  `ここからページの左右中央` (**11**) appear in the corpus **without a matching
+  closer**, so they do not fit the paired-container model and remain generic
+  annotations. (Page-centring *within* an indent **is** supported — §6.6, above.)
+- **地寄せ** (margined right-align) and **embedded-directive compounds** —
+  `［＃ここからN字下げ、「」は返り点］`, `［＃ここから字下げ、ここから数式］` and the
+  like: any unrecognised clause triggers the **decline-whole** rule, so the whole
+  directive is retained losslessly and reports
+  [`unrecognised-container-directive`](diagnostics.md#unrecognised-container-directive).
 - **Left-ruby block form** (`［＃左にルビ付き］…［＃左に「X」のルビ付き終わり］`) —
   the paired-block counterpart of the forward-reference left-side ruby (which
   **is** normative). ~2 occurrences, and the reading sits in the *closer*, so it
   does not fit the streaming per-run container machinery. Pinned only on demand.
-- **Dedicated-node layout / structural markers** — `［＃改行］` (forced break),
-  `［＃本文終わり］` (body end), `字組み` compounds, and the `ローマ数字、面-区-点`
-  gaiji form each need a node the model does not yet carry; left as generic
-  annotations until promoted.
+- **`ローマ数字、面-区-点` gaiji form** — needs a node the model does not yet
+  carry; left as a generic annotation until promoted.
 
 The full sweep leaves a residue of generic-annotation occurrences (down from
 ~194k before successive rounds of corpus grounding). The remainder is
