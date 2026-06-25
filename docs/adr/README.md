@@ -10,6 +10,7 @@ section it governs.
 | [0001](0001-kaeriten-pairing-rule.md) | Kaeriten pairing is document-wide base presence | accepted |
 | [0002](0002-implicit-ruby-base-extent.md) | Implicit ruby base extends over one character class | accepted |
 | [0003](0003-canonical-serialization-forms.md) | Canonical serialization picks one surface form per concept | accepted |
+| [0010](0010-compound-indent-and-rare-bouten.md) | Compound indent modifiers canonicalise; rare bouten ranges stay deferred | accepted |
 
 Decisions are grounded in the official guide and the real Aozora Bunko
 corpus; corpus frequency claims cite the observation that motivated them.

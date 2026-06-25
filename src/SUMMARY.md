@@ -28,6 +28,7 @@
   - [6.16 Superscript, subscript, and side glyphs (上付き・下付き・小書き)](notation/script-glyphs.md)
   - [6.17 Character size (文字サイズ)](notation/font-size.md)
   - [6.18 Horizontal writing (横組み)](notation/horizontal.md)
+  - [6.19 Structural markers (本文終わり・改行)](notation/structural-markers.md)
 - [7. Structural Processing Model](structural-model.md)
 - [8. Reference Rendering](rendering.md)
 - [9. Diagnostics and Error Handling](diagnostics.md)
