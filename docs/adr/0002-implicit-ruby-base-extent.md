@@ -1,7 +1,9 @@
 # 0002. Implicit ruby base extends over one character class
 
 - Status: accepted
-- Date: 2026
+- Date: 2026-06-16
+- Deciders: @P4suta
+- Tags: ruby
 - Governs: §6.1 (Ruby)
 
 ## Context
