@@ -29,6 +29,14 @@ dictionary glyph (`※［＃二重かっこ開く］` → `｟`, the same glyph 
 gaiji. The canonical serialization quotes the description (`※［＃「二重かっこ開く」］`).
 Vector: `gaiji_double_paren`.
 
+A bare **`ローマ数字N`** description (`※［＃ローマ数字17］`) is recognised the same
+way, with the glyph **composed** rather than looked up: the numeral `N` is spelled
+from the U+2160 (uppercase) / U+2170 (lowercase, `ローマ数字N小文字`) single-letter
+Roman-numeral blocks — `17` → `ⅩⅤⅠⅠ` (`Ⅹ`+`Ⅴ`+`Ⅰ`+`Ⅰ`) — because values ≥ 13 have
+no single JIS X 0213 cell (the corpus pairs those with a page-line locator, not an
+address). It resolves like any other gaiji and serialises to the canonical quoted
+form (`※［＃「ローマ数字17」］`). Vector: `roman_numeral`.
+
 The accent form `〔…〕` (§4.3, [Annex A](../annex/accent-table.md)) and the
 iteration marks `／＼` / `／″＼` are related glyph-encoding notations covered
 in [Annex B](../annex/gaiji.md).
@@ -56,8 +64,8 @@ canonical. Vector: `standalone_gaiji`.
 
 - The reference yields a `gaiji` node whose span covers the whole
   `※［＃…］`. Resolution order is normative ([Annex B](../annex/gaiji.md)):
-  explicit `U+XXXX`, then men-ku-ten, then a named description, then a
-  single-character description.
+  explicit `U+XXXX`, then men-ku-ten, then a named description (including the
+  composed `ローマ数字N` numerals), then a single-character description.
 - On success the node carries the resolved scalar (or combining sequence);
   reference rendering (§8) emits that character (optionally wrapped for
   styling).
@@ -72,5 +80,5 @@ canonical. Vector: `standalone_gaiji`.
 
 ## Conformance vectors
 
-`gaiji`, `gaiji_double_paren`, `unresolved-gaiji`,
+`gaiji`, `gaiji_double_paren`, `roman_numeral`, `unresolved-gaiji`,
 `accent-decomposition-applied`.
