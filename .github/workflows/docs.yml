@@ -1,0 +1,51 @@
+# Build the spec with mdBook and publish it to GitHub Pages.
+#
+# Much simpler than a code repo's docs site: there is no API reference
+# or playground to assemble — just `mdbook build` (mdBook is provisioned
+# from mise.toml, exactly as in ci.yml) and a Pages deploy of ./book.
+#
+# Action pinning: every action is pinned to a full commit SHA (the
+# `# vX` trailer is the resolved tag); Dependabot's github-actions
+# ecosystem keeps the SHAs current.
+
+name: docs
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# One deploy in flight at a time; queue the rest so we never partially
+# overwrite the Pages bucket.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: build site
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0  # v7.0.0
+      - uses: jdx/mise-action@c37c93293d6b742fc901e1406b8f764f6fb19dac  # v2
+      - name: Build the book
+        run: mdbook build
+      - uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9  # v5.0.0
+        with:
+          path: book
+
+  deploy:
+    name: deploy
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/deploy-pages@cd2ce8fcbc39b97be8ca5fce6e763baed58fa128  # v5.0.0
+        id: deployment

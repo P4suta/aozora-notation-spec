@@ -1,0 +1,39 @@
+name: codeql
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  schedule:
+    - cron: "23 4 * * 1"  # weekly, Monday 04:23 UTC
+
+permissions:
+  security-events: write
+  contents: read
+  actions: read
+
+concurrency:
+  group: codeql-${{ github.ref }}
+  cancel-in-progress: true
+
+# The only first-class code in this spec repo is the Python validation
+# tooling under tools/ (validate_vectors.py, abnf_check.py, linkcheck.py),
+# so the scan is Python-only. `build-mode: none` — nothing to compile.
+jobs:
+  codeql:
+    name: codeql (${{ matrix.language }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        language: [python]
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0  # v7.0.0
+      - uses: github/codeql-action/init@8aad20d150bbac5944a9f9d289da16a4b0d87c1e  # v4.36.2
+        with:
+          languages: ${{ matrix.language }}
+          build-mode: none
+      - uses: github/codeql-action/analyze@8aad20d150bbac5944a9f9d289da16a4b0d87c1e  # v4.36.2
+        with:
+          category: "/language:${{ matrix.language }}"
