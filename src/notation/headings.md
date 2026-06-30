@@ -70,11 +70,15 @@ appears almost exclusively in the paired form.
 - Reference rendering (§8): a promoted standard 大 / 中 / 小 heading is
   `<h1>`–`<h3>` (`class="aozora-heading aozora-heading-<large|medium|small>"`);
   the 同行 / 窓 styles add an `aozora-heading-<same-line|window>` modifier (and
-  窓 renders as a styled `<div>` rather than an outline `<hN>`); an unpromoted
-  hint is a hidden inline marker (`<span class="aozora-heading-hint"
-  data-level=… data-style=… data-target=… hidden>`), with `data-style` present
-  only for a non-standard style. The precise tag is part of the reference
-  mapping (§8.2), not mandated. The paired and block forms render the same
+  窓 renders as a styled `<div>` rather than an outline `<hN>`); a
+  referent-present unpromoted hint is a hidden inline marker
+  (`<span class="aozora-heading-hint" data-level=… data-style=… data-target=…
+  hidden>`), with `data-style` present only for a non-standard style, while a
+  self-contained hint (see Error conditions) renders its target visibly
+  (`<span class="aozora-heading-hint" data-level=…>X</span>`, no `hidden`, no
+  `data-target`) — the inline analogue of a heading, valid where the directive
+  sits mid-line. The precise tag is part of the reference mapping (§8.2), not
+  mandated. The paired and block forms render the same
   heading element (`<hN>` / `<div>` with the level and style classes) wrapping
   their delimited content directly (phrasing content, not a nested paragraph).
 - Serialization reconstructs the directive (the hint's literal target, or the
@@ -82,10 +86,17 @@ appears almost exclusively in the paired form.
 
 ## Error conditions
 
-- A heading hint whose target is absent from the look-back degrades to a
-  generic annotation (§6.14), as with other forward references (§7.5).
+- A **single-target** heading hint whose target is absent from the look-back is
+  not an error: it is a **self-contained** forward heading — the quoted run is
+  itself the heading text, retained as a visible `heading-hint` marker (never
+  promoted, since there is no preceding line to reclaim). §6.14 degradation does
+  not apply, as with the other forward references (§6.2, §6.12, §7.5).
+- A **multi-quote** heading hint with any missing referent still degrades to a
+  generic annotation (§6.14): a non-contiguous referent cannot be spliced into a
+  single heading run.
 
 ## Conformance vectors
 
-`heading`, `heading_hint`, `heading_ruby_hint`, `heading_promoted`,
-`heading_same_line`, `heading_window`, `heading_paired_window`, `heading_block`.
+`heading`, `heading_hint`, `heading_forward_no_referent`, `heading_ruby_hint`,
+`heading_promoted`, `heading_same_line`, `heading_window`,
+`heading_paired_window`, `heading_block`.
