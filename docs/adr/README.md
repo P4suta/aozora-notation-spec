@@ -16,6 +16,7 @@ back. (Clerical metadata — date format, `Deciders`, `Tags` — may be normalis
 | [0002](0002-implicit-ruby-base-extent.md) | Implicit ruby base extends over one character class | accepted |
 | [0003](0003-canonical-serialization-forms.md) | Canonical serialization picks one surface form per concept | accepted |
 | [0004](0004-compound-indent-and-rare-bouten.md) | Compound indent modifiers canonicalise; rare bouten ranges stay deferred | accepted |
+| [0005](0005-adopt-semver-and-a-version-single-source-of-truth.md) | Adopt SemVer and a version single source of truth | accepted |
 
 Decisions are grounded in the official guide and the real Aozora Bunko
 corpus; corpus frequency claims cite the observation that motivated them.
@@ -35,4 +36,4 @@ corpus; corpus frequency claims cite the observation that motivated them.
 ## Numbering
 
 ADRs use a single sequential counter starting at `0001`, with no gaps. The next
-ADR is `0005`. `just new-adr` picks the next number automatically (highest + 1).
+ADR is `0006`. `just new-adr` picks the next number automatically (highest + 1).

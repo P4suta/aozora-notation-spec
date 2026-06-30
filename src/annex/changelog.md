@@ -3,7 +3,7 @@
 The authoritative change log is `CHANGELOG.md` at the repository root; this
 annex mirrors it for readers of the rendered book.
 
-## Draft v0.1 (unreleased)
+## Draft v0.1.0 (unreleased) <!-- x-release-please-version -->
 
 **Added** — the initial framework (§§1–5, 7–12) and annexes; normative
 notation families (ruby including the left-side ruby (saidoku-moji building
@@ -36,6 +36,7 @@ restored to the display form `《…》` (U+300A/U+300B); a literal `《《…�
 source is two ruby openers (a `nested-ruby` error). The `double_ruby` vector
 is renamed `angle_quote`.
 
-Versioning: the specification is `vMAJOR.MINOR`; a normative change that can
-break a conforming processor bumps MAJOR. See §10.5 for how provisional
-families graduate to `must` coverage.
+Versioning: the specification follows [Semantic Versioning](https://semver.org).
+While pre-1.0 (`0.x`), a normative change that can break a conforming processor
+bumps the minor; backward-compatible additions and fixes bump the patch. See
+§10.5 for how provisional families graduate to `must` coverage.

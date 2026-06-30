@@ -1,6 +1,6 @@
 # The Aozora Bunko Notation Specification
 
-**Status:** Draft v0.1 · **Date:** 2026 · **License:** Apache-2.0 OR MIT
+**Status:** Draft v0.1.0 · **Date:** 2026 · **License:** Apache-2.0 OR MIT <!-- x-release-please-version -->
 
 This document specifies **青空文庫記法** (Aozora Bunko notation): the
 inline and block annotation language used to mark up plain-text works in the

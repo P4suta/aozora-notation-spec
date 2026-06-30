@@ -28,7 +28,9 @@ Where the official documentation is silent or ambiguous, this spec makes an
 
 ## Status
 
-Draft `v0.1`. The framework and the §6 notation families are normative; a few
+Draft `v0.1.0`. <!-- x-release-please-version -->
+
+The framework and the §6 notation families are normative; a few
 families the official guide itself treats as provisional are documented with
 their notation, their full normative semantics deferred to a later revision.
 See the [change log](src/annex/changelog.md).
@@ -66,8 +68,9 @@ The intent is for this repository to become the **single source of truth**
 that notation processors conform to. An implementation claims conformance by
 running the vectors under `conformance/vectors/` per
 [`conformance/RUNNER.md`](conformance/RUNNER.md) and matching every
-`must`-level expectation. A consuming implementation pins this repository
-(e.g. by git revision) and fails its CI on divergence.
+`must`-level expectation. A consuming implementation pins a **tagged release**
+of this repository (`vX.Y.Z`; a git revision also works) and fails its CI on
+divergence.
 
 ## Licence
 
