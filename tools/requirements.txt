@@ -2,4 +2,4 @@
 # Pinned loosely; Dependabot (pip ecosystem, /tools) keeps them fresh and
 # CI installs from here so host == CI. validate_vectors.py needs jsonschema;
 # abnf_check.py and linkcheck.py are pure stdlib.
-jsonschema>=4.0
+jsonschema>=4.26.0
