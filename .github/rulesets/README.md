@@ -25,16 +25,18 @@ unsigned commits and must exempt its App.
 
 ### Required status checks
 
-`main-branch.json` requires the `spec`, `lint`, and `codeql (python)` checks
-(`integration_id: 15368` is GitHub Actions). These must match the actual job
-names in `.github/workflows/` — if a workflow job is renamed, update the
-context here too. `commitlint` is intentionally **not** required: it is skipped
-on Dependabot PRs (see `ci.yml`), and a skipped required check blocks the merge;
-the commit-msg lefthook hook plus the visible PR check cover it.
+`main-branch.json` requires the `spec`, `lint`, `codeql (python)`, and
+`release-gate` checks (`integration_id: 15368` is GitHub Actions). These must
+match the actual job names in `.github/workflows/` — if a workflow job is
+renamed, update the context here too. `release-gate` enforces the
+`release: approved` label on a Release PR (ADR-0007). `commitlint` is
+intentionally **not** required: it is skipped on Dependabot PRs (see `ci.yml`),
+and a skipped required check blocks the merge; the commit-msg lefthook hook plus
+the visible PR check cover it.
 
-> Apply this only **after** the `lint` job (shared-config PR) and the
-> `codeql` workflow (this PR) have merged to `main`, so all three contexts
-> exist; otherwise PRs wait forever on a check that never runs.
+> Add a context here only **after** the job exists on `main`; otherwise every
+> PR waits forever on a check that never runs. (`release-gate` was added with
+> ADR-0007, after its `ci.yml` job merged.)
 
 ## Applying / re-syncing (maintainer only)
 
@@ -58,12 +60,27 @@ id=$(gh api "repos/$REPO/rulesets" --jq '.[] | select(.name=="main-branch-protec
 gh api "repos/$REPO/rulesets/$id" -X PUT --input .github/rulesets/main-branch.json
 ```
 
-## Optional, apply after the first release
+## App-only `v*` tag creation (ADR-0007)
 
-- **App-only `v*` tag creation.** Once the spec cuts its first release, a
-  maintainer MAY add an inline ruleset restricting `v*` tag *creation* to the
-  release App (`rules: [{ "type": "creation" }]`, `bypass_actors` = the App as an
-  `Integration`). Built inline with `jq` — not a committed file, since an empty
-  `bypass_actors` would lock out everyone, including the App. Apply it **last**,
-  after the first successful release, so it never blocks a manual bootstrap tag.
-  (Mirrors sibling `aozora`'s "release-tags-app-only".)
+Complements `release-tags-immutable` (which blocks delete / update / force-push)
+by restricting tag **creation** to the release App, so no human can hand-push a
+`v*` tag to fire a release. **Inline only — never a committed file**, because a
+committed file with an empty `bypass_actors` would lock out the App too. Apply
+with the App's numeric **App ID** (App settings page — *not* the Client ID, *not*
+the bot user id) injected at apply time:
+
+```sh
+REPO=P4suta/aozora-notation-spec
+APP_ID=<release App's numeric App ID>
+gh api "repos/$REPO/rulesets" -X POST --input <(jq -n --argjson app "$APP_ID" '{
+  name: "release-tags-app-only",
+  target: "tag",
+  enforcement: "active",
+  conditions: { ref_name: { include: ["refs/tags/v*"], exclude: [] } },
+  rules: [{ type: "creation" }],
+  bypass_actors: [{ actor_id: $app, actor_type: "Integration", bypass_mode: "always" }]
+}')
+```
+
+Safe to apply pre-release: the first release's `v*` tag is created by the App
+(release-please), not by hand. (Mirrors sibling `aozora`'s "release-tags-app-only".)

@@ -30,7 +30,8 @@
         "required_status_checks": [
           { "context": "spec", "integration_id": 15368 },
           { "context": "lint", "integration_id": 15368 },
-          { "context": "codeql (python)", "integration_id": 15368 }
+          { "context": "codeql (python)", "integration_id": 15368 },
+          { "context": "release-gate", "integration_id": 15368 }
         ]
       }
     }
