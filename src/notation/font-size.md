@@ -41,6 +41,28 @@ font-size-close = LBRACK HASH %s"ここで" direction %s"文字終わり" RBRACK
 The block closer drops the magnitude — it names only the **direction**
 (`大きな` / `小さな`); the opener's stage count is authoritative.
 
+### Absolute sizes (特大 / 大 / 中 / 小文字)
+
+A second, **absolute** scale names a fixed size rather than a relative stage —
+`特大文字` > `大文字` > `中文字` > (body) > `小文字`. The forward-reference form
+is corpus-attested (`「X」は小文字`); unlike the relative scale it takes no
+magnitude.
+
+```abnf
+abs-size    = target "［＃「" target "」は" abs-keyword "］"
+abs-keyword = %s"特大文字" / %s"大文字" / %s"中文字" / %s"小文字"
+```
+
+```text
+ヱ［＃「ヱ」は小文字］
+```
+
+The absolute `小文字` is a *size*, distinct from the script-glyph
+`上付き小文字` / `下付き小文字` (§6.16) whose keyword it is a substring of: the
+recogniser matches the whole `は…` body, so the two never collide. (The
+single-work postfix headline forms `［＃大文字］` / `［＃大文字、太字］` apply the
+same scale at the line scope; they are documented under the line directives.)
+
 ## Parameters
 
 - **magnitude** — the number of stages, 1‥127. A leading run of ASCII or
@@ -68,6 +90,10 @@ The block closer drops the magnitude — it names only the **direction**
 - Serialization (§7.6) reconstructs `［＃「X」はN段階大きな/小さな文字］`. A
   full-width magnitude canonicalises to ASCII; the mapping is idempotent, so
   the parse∘serialize fixed point holds after the first pass.
+- The **absolute** forward form yields an `emphasis` node carrying the absolute
+  size; reference rendering (§8) is `<span class="aozora-font-{slug}">…</span>`
+  with slug `font-extra-large` / `font-large` / `font-medium` / `font-small`.
+  Serialization reconstructs `［＃「X」は…文字］` byte-exact.
 
 ## Error conditions
 
@@ -82,4 +108,5 @@ The block closer drops the magnitude — it names only the **direction**
 ## Conformance vectors
 
 `font_size_larger_forward`, `font_size_smaller_forward`, `font_size_block`,
-`font_size_larger_no_referent` (under `conformance/vectors/`).
+`font_size_larger_no_referent`, `font_size_absolute_small_forward` (under
+`conformance/vectors/`).
