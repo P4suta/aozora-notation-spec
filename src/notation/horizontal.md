@@ -45,13 +45,15 @@ horizontal-close  = LBRACK HASH %s"ここで横組み終わり" RBRACK
 
 ## Error conditions
 
-- **Target with no referent (inline)** — degrades to a generic annotation
-  (§6.14).
+- **Target with no referent (inline)** — the quoted target has no earlier run
+  to reorient, so it is itself the 横組み run: a **self-contained** forward
+  reference, rendered `<span class="aozora-yokogumi">`. Serialization
+  reconstructs the directive byte-exact (§7.6).
 - **Mismatched / unclosed block** — handled per
   [`mismatched-container-close`](../diagnostics.md#mismatched-container-close)
   and [`unclosed-bracket`](../diagnostics.md#unclosed-bracket).
 
 ## Conformance vectors
 
-`horizontal_inline_forward`, `horizontal_container` (under
-`conformance/vectors/`).
+`horizontal_inline_forward`, `horizontal_container`,
+`horizontal_inline_forward_no_referent` (under `conformance/vectors/`).
