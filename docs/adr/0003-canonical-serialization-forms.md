@@ -1,7 +1,9 @@
 # 0003. Canonical serialization picks one surface form per concept
 
 - Status: accepted
-- Date: 2026
+- Date: 2026-06-23
+- Deciders: @P4suta
+- Tags: serialization
 - Governs: §6 (notation families), §7 (structural model), the serialize projection
 
 ## Context

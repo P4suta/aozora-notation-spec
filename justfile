@@ -51,3 +51,19 @@ typos:
 
 # Everything CI runs (build needs mdBook; the rest is pure Python).
 ci: validate abnf-check linkcheck typos fmt-check build
+
+# Scaffold a new ADR under docs/adr/ from the template: picks the next
+# 4-digit number, slugifies the title, stamps today's date, and writes a
+# skeleton. Pure host-side file templating — no toolchain needed.
+#   just new-adr "Make the kaeriten check streaming"
+new-adr TITLE:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    last=$(ls docs/adr/ | grep -oE '^[0-9]{4}' | sort -n | tail -1)
+    n=$(printf '%04d' $((10#$last + 1)))
+    slug=$(printf '%s' "{{TITLE}}" | tr '[:upper:] ' '[:lower:]-' | tr -cd 'a-z0-9-')
+    f="docs/adr/${n}-${slug}.md"
+    [[ -e "$f" ]] && { echo "$f already exists" >&2; exit 1; }
+    cp docs/adr/0000-template.md "$f"
+    sed -i -e "s/^# NNNN. TITLE_HERE/# ${n}. {{TITLE}}/" -e "s/YYYY-MM-DD/$(date +%F)/" "$f"
+    echo "Created $f"

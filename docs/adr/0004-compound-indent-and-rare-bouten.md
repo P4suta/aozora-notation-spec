@@ -1,7 +1,9 @@
-# 0010. Compound indent modifiers canonicalise; rare bouten ranges stay deferred
+# 0004. Compound indent modifiers canonicalise; rare bouten ranges stay deferred
 
 - Status: accepted
-- Date: 2026
+- Date: 2026-06-25
+- Deciders: @P4suta
+- Tags: layout, bouten, serialization
 - Governs: §6.6 (Layout containers), §6.2 (Bouten), the serialize and html projections
 
 ## Context

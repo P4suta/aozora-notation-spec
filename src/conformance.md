@@ -108,7 +108,7 @@ Two families that this section previously listed as outside the model are now
   **within** an indent (`ページの左右中央に`) is part of the same compound form
   and is likewise supported. See `indent_compound_styled`. The canonical order,
   spellings, and the modifier set are fixed by
-  [ADR-0010](../docs/adr/0010-compound-indent-and-rare-bouten.md) (extending
+  [ADR-0004](../docs/adr/0004-compound-indent-and-rare-bouten.md) (extending
   [ADR-0003](../docs/adr/0003-canonical-serialization-forms.md)).
 
 ### Closed as a boundary (kept lossless-generic)
@@ -121,7 +121,7 @@ boundary is auditable.
 - **Rare bouten in bare-range form** — `［＃鎖線］…［＃鎖線終わり］` and the
   破線 / 黒三角傍点 variants: **0 occurrences**. The forward-reference form
   (`「X」に鎖線の傍点` etc.) stays normative; the bare-range deferral is recorded
-  in [ADR-0010](../docs/adr/0010-compound-indent-and-rare-bouten.md).
+  in [ADR-0004](../docs/adr/0004-compound-indent-and-rare-bouten.md).
 - **Right-side ruby / annotation** — the right side is already the default
   `｜《》` ruby, so an explicit `の右に…のルビ` bracket is redundant. The
   `の右に…のルビ` and `の右に…の注記` forms have **0 occurrences** (an earlier

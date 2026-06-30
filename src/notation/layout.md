@@ -121,7 +121,7 @@ center-single     = LBRACK HASH ( %s"ページの左右中央" / %s"中央揃え
   `字組み` (Kumi) are **distinct** and are never merged. The top-flush hanging
   form `ここから天付き、折り返してM字下げ` models as amount `0` plus wrap `M` and
   canonicalises to `ここから0字下げ、折り返してM字下げ`. These canonical picks are
-  fixed by [ADR-0010](../../docs/adr/0010-compound-indent-and-rare-bouten.md)
+  fixed by [ADR-0004](../../docs/adr/0004-compound-indent-and-rare-bouten.md)
   (extending [ADR-0003](../../docs/adr/0003-canonical-serialization-forms.md)).
 - **Decline-whole on any unknown clause (losslessness).** A compound opener
   governs a container **only when every clause is recognised**. If **any**
@@ -192,7 +192,7 @@ hanging form and the top-flush 天付き form), 地付き / 地上げ, 字詰め
 a line-layout clause (`字詰め` / `字組み`), and the decorative styles ゴシック体,
 横書き (= 横組み), 罫囲み, and 小さい活字 (canonical order, spellings, and the
 decline-whole-on-unknown rule are fixed in
-[ADR-0010](../../docs/adr/0010-compound-indent-and-rare-bouten.md)).
+[ADR-0004](../../docs/adr/0004-compound-indent-and-rare-bouten.md)).
 
 Deferred to a later revision (§10.5): the **block** centring form
 (`ここから中央揃え` / `ここからページの左右中央`, which has no closer in the
