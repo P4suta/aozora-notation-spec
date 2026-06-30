@@ -13,12 +13,14 @@ body matches no other construct.
 ```text
 怪体な［＃「怪体」に「ママ」の注記］          ← "as-is from the source"
 峰﹅［＃「峰」は底本では「峯」］              ← textual divergence note
+本文［＃入力者注(5)］                        ← numbered input-typist note (→ 注5)
 ［＃なにかしらの注記］                       ← generic (unrecognised) annotation
 ```
 
 ```abnf
 mama-note     = LBRACK HASH LQUOTE target RQUOTE %s"に「ママ」の注記" RBRACK
 textual-note  = LBRACK HASH LQUOTE target RQUOTE %s"は底本では" LQUOTE alt RQUOTE RBRACK
+editor-note   = LBRACK HASH %s"入力者注(" 1*DIGIT %s")" RBRACK   ; ASCII parens + digits
 annotation    = directive          ; any body not classified by §6.1–§6.13
 ```
 
@@ -27,12 +29,18 @@ annotation    = directive          ; any body not classified by §6.1–§6.13
 - **target** — for `ママ` and textual-note forms, the quoted run the note
   concerns (resolved per §7.5).
 - **alt** — for a textual note, the base-text form the run diverges from.
+- **index** — for the numbered input-typist note (`入力者注(N)`), the note
+  number `N` (ASCII digits) referenced in the file's 凡例.
 
 ## Semantics
 
 - A `ママ` note marks its target as intentionally reproduced from the source;
   a textual note records the base-text reading. Both yield an `annotation`
   node carrying the editorial kind and resolve their target by §7.5.
+- A numbered `入力者注(N)` note yields an `annotation` node of editorial kind
+  `editor-note`, rendered (§8) as a visible `注N` superscript rather than a
+  hidden span. The **whole body** must match exactly; a compound note that
+  merely cites a number (e.g. `底本では…。入力者注(6)`) stays a textual note.
 - **Generic annotation (the catch-all).** Any directive whose body is not
   classified by §6.1–§6.13 yields a generic `annotation` node that **retains
   the directive's literal bytes**. A processor **MUST NOT** drop it: this is
@@ -54,4 +62,4 @@ annotation    = directive          ; any body not classified by §6.1–§6.13
 
 ## Conformance vectors
 
-`annotation`, `unrecognised-container-directive`.
+`annotation`, `editor_note`, `unrecognised-container-directive`.
