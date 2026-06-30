@@ -19,8 +19,8 @@ This specification is designed to be the **single source of truth** a
 processor conforms to. The normative prose, the examples, and the
 machine-readable suite are kept in one repository so they cannot drift: every
 normative example in §6 corresponds to a vector, and a consuming processor
-**SHOULD** pin this repository by revision and run the suite in its own CI,
-failing on any `must` mismatch.
+**SHOULD** pin a tagged release (`vX.Y.Z`) of this repository — a git revision
+also works — and run the suite in its own CI, failing on any `must` mismatch.
 
 ## 10.3 Conformance suite
 
@@ -48,7 +48,7 @@ serializer; `html` is compared when the processor has the reference renderer
 
 An implementation claiming conformance SHOULD state:
 
-- the specification revision it targets (this repository's git revision);
+- the specification version it targets (a `vX.Y.Z` release tag; or the git revision);
 - which projections it produces;
 - its results against the suite, including any justified `should`/`may`
   divergences.

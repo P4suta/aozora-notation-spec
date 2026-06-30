@@ -58,7 +58,9 @@ with Aozora Bunko.
 
 ## 1.3 Document status
 
-This is **draft v0.1**. The framework (§§1–5, 7–12) and the notation families
+**Status:** draft v0.1.0 <!-- x-release-please-version -->
+
+The framework (§§1–5, 7–12) and the notation families
 in §6 are normative. A few families that the official guide itself treats as
 provisional — 太字 / 斜体 (§6.12), 表 / 段組 (§6.13), saidoku-moji (§6.5),
 and some layout directives (§6.6) — are documented with their notation, but

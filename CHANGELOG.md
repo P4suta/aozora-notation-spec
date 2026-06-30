@@ -1,11 +1,13 @@
 # Change log
 
 All notable changes to this specification are recorded here. This document
-follows [Keep a Changelog](https://keepachangelog.com/) conventions; the
-specification itself is versioned `vMAJOR.MINOR` (a normative change that can
-break a conforming processor bumps MAJOR).
+follows [Keep a Changelog](https://keepachangelog.com/) conventions and the
+specification is versioned per [Semantic Versioning](https://semver.org).
+**Pre-1.0 (`0.x`):** a normative change that can break a conforming processor
+bumps the **minor** (`0.x → 0.(x+1).0`); backward-compatible additions and fixes
+bump the **patch**. At `1.0.0` the contract switches to MAJOR-for-breaking.
 
-## [Unreleased] — draft v0.1
+## [Unreleased]
 
 ### Added
 
