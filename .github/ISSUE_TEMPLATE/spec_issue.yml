@@ -1,0 +1,56 @@
+name: Spec issue
+description: An ambiguity, error, or underspecified case in the specification text.
+title: "[spec] "
+labels: ["spec"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this for problems with the **specification itself** — text that is
+        ambiguous, self-contradictory, contradicts the official 注記一覧, or
+        leaves a real corpus form underspecified. For a bug in a specific
+        processor, file it with that implementation instead.
+  - type: input
+    id: section
+    attributes:
+      label: Spec section / ADR / vector
+      description: "What is at issue, e.g. §6.6, ADR-0003, or vector `ruby_explicit`."
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: The problem
+      description: What is ambiguous, wrong, or missing? Quote the text in question.
+    validations:
+      required: true
+  - type: textarea
+    id: source
+    attributes:
+      label: Source fragment (if applicable)
+      description: |
+        The shortest 青空文庫 source that exposes the issue. If the input is
+        Shift_JIS, include a hex dump (e.g. `xxd foo.txt`) rather than pasted
+        glyphs, since the tracker transcodes bytes on display.
+      render: text
+    validations:
+      required: false
+  - type: textarea
+    id: sources-of-truth
+    attributes:
+      label: Sources of truth
+      description: |
+        Cite the official 注記一覧 page and/or a real corpus occurrence that
+        bears on the correct reading — decisions here must be grounded in both.
+      placeholder: |
+        Official: https://www.aozora.gr.jp/annotation/...
+        Corpus: <work / card id / sweep frequency>
+    validations:
+      required: false
+  - type: checkboxes
+    id: confirmations
+    attributes:
+      label: Confirmations
+      options:
+        - label: I searched existing issues and did not find a duplicate.
+          required: true

@@ -1,0 +1,13 @@
+# GitHub reads this to auto-request reviewers on pull requests.
+# aozora-notation-spec is a single-maintainer project; route everything
+# to @P4suta.
+
+* @P4suta
+
+# Surfaces that especially need maintainer review (duplicated for
+# explicitness so a PR touching these always shows @P4suta even once
+# CODEOWNERS grows).
+/.github/        @P4suta
+/docs/adr/       @P4suta
+/conformance/    @P4suta
+/src/grammar/    @P4suta

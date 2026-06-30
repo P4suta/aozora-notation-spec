@@ -1,0 +1,51 @@
+name: Notation proposal
+description: Document a notation, or promote a deferred / generic-annotation form to normative.
+title: "[notation] "
+labels: ["notation"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        This spec documents only forms that the official 注記一覧 defines
+        **and** the corpus actually uses (no fiction). Concrete grounding —
+        the guide entry plus a corpus frequency — is what moves a proposal
+        forward.
+  - type: input
+    id: notation
+    attributes:
+      label: The notation
+      description: "The 青空文庫 form, e.g. `［＃「X」に「Y」の注記］`."
+    validations:
+      required: true
+  - type: textarea
+    id: official
+    attributes:
+      label: Official 注記一覧 reference
+      description: Link or quote the official guide entry that defines this form.
+      placeholder: https://www.aozora.gr.jp/annotation/
+    validations:
+      required: true
+  - type: textarea
+    id: corpus
+    attributes:
+      label: Corpus evidence
+      description: |
+        Where it occurs in the real corpus and roughly how often (a sweep
+        count, example works / cards). Forms with 0 corpus occurrences are
+        deferred by policy (§10.5).
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed model / serialization (optional)
+      description: How it should parse, render, and round-trip, if you have a view.
+    validations:
+      required: false
+  - type: checkboxes
+    id: confirmations
+    attributes:
+      label: Confirmations
+      options:
+        - label: I checked §6 and §10.5 and this is not already covered or explicitly deferred.
+          required: true
