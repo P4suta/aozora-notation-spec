@@ -69,3 +69,33 @@ jobs:
 
       - name: Build the book
         run: mdbook build
+
+  # A Release Please PR (labelled `autorelease: pending`) may merge only once a
+  # maintainer adds `release: approved` — the deliberate "we are releasing" step.
+  # Normal PRs (no `autorelease: pending`) pass unconditionally. Labels are read
+  # live, so after labelling, re-run just this job to turn it green (no full CI
+  # rerun). Required via the main-branch ruleset, so it actually blocks merge.
+  release-gate:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      pull-requests: read
+    steps:
+      - name: "Require `release: approved` on a Release PR"
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR: ${{ github.event.number }}
+          REPO: ${{ github.repository }}
+        run: |
+          labels=$(gh pr view "$PR" --repo "$REPO" --json labels --jq '.labels[].name')
+          if grep -qx 'autorelease: pending' <<<"$labels"; then
+            if grep -qx 'release: approved' <<<"$labels"; then
+              echo "Release PR is approved — gate open."
+            else
+              echo "::error::Release PR (autorelease: pending) lacks the 'release: approved' label. Add it deliberately, then re-run this job."
+              exit 1
+            fi
+          else
+            echo "Not a Release PR — gate not applicable."
+          fi
