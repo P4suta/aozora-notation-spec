@@ -1,0 +1,30 @@
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: "/"
+    schedule:
+      interval: weekly
+      day: monday
+      time: "02:00"
+      timezone: "Asia/Tokyo"
+    open-pull-requests-limit: 10
+    # Keep the workflow action SHA pins fresh; the human-readable tag
+    # comments are updated automatically alongside the SHA.
+    groups:
+      actions-sha-bumps:
+        patterns: ["*"]
+
+  - package-ecosystem: pip
+    # The spec's only declared Python dependency is jsonschema
+    # (tools/requirements.txt), used by validate_vectors.py. abnf_check.py
+    # and linkcheck.py are pure stdlib. The mdBook/Python toolchain itself
+    # is pinned by mise.toml, which Dependabot does not track.
+    directory: "/tools"
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 5
+    groups:
+      pip-deps:
+        patterns: ["*"]
+        update-types: ["minor", "patch"]

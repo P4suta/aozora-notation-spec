@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Implementation bug (parser/renderer crash, wrong output)
+    url: https://github.com/P4suta/aozora/issues/new/choose
+    about: This repo is the processor-neutral specification. Bugs in a specific implementation belong with that implementation (e.g. the aozora processor).
+  - name: Security report
+    url: https://github.com/P4suta/aozora-notation-spec/security/advisories/new
+    about: Open a **private** security advisory. Do not file security issues publicly.
