@@ -19,7 +19,15 @@ gaiji-ref = REFMARK directive          ; ※［＃ description 〔、address〕 
 ※［＃「口＋世」、U+546D、123-4］          ← Unicode reference (+ provenance)
 ※［＃「土へん＋竒」、123-4］              ← description only (provenance locator)
 ※［＃二の字点、1-2-22］                  ← named, with men-ku-ten
+※［＃二重かっこ開く］                    ← named, dictionary-resolved (no address)
 ```
+
+A description in `「…」` quotes is recognised on its own; a **bare (unquoted)
+description with no address** is recognised only when it names a known
+dictionary glyph (`※［＃二重かっこ開く］` → `｟`, the same glyph as the upstream
+`始め二重括弧` entry), so an ordinary `［＃…］` directive is not mistaken for a
+gaiji. The canonical serialization quotes the description (`※［＃「二重かっこ開く」］`).
+Vector: `gaiji_double_paren`.
 
 The accent form `〔…〕` (§4.3, [Annex A](../annex/accent-table.md)) and the
 iteration marks `／＼` / `／″＼` are related glyph-encoding notations covered
@@ -64,4 +72,5 @@ canonical. Vector: `standalone_gaiji`.
 
 ## Conformance vectors
 
-`gaiji`, `unresolved-gaiji`, `accent-decomposition-applied`.
+`gaiji`, `gaiji_double_paren`, `unresolved-gaiji`,
+`accent-decomposition-applied`.
