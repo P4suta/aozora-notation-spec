@@ -32,11 +32,18 @@ both a block range and a `は`-form leaf, §6.12):
 
 ```text
 注意［＃「注意」は罫囲み］事項。
+新興河上［＃「新興河上」に枠囲み］      ← に particle + 枠囲み spelling
 ```
 
 ```abnf
-keigakomi-inline = target "［＃「" target "」は罫囲み］"
+keigakomi-inline = target "［＃「" target "」"
+                   (%s"は" / %s"に") (%s"罫囲み" / %s"枠囲み" / %s"枠囲い") "］"
 ```
+
+Unlike 太字/斜体 (`は`-only, §6.12), the frame decoration accepts **either**
+particle — `は` ("is framed") or `に` ("frame applied to") — and the corpus
+spells the keyword `罫囲み`, `枠囲み`, or `枠囲い` (okurigana variant). All
+canonicalise to `は罫囲み` on serialize.
 
 ## Parameters
 
@@ -54,8 +61,9 @@ quoted run to box), resolved by the look-back rule of §7.5.
   `<div class="aozora-container aozora-container-keigakomi">…</div>` for the
   block form and `<span class="aozora-keigakomi-inline">…</span>` for the
   inline form.
-- Serialization reconstructs the block opener/closer or the inline directive
-  byte-exact (§7.6).
+- Serialization reconstructs the block opener/closer byte-exact (§7.6); the
+  inline form canonicalises the particle and keyword to `は罫囲み`
+  (`に`→`は`, `枠囲み`/`枠囲い`→`罫囲み`), idempotent after the first pass.
 
 ## Error conditions
 
@@ -66,4 +74,4 @@ quoted run to box), resolved by the look-back rule of §7.5.
 
 ## Conformance vectors
 
-`keigakomi_container`, `keigakomi_inline_forward`.
+`keigakomi_container`, `keigakomi_inline_forward`, `keigakomi_inline_framed`.
