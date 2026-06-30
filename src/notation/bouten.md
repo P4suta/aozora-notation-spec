@@ -72,6 +72,15 @@ Three forms produce emphasis.
   than once in the look-back raises
   [`bouten-target-ambiguous`](../diagnostics.md#bouten-target-ambiguous)
   (warning).
+- **Target with no referent (forward reference)** — a single-target `に<kw>` /
+  `の左に<kw>` directive whose quoted target does not occur in the look-back is a
+  **self-contained** forward bouten: the quoted run is itself the marked text,
+  rendered `<em class="aozora-bouten …">`, and serialization reconstructs the
+  directive byte-exact (§7.6). A no-referent target has zero look-back
+  occurrences, so it never raises `bouten-target-ambiguous`. A **multi-target**
+  bracket (`「A」「B」`) with any missing target is not promoted and degrades to a
+  generic annotation (§6.14): non-contiguous targets cannot be spliced into one
+  leaf.
 - **Unclosed range** — an opener with no closer is handled per
   [`unclosed-bracket`](../diagnostics.md#unclosed-bracket).
 
@@ -79,4 +88,5 @@ Three forms produce emphasis.
 
 `bouten-target-ambiguous`, `bouten_range`, `bouten_range_chain_line`,
 `bouten_chain_line`, `bouten_black_triangle`,
-`mismatched-bouten-container`, `mixed_ruby_bouten`.
+`mismatched-bouten-container`, `mixed_ruby_bouten`,
+`bouten_forward_no_referent`.
