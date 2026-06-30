@@ -24,11 +24,14 @@ jobs:
       # Lint only non-merge commits: `committed` flags any merge commit
       # ("Merge branch 'main' …") as "Missing type", so a maintainer
       # `gh pr update-branch` merge must not reach it (P4suta/aozora#113).
+      # `committed` takes a single revspec, so feed SHAs one per
+      # invocation (`-rn1`); a multi-commit PR would otherwise pass
+      # several positionals at once and abort with "unexpected argument".
       - name: Check Conventional Commits (committed)
         run: |
           base='${{ github.event.pull_request.base.sha }}'
           head='${{ github.event.pull_request.head.sha }}'
-          git rev-list --no-merges "$base..$head" | xargs -r committed
+          git rev-list --no-merges "$base..$head" | xargs -rn1 committed
 
   spec:
     runs-on: ubuntu-latest
