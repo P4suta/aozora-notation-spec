@@ -1,0 +1,14 @@
+# typos (https://github.com/crate-ci/typos) configuration.
+# Named `_typos.toml` per the tool's convention. The generated `book/`
+# dir is .gitignored, so typos already skips it.
+
+[default]
+extend-ignore-identifiers-re = [
+  "[A-Fa-f0-9]{7,}", # git SHAs in commit/provenance references
+]
+
+[default.extend-words]
+# The spec's normative prose uses the English prefix `mis-` (mis-fire,
+# mis-rendering, mis-detecting, mis-handle, …); typos would "correct" the
+# bare `mis` to `miss`/`mist`.
+mis = "mis"

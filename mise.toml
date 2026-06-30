@@ -12,3 +12,7 @@ python = "3.12"
 just = "latest"
 lefthook = "latest"
 "github:crate-ci/committed" = "latest"
+# TOML formatter + spell-checker, run by the `fmt-check` / `typos` recipes
+# and the CI `lint` job (precompiled via aqua / GitHub releases).
+taplo = "latest"
+"github:crate-ci/typos" = "latest"

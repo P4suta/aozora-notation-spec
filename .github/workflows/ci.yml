@@ -17,10 +17,10 @@ jobs:
     # PR doesn't flip the guard and fail the lint (P4suta/aozora#113).
     if: github.event_name == 'pull_request' && github.event.pull_request.user.login != 'dependabot[bot]'
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0  # v7.0.0
         with:
           fetch-depth: 0
-      - uses: jdx/mise-action@v2
+      - uses: jdx/mise-action@c37c93293d6b742fc901e1406b8f764f6fb19dac  # v2
       # Lint only non-merge commits: `committed` flags any merge commit
       # ("Merge branch 'main' …") as "Missing type", so a maintainer
       # `gh pr update-branch` merge must not reach it (P4suta/aozora#113).
@@ -33,17 +33,30 @@ jobs:
           head='${{ github.event.pull_request.head.sha }}'
           git rev-list --no-merges "$base..$head" | xargs -rn1 committed
 
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0  # v7.0.0
+      # mise provisions typos + taplo (and the rest) from mise.toml.
+      - uses: jdx/mise-action@c37c93293d6b742fc901e1406b8f764f6fb19dac  # v2
+      - name: Spell-check (typos)
+        run: typos
+      - name: TOML formatting (taplo)
+        run: taplo fmt --check
+
   spec:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0  # v7.0.0
 
       # mise provisions mdBook (precompiled) + Python 3.12 from mise.toml,
       # so the job no longer compiles mdBook from source.
-      - uses: jdx/mise-action@v2
+      - uses: jdx/mise-action@c37c93293d6b742fc901e1406b8f764f6fb19dac  # v2
 
-      - name: Install jsonschema
-        run: pip install jsonschema
+      # Install from the pinned manifest so host == CI and Dependabot
+      # (pip ecosystem, /tools) can track the dependency.
+      - name: Install Python deps
+        run: pip install -r tools/requirements.txt
 
       - name: Validate conformance vectors
         run: python3 tools/validate_vectors.py

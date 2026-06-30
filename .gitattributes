@@ -1,0 +1,5 @@
+# Defaults: everything is text, normalised to LF in the repo.
+* text=auto eol=lf
+
+# License text files must stay LF even on Windows checkouts.
+LICENSE-*  text eol=lf

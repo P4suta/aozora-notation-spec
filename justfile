@@ -37,5 +37,17 @@ abnf-check:
 linkcheck:
     python3 tools/linkcheck.py
 
+# Format all TOML in place (taplo); config in taplo.toml.
+fmt:
+    taplo fmt
+
+# Check TOML formatting without writing (taplo) — the CI gate.
+fmt-check:
+    taplo fmt --check
+
+# Spell-check the tracked sources (typos); config in _typos.toml.
+typos:
+    typos
+
 # Everything CI runs (build needs mdBook; the rest is pure Python).
-ci: validate abnf-check linkcheck build
+ci: validate abnf-check linkcheck typos fmt-check build
