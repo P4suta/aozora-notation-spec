@@ -14,11 +14,14 @@ GitHub's own ruleset import/export uses exactly this JSON shape
 | --- | --- | --- |
 | `main-branch.json` | default branch | required checks (strict), PR (0 approvals, dismiss-stale, conversation resolution), linear history, no force-push, no deletion |
 | `require-signed-commits.json` | all branches | signed commits |
+| `release-tags.json` | `v*` tags | immutable: no delete / update / force-push |
 
 `enforce_admins`-equivalent behaviour is the **empty `bypass_actors`** — no
-one, including admins, bypasses the rulesets. The repo has no release-plz / App
-automation, so there are no `bypass_actors` exemptions to inject (unlike the
-sibling `aozora` repo).
+one, including admins, bypasses the rulesets. The release automation (Release
+Please, ADR-0006) needs **no `bypass_actors` exemption**: it commits through the
+GitHub API, so its commits are already GitHub-signed and satisfy
+`require-signed-commits` — unlike sibling `aozora`'s release-plz, which raw-pushes
+unsigned commits and must exempt its App.
 
 ### Required status checks
 
@@ -44,6 +47,7 @@ REPO=P4suta/aozora-notation-spec
 # Create (POST). Run once per ruleset.
 gh api "repos/$REPO/rulesets" -X POST --input .github/rulesets/main-branch.json
 gh api "repos/$REPO/rulesets" -X POST --input .github/rulesets/require-signed-commits.json
+gh api "repos/$REPO/rulesets" -X POST --input .github/rulesets/release-tags.json   # before the first release
 
 # Verify.
 gh api "repos/$REPO/rulesets" --jq '.[] | {id, name, target, enforcement}'
@@ -54,8 +58,12 @@ id=$(gh api "repos/$REPO/rulesets" --jq '.[] | select(.name=="main-branch-protec
 gh api "repos/$REPO/rulesets/$id" -X PUT --input .github/rulesets/main-branch.json
 ```
 
-## Not included yet
+## Optional, apply after the first release
 
-- **`release-tags.json`** (immutable `v*` tags) — deferred until the spec
-  actually cuts versioned releases. The CHANGELOG is still `[Unreleased]`
-  (draft v0.1), so there is nothing to protect yet.
+- **App-only `v*` tag creation.** Once the spec cuts its first release, a
+  maintainer MAY add an inline ruleset restricting `v*` tag *creation* to the
+  release App (`rules: [{ "type": "creation" }]`, `bypass_actors` = the App as an
+  `Integration`). Built inline with `jq` — not a committed file, since an empty
+  `bypass_actors` would lock out everyone, including the App. Apply it **last**,
+  after the first successful release, so it never blocks a manual bootstrap tag.
+  (Mirrors sibling `aozora`'s "release-tags-app-only".)
