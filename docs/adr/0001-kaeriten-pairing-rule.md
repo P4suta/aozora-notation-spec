@@ -1,7 +1,9 @@
 # 0001. Kaeriten pairing is document-wide base presence
 
 - Status: accepted
-- Date: 2026
+- Date: 2026-06-16
+- Deciders: @P4suta
+- Tags: kunten, diagnostics
 - Governs: §6.5 (Kunten), `bracketed-kaeriten-no-pair`
 
 ## Context
