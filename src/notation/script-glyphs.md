@@ -65,11 +65,14 @@ forward-reference form, and the corpus attests only it.
 ## Error conditions
 
 - **Target with no referent** — a `は…` directive whose quoted target does not
-  occur in the preceding text has no run to treat; it is not recognised as this
-  family and degrades to a generic annotation (§6.14), so no input is lost
-  (parallel to the 太字/斜体 rule, §6.12).
+  occur in the preceding text has no earlier run to treat, so the quoted target
+  is itself the treated run: a **self-contained** forward reference, rendered
+  `<sup>` / `<sub>` / side `<span>`. Serialization reconstructs the directive
+  byte-exact (§7.6); no input is lost (parallel to the 太字/斜体 rule, §6.12).
 
 ## Conformance vectors
 
 `superscript_forward`, `subscript_forward`, `side_glyph_right`,
-`side_glyph_left` (under `conformance/vectors/`).
+`side_glyph_left`, `superscript_forward_no_referent`,
+`subscript_forward_no_referent`, `side_glyph_right_no_referent`,
+`side_glyph_left_no_referent` (under `conformance/vectors/`).

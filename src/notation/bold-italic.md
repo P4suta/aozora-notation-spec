@@ -78,11 +78,17 @@ the family has both a bare inline range and a `ここから`/`ここで` block r
 - **Unclosed range** — an opener with no closer is handled per
   [`unclosed-bracket`](../diagnostics.md#unclosed-bracket).
 - **Target with no referent (forward reference)** — a `は太字` / `は斜体`
-  directive whose quoted target does not occur in the preceding text has no run
-  to emphasise; it is not recognised as emphasis and degrades to a generic
-  annotation (§6.14), so no input is lost.
+  directive whose quoted target does not occur in the preceding text has no
+  earlier run to emphasise, so the quoted target is itself the styled run: a
+  **self-contained** forward reference, rendered `<b>` / `<i>`. ゴシック体 /
+  ゴチック canonicalise to `太字` (§6.12), idempotent after the first pass.
+  Serialization reconstructs `［＃「X」は太字／斜体］` byte-exact (§7.6); no input
+  is lost. (Contrast the multi-quote body above, which is still unrecognised and
+  degrades, §6.14.)
 
 ## Conformance vectors
 
 `bold_inline`, `italic_inline`, `bold_block`, `italic_block`, `bold_forward`,
-`italic_forward`, `emphasis_mixed` (under `conformance/vectors/`).
+`italic_forward`, `emphasis_mixed`, `bold_forward_no_referent`,
+`italic_forward_no_referent`, `bold_forward_gothic_no_referent` (under
+`conformance/vectors/`).

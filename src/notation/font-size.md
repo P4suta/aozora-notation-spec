@@ -72,11 +72,14 @@ The block closer drops the magnitude — it names only the **direction**
 ## Error conditions
 
 - **Target with no referent** — a `は…文字` directive whose quoted target does
-  not occur in the preceding text degrades to a generic annotation (§6.14).
+  not occur in the preceding text has no earlier run to resize, so the quoted
+  target is itself the resized run: a **self-contained** forward reference,
+  rendered `<span data-steps>`. Serialization reconstructs the directive
+  byte-exact (§7.6).
 - **Malformed magnitude** — a zero, missing, or out-of-range stage count
   degrades (§6.14); no dedicated diagnostic is defined.
 
 ## Conformance vectors
 
-`font_size_larger_forward`, `font_size_smaller_forward`, `font_size_block`
-(under `conformance/vectors/`).
+`font_size_larger_forward`, `font_size_smaller_forward`, `font_size_block`,
+`font_size_larger_no_referent` (under `conformance/vectors/`).
