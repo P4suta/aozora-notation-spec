@@ -1,0 +1,96 @@
+name: link-audit
+
+# Weekly EXTERNAL-link rot audit for the rendered spec — the non-blocking
+# complement to the offline `linkcheck.py` gate in ci.yml (which only
+# checks internal cross-references + SUMMARY consistency).
+#
+# Because a third-party host's uptime / rate-limit / UA-gating is not a
+# sane merge gate, a failure here does NOT block anything: it opens (or
+# updates) a tracking issue labelled `link-audit`, and closes it again
+# once the links are healthy.
+
+on:
+  schedule:
+    - cron: "41 5 * * 2"  # weekly, Tuesday 05:41 UTC (offset from scorecard/codeql Mon)
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: link-audit-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0  # v7.0.0
+      - uses: jdx/mise-action@c37c93293d6b742fc901e1406b8f764f6fb19dac  # v2
+      - name: Build the book
+        run: mdbook build
+      - uses: taiki-e/install-action@9bcaee1dcae34154180f412e2fa69355a7cda9f6  # v2
+        with:
+          tool: lychee
+      - name: lychee external-link audit (online)
+        id: lychee
+        # Do not fail the job on broken links — the tracking issue is the
+        # signal, not a red check. Capture the exit code for the reporter.
+        run: |
+          set +e
+          lychee --no-progress --format markdown --output lychee-report.md 'book/**/*.html'
+          code=$?
+          echo "exit_code=$code" >> "$GITHUB_OUTPUT"
+          echo "lychee exited with $code"
+      - name: Open / update / close tracking issue
+        env:
+          GH_TOKEN: ${{ github.token }}
+          LYCHEE_EXIT: ${{ steps.lychee.outputs.exit_code }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          set -euo pipefail
+          LABEL="link-audit"
+          TITLE="External link audit: broken links in the spec"
+          REPORT="lychee-report.md"
+
+          # Idempotent label (issues:write covers labels).
+          gh label create "$LABEL" -c FBCA04 \
+            -d "Spec external link rot found by the link-audit workflow" 2>/dev/null || true
+
+          existing=$(gh issue list --label "$LABEL" --state open --json number --jq '.[0].number // empty')
+
+          if [ "${LYCHEE_EXIT}" != "0" ]; then
+            {
+              echo "The weekly external-link audit found broken links in the rendered spec."
+              echo
+              echo "Workflow run: ${RUN_URL}"
+              echo
+              echo "These are EXTERNAL links only — internal cross-references are gated on"
+              echo "every PR by \`linkcheck.py\` (offline). A broken external link is often a"
+              echo "transient host outage or genuine rot; verify before editing the spec."
+              echo
+              echo "<details><summary>lychee report</summary>"
+              echo
+              if [ -f "$REPORT" ]; then sed -n '1,500p' "$REPORT"; else echo "(report file missing)"; fi
+              echo
+              echo "</details>"
+            } > issue-body.md
+
+            if [ -n "$existing" ]; then
+              gh issue edit "$existing" --body-file issue-body.md
+              gh issue comment "$existing" --body "Re-audited $(date -u +%Y-%m-%d): still failing. See ${RUN_URL}"
+              echo "Updated issue #${existing}"
+            else
+              gh issue create --title "$TITLE" --label "$LABEL" --body-file issue-body.md
+              echo "Opened a new tracking issue"
+            fi
+          else
+            if [ -n "$existing" ]; then
+              gh issue comment "$existing" --body "External link audit is green again ($(date -u +%Y-%m-%d), ${RUN_URL}). Closing."
+              gh issue close "$existing"
+              echo "Closed issue #${existing}"
+            else
+              echo "All external links healthy; no open issue to manage."
+            fi
+          fi

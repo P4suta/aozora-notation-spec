@@ -9,7 +9,11 @@ src = "src"
 default-theme = "light"
 preferred-dark-theme = "navy"
 no-section-label = false
-# git-repository-url = "https://github.com/<owner>/aozora-notation-spec"
+git-repository-url = "https://github.com/P4suta/aozora-notation-spec"
+edit-url-template = "https://github.com/P4suta/aozora-notation-spec/edit/main/{path}"
+# Project Pages live under a repo subpath, so absolute URLs (404 page,
+# print view) need this base; `mdbook serve` overrides it locally.
+site-url = "/aozora-notation-spec/"
 
 [output.html.fold]
 enable = true
