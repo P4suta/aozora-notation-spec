@@ -16,6 +16,7 @@ body matches no other construct.
 本文［＃入力者注(5)］                        ← numbered input-typist note (→ 注5)
 起上り［＃「起上り」にルビ］                 ← ruby-presence note (X carries ruby)
 本文［＃ルビは「材木置場」にかかる］         ← ruby-binding note (ruby applies to X)
+親［＃左にルビ付き］子［＃左に「よみ」のルビ付き終わり］  ← left-ruby span pair (reading on closer)
 ［＃なにかしらの注記］                       ← generic (unrecognised) annotation
 ```
 
@@ -25,6 +26,8 @@ textual-note  = LBRACK HASH LQUOTE target RQUOTE %s"は底本では" LQUOTE alt 
 editor-note   = LBRACK HASH %s"入力者注(" 1*DIGIT %s")" RBRACK   ; ASCII parens + digits
 ruby-attached = LBRACK HASH LQUOTE target RQUOTE %s"にルビ" RBRACK
 ruby-retarget = LBRACK HASH %s"ルビは" LQUOTE target RQUOTE %s"にかかる" RBRACK
+ruby-pair-open  = LBRACK HASH %s"左にルビ付き" RBRACK
+ruby-pair-close = LBRACK HASH %s"左に" LQUOTE reading RQUOTE %s"のルビ付き終わり" RBRACK
 annotation    = directive          ; any body not classified by §6.1–§6.13
 ```
 
@@ -53,6 +56,15 @@ annotation    = directive          ; any body not classified by §6.1–§6.13
   (`<sup class="aozora-ruby-note">ルビ</sup>`) rather than the run `X` — `X` is
   usually the adjacent text and re-emitting it would double-render. The raw
   bracket round-trips byte-exact (§7.6).
+- The **left-side-ruby span pair** — `左にルビ付き` (opener) … `左に「Y」の
+  ルビ付き終わり` (closer) — brackets a run carrying a left-side ruby whose
+  reading `Y` is named on the closer. Both markers yield an `annotation` node
+  (editorial kinds `ruby-pair-open` / `ruby-pair-close`); like the inline
+  warichu pair they are independent raw-preserving directives, **not** coupled
+  at the tree level. Reference rendering (§8) is a compact marker on each —
+  `左ルビ` on the opener and `左ルビ「Y」` on the closer (the reading `Y` is a
+  gloss, not surrounding text, so it does not double-render). Both round-trip
+  byte-exact (§7.6).
 - **Generic annotation (the catch-all).** Any directive whose body is not
   classified by §6.1–§6.13 yields a generic `annotation` node that **retains
   the directive's literal bytes**. A processor **MUST NOT** drop it: this is
@@ -75,4 +87,4 @@ annotation    = directive          ; any body not classified by §6.1–§6.13
 ## Conformance vectors
 
 `annotation`, `editor_note`, `ruby_attached`, `ruby_retarget`,
-`unrecognised-container-directive`.
+`left_ruby_pair`, `unrecognised-container-directive`.
