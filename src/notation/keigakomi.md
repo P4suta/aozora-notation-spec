@@ -45,6 +45,27 @@ particle — `は` ("is framed") or `に` ("frame applied to") — and the corpu
 spells the keyword `罫囲み`, `枠囲み`, or `枠囲い` (okurigana variant). All
 canonicalise to `は罫囲み` on serialize.
 
+### Box-character enclosure (「□」囲み)
+
+A second inline form names the **enclosing glyph** explicitly, in a quoted
+token after the particle:
+
+```text
+一［＃「一」は「□」囲み］
+```
+
+```abnf
+box-enclosure = target "［＃「" target "」" %s"は「" box-glyph %s"」囲み" "］"
+box-glyph     = %x25A1   ; □ (U+25A1) — the only attested glyph
+```
+
+This is the same enclosure **family** as 罫囲み — it boxes the target run —
+but a distinct **style**: a box glyph rather than a ruled frame. The `□`
+names an enclosure *kind*, not free data; a future non-□ glyph would be a
+further named kind (compare 二重罫囲み / 点線丸囲み), never an arbitrary
+character. The look-back rule of §7.5 consumes the preceding literal exactly
+as the other `は`-form leaves.
+
 ## Parameters
 
 None for the block form. The inline form names a single **target** (the
@@ -56,14 +77,18 @@ quoted run to box), resolved by the look-back rule of §7.5.
   `keigakomi`) governing the enclosed block; it nests with other block
   containers (§7.3).
 - The inline forward-reference form yields an `emphasis` node over its target
-  run and is an **inline** construct.
+  run and is an **inline** construct. The box-character form (`「X」は「□」囲み`)
+  likewise yields an `emphasis` node over its target.
 - Reference rendering (§8) is
   `<div class="aozora-container aozora-container-keigakomi">…</div>` for the
-  block form and `<span class="aozora-keigakomi-inline">…</span>` for the
-  inline form.
+  block form, `<span class="aozora-keigakomi-inline">…</span>` for the inline
+  rule form, and `<span class="aozora-keigakomi-box">…</span>` for the
+  box-character form (the box is drawn by the stylesheet, so the `□` glyph is
+  not emitted into the body).
 - Serialization reconstructs the block opener/closer byte-exact (§7.6); the
-  inline form canonicalises the particle and keyword to `は罫囲み`
-  (`に`→`は`, `枠囲み`/`枠囲い`→`罫囲み`), idempotent after the first pass.
+  inline rule form canonicalises the particle and keyword to `は罫囲み`
+  (`に`→`は`, `枠囲み`/`枠囲い`→`罫囲み`), and the box form reconstructs
+  `「X」は「□」囲み` byte-exact — all idempotent after the first pass.
 
 ## Error conditions
 
@@ -74,4 +99,5 @@ quoted run to box), resolved by the look-back rule of §7.5.
 
 ## Conformance vectors
 
-`keigakomi_container`, `keigakomi_inline_forward`, `keigakomi_inline_framed`.
+`keigakomi_container`, `keigakomi_inline_forward`, `keigakomi_inline_framed`,
+`box_enclosure`, `box_enclosure_no_referent`.
