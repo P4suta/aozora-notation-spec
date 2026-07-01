@@ -142,6 +142,18 @@ than once in the preceding look-back. **Recovery:** applied to the match the
 look-back rule selects, which may not be intended. The label spans the
 directive.
 
+### Forward referent not stylable
+
+`forward-referent-not-stylable` · **warning**
+
+An inline-style forward reference (`［＃「X」は太字／斜体］`, `［＃「X」に傍点］`,
+`は縦中横`, `は「□」囲み`, …, §6.2 / §6.3 / §6.12) named a target `X` that **is**
+present in the look-back (§7.5) but cannot be styled in place: it is a ruby base
+(bouten-over-ruby is not representable), lies on an earlier line, sits inside
+another construct, or is one of several quoted targets. **Recovery:** the
+directive is kept and round-trips unchanged, but the run is left unstyled. The
+label spans the directive.
+
 ### Bracketed kaeriten no pair
 
 `bracketed-kaeriten-no-pair` · **error**

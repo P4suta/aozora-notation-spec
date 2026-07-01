@@ -72,7 +72,11 @@ already-seen text to find the run they apply to:
 Resolution rule: a processor scans the text **preceding** the directive (back
 to the start of the current line, or the document per the construct) for the
 most recent occurrence of the quoted target `X`, and applies the construct to
-that run.
+that run. The matched run may be **adjacent** to the directive (the redundant
+explicit form `平和［＃「平和」に傍点］`) or lie **earlier in the same base run**
+(`太字の［＃「太字」は太字］` — `の` intervenes); in both cases the construct is
+applied **in place** to that occurrence, and the directive round-trips unchanged
+(§7.6).
 
 - The look-back is over the **base text**: ruby readings (`《…》`) and the
   explicit-base `｜` marker are not part of what `X` matches against. A heading
@@ -88,6 +92,13 @@ that run.
   processor raises the family's "ambiguous" diagnostic where defined
   (e.g. [`bouten-target-ambiguous`](diagnostics.md#bouten-target-ambiguous))
   and applies the construct to the match its look-back selects.
+- If `X` resolves but the matched run **cannot be styled in place** — it is a
+  ruby base (bouten-over-ruby is not representable as a text-only leaf), lies on
+  an earlier line, sits inside another construct, or is one of several quoted
+  targets — a processor keeps the directive, leaves the run **unstyled**, and
+  raises
+  [`forward-referent-not-stylable`](diagnostics.md#forward-referent-not-stylable).
+  The directive still round-trips unchanged (§7.6).
 - The redundant explicit form `平和［＃「平和」に傍点］` (the target literal
   immediately precedes the directive) is common and **MUST** round-trip
   unchanged (§7.6).
