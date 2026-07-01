@@ -14,6 +14,8 @@ body matches no other construct.
 怪体な［＃「怪体」に「ママ」の注記］          ← "as-is from the source"
 峰﹅［＃「峰」は底本では「峯」］              ← textual divergence note
 本文［＃入力者注(5)］                        ← numbered input-typist note (→ 注5)
+起上り［＃「起上り」にルビ］                 ← ruby-presence note (X carries ruby)
+本文［＃ルビは「材木置場」にかかる］         ← ruby-binding note (ruby applies to X)
 ［＃なにかしらの注記］                       ← generic (unrecognised) annotation
 ```
 
@@ -21,6 +23,8 @@ body matches no other construct.
 mama-note     = LBRACK HASH LQUOTE target RQUOTE %s"に「ママ」の注記" RBRACK
 textual-note  = LBRACK HASH LQUOTE target RQUOTE %s"は底本では" LQUOTE alt RQUOTE RBRACK
 editor-note   = LBRACK HASH %s"入力者注(" 1*DIGIT %s")" RBRACK   ; ASCII parens + digits
+ruby-attached = LBRACK HASH LQUOTE target RQUOTE %s"にルビ" RBRACK
+ruby-retarget = LBRACK HASH %s"ルビは" LQUOTE target RQUOTE %s"にかかる" RBRACK
 annotation    = directive          ; any body not classified by §6.1–§6.13
 ```
 
@@ -41,6 +45,14 @@ annotation    = directive          ; any body not classified by §6.1–§6.13
   `editor-note`, rendered (§8) as a visible `注N` superscript rather than a
   hidden span. The **whole body** must match exactly; a compound note that
   merely cites a number (e.g. `底本では…。入力者注(6)`) stays a textual note.
+- The **ruby-placement notes** — `「X」にルビ` (the run `X` carries a ruby
+  gloss) and `ルビは「X」にかかる` (a nearby ruby applies to `X`) — are
+  proofreading markers, **not** renderable ruby (the gloss text is not in the
+  directive). Each yields an `annotation` node of editorial kind
+  `ruby-attached` / `ruby-retarget`, rendered (§8) as a compact visible marker
+  (`<sup class="aozora-ruby-note">ルビ</sup>`) rather than the run `X` — `X` is
+  usually the adjacent text and re-emitting it would double-render. The raw
+  bracket round-trips byte-exact (§7.6).
 - **Generic annotation (the catch-all).** Any directive whose body is not
   classified by §6.1–§6.13 yields a generic `annotation` node that **retains
   the directive's literal bytes**. A processor **MUST NOT** drop it: this is
@@ -62,4 +74,5 @@ annotation    = directive          ; any body not classified by §6.1–§6.13
 
 ## Conformance vectors
 
-`annotation`, `editor_note`, `unrecognised-container-directive`.
+`annotation`, `editor_note`, `ruby_attached`, `ruby_retarget`,
+`unrecognised-container-directive`.
