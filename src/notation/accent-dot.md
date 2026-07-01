@@ -24,21 +24,26 @@ a letter (and, optionally, which occurrence) of the preceding run, the `は`
 particle, a position (`上` above / `下` below), and the keyword `ドット付き`.
 
 ```abnf
-dotted     = run "［＃" clause "］"
+dotted     = run "［＃" clause *( ( "。" / "、" ) clause ) "］"
 clause     = selector "は" [ set-adv ] position "ドット付き"
 selector   = [ ordinal ] letters
-ordinal    = number "つめの" / "最後の"
+ordinal    = number "つめの" / "最後の" / "前の" / "後の"
 set-adv    = "ともに" / "それぞれ"
 position   = "上" / "下"
 letters    = 1*ALPHA            ; ASCII letters, case-significant for the glyph
 number     = 1*DIGIT            ; ASCII or fullwidth digits
 ```
 
+A body may carry several `。`- or `、`-joined clauses; every clause addresses the
+**same** preceding run, and their substitutions are applied together.
+
 ```text
 Sam［＃mは上ドット付き］
 Sisa［＃２つめのsは下ドット付き］
 Visnu［＃snはともに下ドット付き］
 〔Mīhr〕［＃hは下ドット付き］
+Samsa［＃mは上ドット付き。２つめのsは下ドット付き］
+Konkana［＃前のnは上ドット付き、後のnは下ドット付き］
 ```
 
 `run` is the source text immediately preceding the bracket: a bare Latin word,
@@ -50,9 +55,11 @@ or a whole `〔…〕` accent span (whose tortoiseshell brackets are retained).
   - a **bare** letter (`m`) selects the first *composable* occurrence in the run
     (a word-initial capital with no dotted glyph, e.g. the `N` of `Nara-sinha`,
     is skipped in favour of the intended lowercase letter);
-  - an **ordinal** `Nつめの` / `最後の` selects the N-th / last occurrence,
-    **counting case-insensitively** (an uppercase `S` is occurrence 1 for a
-    `２つめのs` over `Sīsa`); the counted position must itself be composable;
+  - an **ordinal** `Nつめの` / `最後の` / `前の` / `後の` selects the N-th /
+    last / first / last occurrence, **counting case-insensitively** (an
+    uppercase `S` is occurrence 1 for a `２つめのs` over `Sīsa`); `前の` / `後の`
+    name the earlier / later of a letter's two occurrences across a `、`-joined
+    pair; the selected position must itself be composable;
   - a **cluster** of several letters with `ともに` / `それぞれ` dots each listed
     letter's first occurrence independently (`sn` → the first `s` and first `n`).
 - **position** — `上` (dot above) or `下` (dot below).
@@ -78,6 +85,9 @@ serialization but does not change which occurrences are dotted.
   ```
 
   `aozora-accent-dot` does not collide with any other treatment's class.
+- A **multi-clause** body applies every clause's substitutions to the one
+  reclaimed run (resolve-all-then-substitute, so an earlier dot never shifts a
+  later clause's index) and still yields a single node.
 
 ## Error conditions
 
@@ -90,14 +100,16 @@ serialization but does not change which occurrences are dotted.
   the run, an ordinal out of range, or a `(letter, position)` pair with no
   precomposed glyph (e.g. an uppercase `S` below) degrades likewise, losing no
   input.
-- **Multi-clause and word-qualified forms** — a `。`- or `、`-joined multi-clause
-  body (`mは上ドット付き。２つめのsは下ドット付き`), a word-qualified selector
-  (`simhaのm…`), and a `段目` table-row reference are **not** this single-clause
-  shape; they degrade to an unrecognised directive pending the multi-clause
-  selector grammar.
+- **Word-qualified and 段目 forms** — a word-qualified selector (`simhaのm…`) and
+  a `段目` table-row reference (`４段目、Sinhaのn…`) address a *named word* or a
+  table row rather than the adjacent run; their `、`-split pieces are not pure
+  ASCII-letter selectors, so they degrade to an unrecognised directive. A body
+  in which *any* clause fails to parse degrades as a whole.
 
 ## Conformance vectors
 
 `accent_dot_above`, `accent_dot_below`, `accent_dot_tortoise`,
 `accent_dot_ordinal`, `accent_dot_uppercase`, `accent_dot_cluster`,
-`accent_dot_ruby_base_unknown` (under `conformance/vectors/`).
+`accent_dot_multi_clause`, `accent_dot_former_latter`,
+`accent_dot_ruby_base_unknown`, `accent_dot_dangyou_unknown` (under
+`conformance/vectors/`).
