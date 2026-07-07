@@ -48,7 +48,7 @@ are catalogued in [Annex C.2](../annex/slugs.md).
 ［＃地付き］平和への誓い        ← single-line end-align (foot)
 ［＃地から2字上げ］…           ← single-line end-align, 2 from the foot
 ［＃ページの左右中央］          ← single-line centring marker (page centre)
-［＃この行はゴシック体］本文行   ← single-line bold (ゴシック → 太字)
+［＃この行はゴシック体］本文行   ← single-line gothic (a typeface, not 太字)
 見出し行［＃大文字、太字］       ← single-line absolute size (+ optional 、太字)
 
 ［＃ここから地付き］…［＃ここで地付き終わり］          ← block end-align
@@ -76,7 +76,7 @@ line-width-open   = LBRACK HASH %s"ここから" 1*DIGIT %s"字詰め" RBRACK
 align-end-single  = LBRACK HASH %s"地付き" RBRACK
                   / LBRACK HASH %s"地から" 1*DIGIT %s"字上げ" RBRACK
 center-single     = LBRACK HASH ( %s"ページの左右中央" / %s"中央揃え" ) RBRACK
-line-bold-single  = LBRACK HASH %s"この行はゴシック体" RBRACK
+line-gothic-single = LBRACK HASH %s"この行はゴシック体" RBRACK
 line-font-single  = LBRACK HASH abs-size-keyword [ %s"、太字" ] RBRACK
 abs-size-keyword  = %s"特大文字" / %s"大文字" / %s"中文字" / %s"小文字"
 ```
@@ -96,7 +96,7 @@ abs-size-keyword  = %s"特大文字" / %s"大文字" / %s"中文字" / %s"小文
 - **width** — for line-width (字詰め), the number of full-width characters per
   line the enclosed run is set to.
 - **styles** — for a compound indent, the **co-applied decoration set** carried
-  by the opener's clause stack: any of `bold` (ゴシック体), `horizontal`
+  by the opener's clause stack: any of `gothic` (ゴシック体), `horizontal`
   (横書き / 横組み), `framed` (罫囲み), and `font` (小さい活字, a one-stage-smaller
   font). The set is **order-independent** on input and **open-ended**: a future
   decorative modifier is one new clause without changing the model (it rides the
@@ -147,10 +147,11 @@ abs-size-keyword  = %s"特大文字" / %s"大文字" / %s"中文字" / %s"小文
   preserves that offset and canonicalises the closer to `地付き終わり`.
 - A **single-line** directive (no `ここから`, no closer) governs only the rest
   of its line and is a **zero-width marker** node (`indent` / `align-end` /
-  `center` / `line-bold`), not a wrapping container (§7.4). It does not capture
+  `center` / `line-gothic`), not a wrapping container (§7.4). It does not capture
   following lines. The centring marker (`ページの左右中央` / `中央揃え`) flags its
-  line as page-centred; `この行はゴシック体` flags its line as bold (the
-  single-line counterpart of the `ゴシック体` compound clause); the actual
+  line as page-centred; `この行はゴシック体` sets its line in gothic (the
+  single-line counterpart of the `ゴシック体` compound clause, a typeface distinct
+  from 太字, #435); the actual
   styling is a presentation concern (§8). A `大文字` / `中文字` / `小文字` /
   `特大文字` marker (optionally `、太字`) flags its line with an **absolute font
   size** (§6.17) — the postfix headline form; the `bold` flag canonicalises to
@@ -222,7 +223,7 @@ unrecognised clause — retains it as a generic annotation (§6.14) and reports
 ## Conformance vectors
 
 `indent_container`, `wrap_indent`, `align_end_container`, `line_width_container`,
-`center_page`, `line_bold_single`, `line_font_size_single`,
+`center_page`, `line_gothic_single`, `line_font_size_single`,
 `line_font_size_bold_single`, `indent_compound_styled`,
 `nested_containers`, `mismatched-container-close`,
 `unrecognised-container-directive`, `break-in-single-line-container`.
