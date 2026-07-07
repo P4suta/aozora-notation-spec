@@ -80,10 +80,13 @@ the family has both a bare inline range and a `ここから`/`ここで` block r
 - **Target with no referent (forward reference)** — a `は太字` / `は斜体`
   directive whose quoted target does not occur in the preceding text has no
   earlier run to emphasise, so the quoted target is itself the styled run: a
-  **self-contained** forward reference, rendered `<b>` / `<i>`. ゴシック体 /
-  ゴチック canonicalise to `太字` (§6.12), idempotent after the first pass.
-  Serialization reconstructs `［＃「X」は太字／斜体］` byte-exact (§7.6); no input
-  is lost. (Contrast the multi-quote body above, which is still unrecognised and
+  **self-contained** forward reference, rendered `<b>` / `<i>`. `ゴシック体` is a
+  **first-class gothic construct** (§6.6), distinct from `太字` — the corpus uses
+  them in disjoint works and gothic is a typeface family, not a bold weight — so
+  the parser preserves its spelling and never folds it to `太字`; serialization
+  reconstructs `［＃「X」はゴシック体／太字／斜体］` byte-exact (§7.6). The vanishing
+  `ゴチック` variant degrades (§6.14) with a lint suggesting `ゴシック体`.
+  (Contrast the multi-quote body above, which is still unrecognised and
   degrades, §6.14.)
 
 ## Conformance vectors

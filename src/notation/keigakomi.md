@@ -36,14 +36,15 @@ both a block range and a `は`-form leaf, §6.12):
 ```
 
 ```abnf
-keigakomi-inline = target "［＃「" target "」"
-                   (%s"は" / %s"に") (%s"罫囲み" / %s"枠囲み" / %s"枠囲い") "］"
+keigakomi-inline = target "［＃「" target "」" (%s"は" / %s"に") %s"罫囲み" "］"
 ```
 
 Unlike 太字/斜体 (`は`-only, §6.12), the frame decoration accepts **either**
-particle — `は` ("is framed") or `に` ("frame applied to") — and the corpus
-spells the keyword `罫囲み`, `枠囲み`, or `枠囲い` (okurigana variant). All
-canonicalise to `は罫囲み` on serialize.
+particle — `は` ("is framed") or `に` ("frame applied to"). The core recognises
+only the canonical keyword `罫囲み`. The corpus-rare, non-canonical spellings
+`枠囲み` / `枠囲い` (and the rule-style names `表罫囲み` / `ミシン罫囲み`) are
+**not** folded onto `罫囲み` — that would erase their spelling; they degrade to a
+lossless `Unknown` directive (§6.14) with a lint suggesting `は罫囲み` (#435).
 
 ### Box-character enclosure (「□」囲み)
 
@@ -86,9 +87,10 @@ quoted run to box), resolved by the look-back rule of §7.5.
   box-character form (the box is drawn by the stylesheet, so the `□` glyph is
   not emitted into the body).
 - Serialization reconstructs the block opener/closer byte-exact (§7.6); the
-  inline rule form canonicalises the particle and keyword to `は罫囲み`
-  (`に`→`は`, `枠囲み`/`枠囲い`→`罫囲み`), and the box form reconstructs
-  `「X」は「□」囲み` byte-exact — all idempotent after the first pass.
+  canonical inline rule form (`は罫囲み` / `に罫囲み`) reconstructs its particle
+  and keyword byte-exact, and the box form reconstructs `「X」は「□」囲み`
+  byte-exact — all idempotent. The non-canonical `枠囲み` / `枠囲い` are not
+  recognised (they degrade, §6.14, and round-trip verbatim as an `Unknown`).
 
 ## Error conditions
 
