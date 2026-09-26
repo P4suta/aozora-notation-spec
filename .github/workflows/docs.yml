@@ -1,12 +1,9 @@
 # Build the spec with mdBook and publish it to GitHub Pages.
 #
-# Much simpler than a code repo's docs site: there is no API reference
-# or playground to assemble — just `mdbook build` (mdBook is provisioned
-# from mise.toml, exactly as in ci.yml) and a Pages deploy of ./book.
+# Much simpler than a code repository's docs site: there is no API reference or playground to assemble — just `mdbook build` (mdBook is provisioned from `mise.toml`, exactly as in `ci.yml`) and a Pages deployment of `./book`.
 #
-# Action pinning: every action is pinned to a full commit SHA (the
-# `# vX` trailer is the resolved tag); Dependabot's github-actions
-# ecosystem keeps the SHAs current.
+# Action pinning: every action is pinned to a full commit SHA, and the `# vX` trailer is the resolved tag.
+# Mend-hosted Renovate keeps the SHAs current under the shared P4suta policy.
 
 name: docs
 

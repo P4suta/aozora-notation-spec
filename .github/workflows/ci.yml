@@ -11,10 +11,8 @@ permissions:
 jobs:
   commitlint:
     runs-on: ubuntu-latest
-    # Skip for dependabot (its subjects/bodies exceed 50/72 and its PRs
-    # squash-merge with a maintainer subject). Guard on the PR *author*,
-    # not `github.actor`, so a maintainer `gh pr update-branch` on a bot
-    # PR doesn't flip the guard and fail the lint (P4suta/aozora#113).
+    # Skip only GitHub Dependabot security PRs because their subjects and bodies exceed 50/72, while routine Mend-hosted Renovate PRs use Conventional Commit titles.
+    # Guard on the PR *author*, not `github.actor`, so a maintainer `gh pr update-branch` on a bot PR does not flip the guard and fail the lint (P4suta/aozora#113).
     if: github.event_name == 'pull_request' && github.event.pull_request.user.login != 'dependabot[bot]'
     steps:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0  # v7.0.0
@@ -53,8 +51,7 @@ jobs:
       # so the job no longer compiles mdBook from source.
       - uses: jdx/mise-action@e6a8b3978addb5a52f2b4cd9d91eafa7f0ab959d  # v4.2.0
 
-      # Install from the pinned manifest so host == CI and Dependabot
-      # (pip ecosystem, /tools) can track the dependency.
+      # Install from the pinned manifest so host == CI and Mend-hosted Renovate can track the Python dependencies under the shared P4suta policy.
       - name: Install Python deps
         run: pip install -r tools/requirements.txt
 

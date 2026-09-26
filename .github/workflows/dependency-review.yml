@@ -1,10 +1,8 @@
-# Dependency review on pull requests — flags newly introduced advisories
-# in the only tracked dependency surfaces this repo has: GitHub Actions
-# and the pip tooling (tools/requirements.txt). Complements Dependabot,
-# which bumps; this gates what a PR *adds*.
+# Dependency review on pull requests flags newly introduced advisories in the only tracked dependency surfaces this repository has: GitHub Actions and the pip tooling (`tools/requirements.txt`).
+# It complements Mend-hosted Renovate updates by gating what every pull request adds.
 #
-# Action pinning: pinned to full commit SHAs (the `# vX.Y.Z` trailer is
-# the resolved tag); Dependabot keeps them current.
+# Action pinning uses full commit SHAs, and the `# vX.Y.Z` trailer is the resolved tag.
+# Mend-hosted Renovate keeps them current under the shared P4suta policy.
 
 name: dependency-review
 
