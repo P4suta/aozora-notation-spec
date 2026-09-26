@@ -25,14 +25,11 @@ unsigned commits and must exempt its App.
 
 ### Required status checks
 
-`main-branch.json` requires the `spec`, `lint`, `codeql (python)`, and
-`release-gate` checks (`integration_id: 15368` is GitHub Actions). These must
-match the actual job names in `.github/workflows/` — if a workflow job is
-renamed, update the context here too. `release-gate` enforces the
-`release: approved` label on a Release PR (ADR-0007). `commitlint` is
-intentionally **not** required: it is skipped on Dependabot PRs (see `ci.yml`),
-and a skipped required check blocks the merge; the commit-msg lefthook hook plus
-the visible PR check cover it.
+`main-branch.json` requires the `spec`, `lint`, `codeql (python)`, and `release-gate` checks (`integration_id: 15368` is GitHub Actions).
+These must match the actual job names in `.github/workflows/` — if a workflow job is renamed, update the context here too.
+`release-gate` enforces the `release: approved` label on a Release PR (ADR-0007).
+`commitlint` is intentionally **not** required: it is skipped only on GitHub Dependabot security PRs (see `ci.yml`), while routine Mend-hosted Renovate PRs run it.
+A skipped required check blocks the merge, so the commit-msg lefthook hook plus the visible PR check cover it.
 
 > Add a context here only **after** the job exists on `main`; otherwise every
 > PR waits forever on a check that never runs. (`release-gate` was added with
@@ -71,7 +68,7 @@ the bot user id) injected at apply time:
 
 ```sh
 REPO=P4suta/aozora-notation-spec
-APP_ID=<release App's numeric App ID>
+APP_ID=<release-app-numeric-id>
 gh api "repos/$REPO/rulesets" -X POST --input <(jq -n --argjson app "$APP_ID" '{
   name: "release-tags-app-only",
   target: "tag",
