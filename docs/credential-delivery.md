@@ -14,6 +14,8 @@ The shared credential still carries the signing provider's authority after retri
 | automation | `aozora-notation-spec.automation` | `DOPPLER_AUTOMATION_IDENTITY_ID` | release |
 
 The manual **Verify credential access** workflow checks required fields and rejects access to an unrelated config.
+Pushes that change the verifier file register its manual entrypoint with GitHub Actions.
+Every credential job requires a manual dispatch on main, so automatic events retrieve no credentials.
 Automation also creates a repository-scoped App token with contents read access.
 This workflow performs no signing, notarization, registry publication, release creation, or deployment.
 Existing environment protections remain in force; their approval does not grant authority for another operation.
