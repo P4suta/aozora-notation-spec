@@ -1,24 +1,30 @@
 name: ci
 
 on:
-  push:
-    branches: [main]
   pull_request:
+  merge_group:
 
 permissions:
   contents: read
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   commitlint:
+    name: commitlint
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     # Skip only GitHub Dependabot security PRs because their subjects and bodies exceed 50/72, while routine Mend-hosted Renovate PRs use Conventional Commit titles.
     # Guard on the PR *author*, not `github.actor`, so a maintainer `gh pr update-branch` on a bot PR does not flip the guard and fail the lint (P4suta/aozora#113).
     if: github.event_name == 'pull_request' && github.event.pull_request.user.login != 'dependabot[bot]'
     steps:
-      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0  # v7.0.0
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
-      - uses: jdx/mise-action@e6a8b3978addb5a52f2b4cd9d91eafa7f0ab959d  # v4.2.0
+          persist-credentials: false
+      - uses: jdx/mise-action@8418fedb1110381a0d3ba51a7a415d7c1b884550 # v5.2.2
       # Lint only non-merge commits: `committed` flags any merge commit
       # ("Merge branch 'main' …") as "Missing type", so a maintainer
       # `gh pr update-branch` merge must not reach it (P4suta/aozora#113).
@@ -26,30 +32,40 @@ jobs:
       # invocation (`-rn1`); a multi-commit PR would otherwise pass
       # several positionals at once and abort with "unexpected argument".
       - name: Check Conventional Commits (committed)
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
         run: |
-          base='${{ github.event.pull_request.base.sha }}'
-          head='${{ github.event.pull_request.head.sha }}'
-          git rev-list --no-merges "$base..$head" | xargs -rn1 committed
+          set -euo pipefail
+          git rev-list --no-merges "$BASE_SHA..$HEAD_SHA" | xargs -rn1 committed
 
   lint:
+    name: lint
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
-      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0  # v7.0.0
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
       # mise provisions typos + taplo (and the rest) from mise.toml.
-      - uses: jdx/mise-action@e6a8b3978addb5a52f2b4cd9d91eafa7f0ab959d  # v4.2.0
+      - uses: jdx/mise-action@8418fedb1110381a0d3ba51a7a415d7c1b884550 # v5.2.2
       - name: Spell-check (typos)
         run: typos
       - name: TOML formatting (taplo)
         run: taplo fmt --check
 
   spec:
+    name: spec
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
-      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0  # v7.0.0
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
 
       # mise provisions mdBook (precompiled) + Python 3.12 from mise.toml,
       # so the job no longer compiles mdBook from source.
-      - uses: jdx/mise-action@e6a8b3978addb5a52f2b4cd9d91eafa7f0ab959d  # v4.2.0
+      - uses: jdx/mise-action@8418fedb1110381a0d3ba51a7a415d7c1b884550 # v5.2.2
 
       # Install from the pinned manifest so host == CI and Mend-hosted Renovate can track the Python dependencies under the shared P4suta policy.
       - name: Install Python deps
@@ -73,11 +89,12 @@ jobs:
   # live, so after labelling, re-run just this job to turn it green (no full CI
   # rerun). Required via the main-branch ruleset, so it actually blocks merge.
   release-gate:
+    name: release-gate
     if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     timeout-minutes: 5
     permissions:
-      pull-requests: read
+      pull-requests: read # The gate reads the current pull request labels.
     steps:
       - name: "Require `release: approved` on a Release PR"
         env:
