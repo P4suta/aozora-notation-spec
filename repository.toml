@@ -1,0 +1,20 @@
+name = "Notation specification"
+summary = "Unofficial Aozora Bunko notation specification and conformance tests"
+install = """
+git clone https://github.com/P4suta/aozora-notation-spec.git
+cd aozora-notation-spec
+mise install
+"""
+usage_language = "sh"
+usage = "mise x -- just build"
+documentation_index = true
+copyright = "2026 aozora-notation-spec contributors"
+license = "MIT OR Apache-2.0"
+
+[preserved_licenses]
+mit_sha256 = "8af38ac282811ed946ece69b3c9539974efda90ee396964d3c8437cbdb5b2ffa"
+apache_sha256 = "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+
+[[consent]]
+contributor = "Yasunobu"
+evidence = "https://github.com/P4suta/aozora-notation-spec/commit/48e5e9a5ba802aeb31541388664e530193092020"
