@@ -1,17 +1,14 @@
 # 8. Reference Rendering
 
-This specification defines notation in terms of an abstract **node model**; a
-processor's primary output is that structure (the `nodes` / `pairs`
-projections of §10). This section gives a **reference rendering** to semantic
-HTML5. The node model is normative; the specific HTML is a **reference
-mapping** — informative, so that the conformance suite can pin a concrete
-output, but a processor MAY target a different presentation.
+This specification defines notation in terms of an abstract **node model**; a processor's primary output is that structure (the `nodes` / `pairs` projections of §10).
+This section gives a **reference rendering** to semantic HTML5.
+The node model is normative; the specific HTML is a **reference mapping** — informative, so that the conformance suite can pin a concrete output, but a processor MAY target a different presentation.
 
 ## 8.1 Node model (normative)
 
-Parsing yields a tree of nodes. Each node has a **kind** and a
-sanitized-source **span**; container nodes have children. The kinds, with the
-family that produces them, are:
+Parsing yields a tree of nodes.
+Each node has a **kind** and a decoded-source **span** (§3.5); container nodes have children.
+The kinds, with the family that produces them, are:
 
 | Kind | Family | Notes |
 |---|---|---|
@@ -32,8 +29,7 @@ family that produces them, are:
 | `side-note` | §6.5 | base + left-side note (注記) |
 
 The `nodes` conformance projection lists recognized nodes in source order,
-each with its span; container open/close appear as `containerOpen` /
-`containerClose` entries (in source coordinates).
+each with its span; container open/close appear as `containerOpen` / `containerClose` entries (in source coordinates).
 
 ## 8.2 Reference HTML mapping (informative)
 
@@ -57,17 +53,12 @@ each with its span; container open/close appear as `containerOpen` /
 | Body end | `<div class="aozora-body-end"></div>` |
 | Forced break | `<br />` |
 
-Text is grouped into paragraphs (`<p>`); a blank line ends a paragraph; a
-single newline within a paragraph is a `<br />`. The five HTML-significant
-ASCII characters (`< > & " '`) are escaped. The reference renderer ships no
-stylesheet; the `aozora-*` class hooks are presentation contracts a consumer
-styles.
+Text is grouped into paragraphs (`<p>`); a blank line ends a paragraph; a single newline within a paragraph is a `<br />`.
+The five HTML-significant ASCII characters (`< > & " '`) are escaped.
+The reference renderer ships no stylesheet; the `aozora-*` class hooks are presentation contracts a consumer styles.
 
 ## 8.3 Why a reference mapping, not a mandated one
 
-The notation describes Japanese typography (vertical writing, ruby, emphasis
-dots); the faithful visual result depends on the rendering medium. Pinning a
-reference HTML lets the suite check a concrete output and lets tools
-interoperate, without forcing every processor — a paginator, an EPUB
-builder, a search indexer — to emit identical markup. A processor claims
-conformance against the projections it produces (§10.1).
+The notation describes Japanese typography (vertical writing, ruby, emphasis dots); the faithful visual result depends on the rendering medium.
+Pinning a reference HTML lets the suite check a concrete output and lets tools interoperate, without forcing every processor — a paginator, an EPUB builder, a search indexer — to emit identical markup.
+A processor claims conformance against the projections it produces (§10.1).

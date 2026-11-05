@@ -1,14 +1,12 @@
 # Decision records
 
-Where the official 注記一覧 is silent or admits more than one reading, this
-specification makes an explicit normative decision and records it here, with
-its rationale, so the choice is auditable. Each record is referenced from the
-section it governs.
+Where the official 注記一覧 is silent or admits more than one reading, this specification makes an explicit normative decision and records it here, with its rationale, so the choice is auditable.
+Each record is referenced from the section it governs.
 
 These are [MADR 4.0](https://adr.github.io/madr/) Architecture Decision Records.
-Read the one that governs an area before changing what it governs. Once accepted
-an ADR is never edited for content — it is *superseded* by a later ADR that links
-back. (Clerical metadata — date format, `Deciders`, `Tags` — may be normalised.)
+Read the one that governs an area before changing what it governs.
+Once accepted an ADR is never edited for content — it is *superseded* by a later ADR that links back.
+(Clerical metadata — date format, `Deciders`, `Tags` — may be normalised.)
 
 | ADR | Title | Status |
 |---|---|---|
@@ -19,23 +17,19 @@ back. (Clerical metadata — date format, `Deciders`, `Tags` — may be normalis
 | [0005](0005-adopt-semver-and-a-version-single-source-of-truth.md) | Adopt SemVer and a version single source of truth | accepted |
 | [0006](0006-automated-releases-via-release-please-with-a-dormant-github-app.md) | Automated releases via Release Please with a dormant GitHub App | accepted |
 | [0007](0007-release-safety-layers.md) | Release safety layers — approval gate, App-only tags, provenance | accepted |
+| [Source preservation](preserve-source-during-recovery.md) | Preserve decoded source during recovery serialization | accepted |
 
-Decisions are grounded in the official guide and the real Aozora Bunko
-corpus; corpus frequency claims cite the observation that motivated them.
+Decisions are grounded in the official guide and the real Aozora Bunko corpus; corpus frequency claims cite the observation that motivated them.
 
 ## Authoring a new ADR
 
-1. Scaffold with `just new-adr "Short imperative title"` (copies
-   `0000-template.md` to the next sequential number, slugifies the title, and
-   stamps today's date).
-2. Fill in the sections; cite the two sources of truth (official 注記一覧 +
-   corpus) and keep paragraphs short and action-oriented.
-3. Add a row to the table above and set `Governs:` to the section(s) it binds.
-4. Reference the ADR in the commit body and open a PR. ADRs are normally
-   accepted on merge; controversial ones land as `proposed` and flip to
-   `accepted` once the discussion concludes.
+Name a new record after its decision and add `date: YYYY-MM-DD` to its front matter.
+Use `0000-template.md` for the section structure.
+Cite the official 注記一覧 and corpus evidence, and name the sections the decision governs.
+Add the record to the index above and reference it from the affected specification sections.
+ADRs normally become `accepted` on merge; keep an unaccepted decision `proposed`.
 
 ## Numbering
 
-ADRs use a single sequential counter starting at `0001`, with no gaps. The next
-ADR is `0008`. `just new-adr` picks the next number automatically (highest + 1).
+Existing numbered records keep their filenames and references.
+New records use descriptive paths instead of the sequential `just new-adr` scaffold.
