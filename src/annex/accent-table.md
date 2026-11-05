@@ -1,9 +1,7 @@
 # Annex A. Accent decomposition table
 
-This annex is **normative**. It defines the indicator-to-character mapping for
-the `〔…〕` accent decomposition of §4.3. Within an accent span, a Latin base
-letter immediately followed by an ASCII **indicator** is rewritten to the
-corresponding precomposed Unicode character.
+This annex is **normative**. It defines the indicator-to-character mapping for the `〔…〕` accent decomposition of §4.3.
+Within an accent span, a Latin base letter immediately followed by an ASCII **indicator** is rewritten to the corresponding precomposed Unicode character.
 
 ## A.1 Indicators
 
@@ -19,8 +17,7 @@ corresponding precomposed Unicode character.
 | `/` | stroke / slash | `o/` | ø |
 | `&` | ring above | `a&` | å |
 
-The `&` indicator also forms **ligatures**, which are checked before the
-ring-above reading (longest match wins, §A.3):
+The `&` indicator also forms **ligatures**, which are checked before the ring-above reading (longest match wins, §A.3):
 
 | Sequence | → |
 |---|---|
@@ -30,9 +27,8 @@ ring-above reading (longest match wins, §A.3):
 
 ## A.2 Coverage
 
-Not every (letter, indicator) pair has a precomposed form; only the pairs
-that map to a Unicode character are decomposed. The closed set is enumerated
-below (lower- and upper-case share the same indicators):
+Not every (letter, indicator) pair has a precomposed form; only the pairs that map to a Unicode character are decomposed.
+The closed set is enumerated below (lower- and upper-case share the same indicators):
 
 | Base | Indicators that decompose |
 |---|---|
@@ -47,19 +43,16 @@ below (lower- and upper-case share the same indicators):
 | y / Y | `'` `:` |
 | d / D | `/` · g/G,h,j/J: `^` · h: `/` · l/L: `/` `'` · m: `'` · r/R: `'` · t: `,` · z/Z: `'` |
 
-A `〔…〕` span whose body contains no sequence in this table is left unchanged
-and emits no diagnostic (§4.3).
+A `〔…〕` span whose body contains no sequence in this table is left unchanged and emits no diagnostic (§4.3).
 
 ## A.3 Rules
 
-- **Longest match.** A multi-character ligature (`ae&`, `s&`, …) is matched in
-  preference to a shorter reading of its prefix. `s&` is ß, never `s` + ring.
+- **Longest match.** A multi-character ligature (`ae&`, `s&`, …) is matched in preference to a shorter reading of its prefix.
+  `s&` is ß, never `s` + ring.
 - **Line-bounded.** An accent span begins and ends on one line (§4.3, §5.5).
-- **Loss-free.** The serializer reconstructs the original `〔…〕` source form
-  (§7.6); decomposition is reversible by construction.
-- **Diagnostic.** Each span that actually contained a digraph raises
-  [`accent-decomposition-applied`](../diagnostics.md#accent-decomposition-applied)
-  (note), in post-decomposition coordinates.
+- **Serialization.** Canonical serialization uses the composed body inside `〔…〕`; recovery serialization preserves the decoded input (§7.6).
+- **Diagnostic.** Each span that actually contained a digraph raises [`accent-decomposition-applied`](../diagnostics.md#accent-decomposition-applied) (note).
+  Its span covers the original `〔…〕`, including both delimiters, in decoded-source coordinates (§3.5).
 
 > The enumeration above follows the official 外字 accent guidance
 > ([§12 \[AOZORA-ANNOTATION\]](../references.md)). Additions are a MINOR

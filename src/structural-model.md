@@ -1,113 +1,76 @@
 # 7. Structural Processing Model
 
-§5 yields a flat element stream; §6 classifies each directive. This section
-defines the **structure** built on top: how openers pair with closers, how
-containers nest, how forward references resolve, and how the result
-serializes back to source byte-for-byte.
+§5 yields a flat element stream; §6 classifies each directive.
+This section defines the **structure** built on top: how openers pair with closers, how containers nest, how forward references resolve, and how the result serializes (§7.6).
 
 ## 7.1 Pairing
 
-Some constructs are **paired**: an opener and a matching closer with content
-between them. The paired families are:
+Some constructs are **paired**: an opener and a matching closer with content between them.
+The paired families are:
 
 - block layout containers — `［＃ここから…］` / `［＃ここで…終わり］` (§6.6);
 - `罫囲み` — `［＃罫囲み］` / `［＃罫囲み終わり］` (§6.7);
 - `割り注` — `［＃割り注］` / `［＃割り注終わり］` (§6.8); and
 - the `傍点`/`傍線` **range** form — `［＃傍点］` / `［＃傍点終わり］` (§6.2).
 
-Pairing uses a **stack**: each opener is pushed; each closer pops the nearest
-open of a compatible **family** and forms a pair governing the content
-between them. A processor **MUST** pair by family, not by exact variant, so
-that e.g. a `2字下げ` opener pairs with a plain `字下げ終わり` closer.
+Pairing uses a **stack**: each opener is pushed; each closer pops the nearest open of a compatible **family** and forms a pair governing the content between them.
+A processor **MUST** pair by family, not by exact variant, so that e.g. a `2字下げ` opener pairs with a plain `字下げ終わり` closer.
 
 ## 7.2 Mismatch and recovery
 
-- A closer whose family differs from the popped opener raises
-  [`mismatched-container-close`](diagnostics.md#mismatched-container-close);
-  the opener is auto-closed at the closer and the pair is keyed by the
-  **opener's** family (recovery).
-- Within the `傍点`/`傍線` range family, a 点-vs-線 family disagreement raises
-  [`mismatched-bouten-container`](diagnostics.md#mismatched-bouten-container)
-  (§6.2); the run is keyed to the opener's variant.
-- A closer with no open on the stack, or an opener never closed, is handled
-  per [`unmatched-close`](diagnostics.md#unmatched-close) /
-  [`unclosed-bracket`](diagnostics.md#unclosed-bracket); the affected marker
-  degrades but its bytes are preserved.
+- A closer whose family differs from the popped opener raises [`mismatched-container-close`](diagnostics.md#mismatched-container-close);
+  the opener is auto-closed at the closer and the pair is keyed by the **opener's** family (recovery).
+- Within the `傍点`/`傍線` range family, a 点-vs-線 family disagreement raises [`mismatched-bouten-container`](diagnostics.md#mismatched-bouten-container) (§6.2); the run is keyed to the opener's variant.
+- A closer with no open on the stack, or an opener never closed, is handled per [`unmatched-close`](diagnostics.md#unmatched-close) / [`unclosed-bracket`](diagnostics.md#unclosed-bracket); the affected marker degrades but its bytes are preserved.
 
 ## 7.3 Block vs inline; nesting
 
 A paired construct is **block** or **inline**:
 
-- **Block** containers (block layout, `罫囲み`) govern whole lines and may
-  nest; rendering wraps them as block elements. Breaks (§6.9) persist across
-  a block container (print typography), so a break inside one is **not**
-  flagged.
-- **Inline** ranges (`傍点`/`傍線` range, `割り注`) attach within a line and
-  do not introduce block structure. The corpus shows these never span a line
-  in practice.
+- **Block** containers (block layout, `罫囲み`) govern whole lines and may nest; rendering wraps them as block elements.
+  Breaks (§6.9) persist across a block container (print typography), so a break inside one is **not** flagged.
+- **Inline** ranges (`傍点`/`傍線` range, `割り注`) attach within a line and do not introduce block structure.
+  The corpus shows these never span a line in practice.
 
-Containers nest by the stack discipline of §7.1; an inner pair closes before
-its outer pair.
+Containers nest by the stack discipline of §7.1; an inner pair closes before its outer pair.
 
 ## 7.4 Single-line containers
 
-A *single-line* layout directive (`［＃地付き］`, `［＃2字下げ］`, §6.6) has no
-closer: it governs the remainder of its line only and is modelled as a
-zero-width marker, not a wrapping container. Consequently a page or section
-break sharing that line, or a break inside a `割り注` range, drops the
-governed scope and raises
-[`break-in-single-line-container`](diagnostics.md#break-in-single-line-container)
-(§6.9).
+A *single-line* layout directive (`［＃地付き］`, `［＃2字下げ］`, §6.6) has no closer: it governs the remainder of its line only and is modelled as a zero-width marker, not a wrapping container.
+Consequently a page or section break sharing that line, or a break inside a `割り注` range, drops the governed scope and raises [`break-in-single-line-container`](diagnostics.md#break-in-single-line-container) (§6.9).
 
 ## 7.5 Forward-reference resolution
 
-Some directives name a **target** by quoting it and look **backwards** in the
-already-seen text to find the run they apply to:
+Some directives name a **target** by quoting it and look **backwards** in the already-seen text to find the run they apply to:
 
 - `［＃「X」に傍点］` and its variants (§6.2),
 - `［＃「X」は縦中横］` (§6.3),
 - heading hints `［＃「X」は…見出し］` (§6.10), and
 - `「ママ」`/textual-note annotations (§6.14).
 
-Resolution rule: a processor scans the text **preceding** the directive (back
-to the start of the current line, or the document per the construct) for the
-most recent occurrence of the quoted target `X`, and applies the construct to
-that run. The matched run may be **adjacent** to the directive (the redundant
-explicit form `平和［＃「平和」に傍点］`) or lie **earlier in the same base run**
-(`太字の［＃「太字」は太字］` — `の` intervenes); in both cases the construct is
-applied **in place** to that occurrence, and the directive round-trips unchanged
-(§7.6).
+Resolution rule: a processor scans the text **preceding** the directive (back to the start of the current line, or the document per the construct) for the most recent occurrence of the quoted target `X`, and applies the construct to that run.
+The matched run may be **adjacent** to the directive (the redundant explicit form `平和［＃「平和」に傍点］`) or lie **earlier in the same base run** (`太字の［＃「太字」は太字］` — `の` intervenes); in both cases the construct is applied **in place** to that occurrence, and the directive round-trips unchanged (§7.6).
 
-- The look-back is over the **base text**: ruby readings (`《…》`) and the
-  explicit-base `｜` marker are not part of what `X` matches against. A heading
-  whose title carries ruby —
-  `○　両頭《りやうとう》の蛇《へび》［＃「○　両頭の蛇」は中見出し］` — quotes the
-  ruby-stripped target `○　両頭の蛇`, which a processor resolves against the
-  ruby-stripped run `○　両頭の蛇`.
+- The look-back is over the **base text**: ruby readings (`《…》`) and the explicit-base `｜` marker are not part of what `X` matches against.
+  A heading whose title carries ruby —
+  `○　両頭《りやうとう》の蛇《へび》［＃「○　両頭の蛇」は中見出し］` — quotes the ruby-stripped target `○　両頭の蛇`, which a processor resolves against the ruby-stripped run `○　両頭の蛇`.
 
-- If `X` does not occur in the look-back, the directive degrades to a generic
-  annotation and raises the family's "target not found" diagnostic
-  (e.g. [`tcy-target-not-found`](diagnostics.md#tcy-target-not-found)).
-- If `X` occurs **more than once**, the chosen run may be unintended; a
-  processor raises the family's "ambiguous" diagnostic where defined
-  (e.g. [`bouten-target-ambiguous`](diagnostics.md#bouten-target-ambiguous))
-  and applies the construct to the match its look-back selects.
-- If `X` resolves but the matched run **cannot be styled in place** — it is a
-  ruby base (bouten-over-ruby is not representable as a text-only leaf), lies on
-  an earlier line, sits inside another construct, or is one of several quoted
-  targets — a processor keeps the directive, leaves the run **unstyled**, and
-  raises
-  [`forward-referent-not-stylable`](diagnostics.md#forward-referent-not-stylable).
+- If `X` does not occur in the look-back, the directive degrades to a generic annotation and raises the family's "target not found" diagnostic (e.g. [`tcy-target-not-found`](diagnostics.md#tcy-target-not-found)).
+- If `X` occurs **more than once**, the chosen run may be unintended; a processor raises the family's "ambiguous" diagnostic where defined (e.g. [`bouten-target-ambiguous`](diagnostics.md#bouten-target-ambiguous)) and applies the construct to the match its look-back selects.
+- If `X` resolves but the matched run **cannot be styled in place** — it is a ruby base (bouten-over-ruby is not representable as a text-only leaf), lies on an earlier line, sits inside another construct, or is one of several quoted targets — a processor keeps the directive, leaves the run **unstyled**, and raises [`forward-referent-not-stylable`](diagnostics.md#forward-referent-not-stylable).
   The directive still round-trips unchanged (§7.6).
-- The redundant explicit form `平和［＃「平和」に傍点］` (the target literal
-  immediately precedes the directive) is common and **MUST** round-trip
-  unchanged (§7.6).
+- The redundant explicit form `平和［＃「平和」に傍点］` (the target literal immediately precedes the directive) is common and **MUST** round-trip unchanged (§7.6).
 
 ## 7.6 Serialization round-trip
 
-A processor that serializes **MUST** be a fixed point: re-parsing a
-serialized result yields the same structure, and serializing again yields the
-same bytes. Normalization (§4) is loss-free for this reason — the serializer
-reconstructs `〔…〕` accent spans, the `｜` of an explicit ruby base, the
-literal target of a redundant forward reference, and the original directive
-strings. The `serialize` projection of each conformance vector pins this.
+A processor that serializes **MUST** keep serialization a fixed point: `serialize(parse(serialize(parse(x)))) == serialize(parse(x))`.
+Re-parsing a serialized result **MUST** preserve its semantic structure.
+For well-formed input, canonical serialization follows [ADR-0003](https://github.com/P4suta/aozora-notation-spec/blob/main/docs/adr/0003-canonical-serialization-forms.md) and the notation-family rules, including normalized accent bodies (§4.3).
+
+When parsing reports `unclosed-bracket`, `mismatched-container-close`, or `nested-ruby`, default serialization **MUST** reproduce the entire decoded input byte-for-byte in UTF-8.
+The processor MUST preserve the original BOM, line endings, accent spelling, explicit ruby-base markers, and directive spacing in that case.
+Best-effort parsing and rendering may recover structure, but default serialization MUST NOT repair delimiters or canonicalize any part of the document.
+An explicitly requested normalization operation MAY rewrite the input; the `serialize` conformance projection tests default serialization.
+
+The [preserve-source-during-recovery ADR](https://github.com/P4suta/aozora-notation-spec/blob/main/docs/adr/preserve-source-during-recovery.md) partly supersedes ADR-0003 for these recovery conditions.
+The `unclosed_bracket`, `mismatched_container_close`, and `nested_ruby` vectors pin source preservation, while `accent_decomposition_applied` pins canonical accent serialization.
