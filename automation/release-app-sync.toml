@@ -1,0 +1,13 @@
+workplace = "8f95af89faf8535b63a6"
+repository = "P4suta/aozora-notation-spec"
+repository_id = 1271858005
+owner_id = 42543015
+environment = "release"
+branches = ["main"]
+project = "aozora-notation-spec"
+source_config = "automation"
+config = "github_automation"
+
+[fields]
+RELEASE_APP_CLIENT_ID = "GITHUB_APP_CLIENT_ID"
+RELEASE_APP_PRIVATE_KEY = "GITHUB_APP_PRIVATE_KEY"
