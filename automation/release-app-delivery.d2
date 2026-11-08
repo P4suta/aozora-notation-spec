@@ -1,0 +1,34 @@
+direction: down
+title: "Release App credential boundary · proposed migration" {
+  shape: text
+  near: top-center
+}
+key: "Boxes name configurations, protected data, jobs, or services.\nArrows name reference preparation, credential delivery, or token exchange.\nOIDC means OpenID Connect. HTTPS means Hypertext Transfer Protocol Secure." {
+  shape: text
+  near: bottom-center
+}
+canonical: "Doppler automation config\nSource App credential references"
+projection: "Doppler github_automation config\nGitHub-compatible field names only"
+environment: "GitHub release environment\nDeployment from main only"
+verify: "Manual main job: Verify credential access\nApp receives named inputs; requests read-only token"
+release: "Main job: Maintain release proposals\nApp receives named inputs; requests scoped write token"
+read_token: "Result: read-only installation token\nCurrent repository only"
+write_token: "Result: release installation token\nCurrent repository and selected write permissions"
+attest: "Asset attestation job\nNative GitHub OIDC remains"
+attestation_api: "GitHub attestation API\nBuild provenance for release assets"
+canonical -> projection: "Reuse selected canonical reference targets"
+projection -> environment: "Native HTTPS synchronization"
+environment -> verify: "App inputs"
+environment -> release: "App inputs"
+verify -> read_token: "GitHub App HTTPS exchange"
+release -> write_token: "GitHub App HTTPS exchange"
+attest -> attestation_api: "Attest release assets using OIDC"
+*.style: {
+  fill: "#FFFFFF"
+  stroke: "#000000"
+  font-color: "#000000"
+}
+(** -> **)[*].style: {
+  stroke: "#000000"
+  font-color: "#000000"
+}
