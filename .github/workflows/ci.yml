@@ -24,7 +24,7 @@ jobs:
         with:
           fetch-depth: 0
           persist-credentials: false
-      - uses: jdx/mise-action@b44d12e7d0d8ee7461bb893e1b1993500433185b # v5.2.7
+      - uses: jdx/mise-action@90f833d396d0cc3674b631d2d225e306476c303a # v5.2.10
       # Lint only non-merge commits: `committed` flags any merge commit
       # ("Merge branch 'main' …") as "Missing type", so a maintainer
       # `gh pr update-branch` merge must not reach it (P4suta/aozora#113).
@@ -48,7 +48,7 @@ jobs:
         with:
           persist-credentials: false
       # mise provisions typos + taplo (and the rest) from mise.toml.
-      - uses: jdx/mise-action@b44d12e7d0d8ee7461bb893e1b1993500433185b # v5.2.7
+      - uses: jdx/mise-action@90f833d396d0cc3674b631d2d225e306476c303a # v5.2.10
       - name: Spell-check (typos)
         run: typos
       - name: TOML formatting (taplo)
@@ -65,7 +65,7 @@ jobs:
 
       # mise provisions mdBook (precompiled) + Python 3.12 from mise.toml,
       # so the job no longer compiles mdBook from source.
-      - uses: jdx/mise-action@b44d12e7d0d8ee7461bb893e1b1993500433185b # v5.2.7
+      - uses: jdx/mise-action@90f833d396d0cc3674b631d2d225e306476c303a # v5.2.10
 
       # Install from the pinned manifest so host == CI and Mend-hosted Renovate can track the Python dependencies under the shared P4suta policy.
       - name: Install Python deps
